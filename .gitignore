@@ -54,4 +54,6 @@ compile_commands.json
 *_qmlcache.qrc
 
 .DS_store
-.DS_Store
+
+.idea/
+.idea
