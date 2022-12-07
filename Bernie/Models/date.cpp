@@ -1,4 +1,4 @@
-#include "date.h"
+#include "Date.h"
 
 Date::Date(short unsigned int d, short unsigned int m, short unsigned int y): day(d), month(m), year(y) {}
 
