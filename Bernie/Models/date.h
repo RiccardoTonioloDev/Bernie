@@ -1,5 +1,5 @@
-#ifndef DATE.H
-#define DATE.H
+#ifndef DATE
+#define DATE
 
 #include <iostream>
 
@@ -13,7 +13,7 @@ public:
     /*
     POST: si ritorna una stringa composta da tutti i campi della data nel formato gg/mm/aaaa
     */
-    std::string getData();
+    std::string getData() const;
 };
 
 #endif
