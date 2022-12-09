@@ -16,7 +16,7 @@ public:
     /*
      * POST: va a creare un clone di se stesso, ritornando il puntatore ad esso
      */
-    virtual SerializableObject* clone() const;
+    virtual SerializableObject* clone() const = 0;
     bool operator==(const SerializableObject&) const;
     bool operator<(const SerializableObject&) const;
     bool operator>(const SerializableObject&) const;
@@ -28,7 +28,7 @@ protected:
      */
     static std::string sanitize(const std::string&);
     static std::string deSanitize(const std::string&);
+    static int wow;
 };
-
 
 #endif
