@@ -1,8 +1,7 @@
 //#notReviewed
 #include "SerializableObject.h"
 
-SerializableObject::SerializableObject(const std::string& soName){
-    name = soName;
+SerializableObject::SerializableObject(const std::string& n): name(n){
 }
 virtual SerializableObject* clone const{
     return new SerializableObject(*this);

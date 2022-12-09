@@ -5,7 +5,7 @@
 
 
 class SerializableObject {
-private:
+protected:
     std::string name;
 public:
     SerializableObject(const std::string&);
@@ -16,7 +16,7 @@ public:
     /*
      * POST: va a creare un clone di se stesso, ritornando il puntatore ad esso
      */
-    virtual SerializableObject* clone const;
+    virtual SerializableObject* clone() const;
     bool operator==(const SerializableObject&) const;
     bool operator<(const SerializableObject&) const;
     bool operator>(const SerializableObject&) const;
