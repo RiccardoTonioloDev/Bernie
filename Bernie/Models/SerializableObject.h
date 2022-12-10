@@ -30,6 +30,7 @@ public:
      * recuperare.
      */
     static std::pair<bool,std::vector<std::string>> deSanitize(const std::string&);
+    static char SEPARATOR;
 protected:
     /*
      * POST: va ad aggiungere caratteri di escape per evitare che l'utente corrompa accidentalmente
