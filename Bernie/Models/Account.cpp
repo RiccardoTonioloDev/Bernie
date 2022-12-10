@@ -1,11 +1,11 @@
 //#notReviewed
 #include "Account.h"
 
-Account::Account(const std::string & n, const std::string & email, const std::string & usrnm, const std::string & pswd): SerializableObject(n), email(email), username(usrnm), password(pswd){}
+Account::Account(const std::string & n, const std::string & email, const std::string & pswd, const std::string & usrnm): SerializableObject(n), email(email), username(usrnm), password(pswd){}
 
 std::string Account::serialize() const {
     std::string serializedObj = "ACCOUNT,";
-    serializedObj = serializedObj + name + "," + email + "," + username + "," + password;
+    serializedObj = serializedObj + sanitize(name) + "," + sanitize(email) + "," + sanitize(password) + "," + sanitize(username);
     return serializedObj;
 }
 

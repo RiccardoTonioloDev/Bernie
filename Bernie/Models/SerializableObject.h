@@ -2,6 +2,8 @@
 #ifndef SERIALIZABLEOBJECT_H
 #define SERIALIZABLEOBJECT_H
 #include <string>
+#include <vector>
+#include<utility>
 
 
 class SerializableObject {
@@ -10,25 +12,30 @@ protected:
 public:
     SerializableObject(const std::string&);
     /*
-     * POST: va a serializzare in formato CSV il contenuto dell'oggetto
+     * POST: va a serializzare in formato CSV il contenuto dell'oggetto.
      */
     virtual std::string serialize() const = 0;
     /*
-     * POST: va a creare un clone di se stesso, ritornando il puntatore ad esso
+     * POST: va a creare un clone di se stesso, ritornando il puntatore a esso.
      */
     virtual SerializableObject* clone() const = 0;
     bool operator==(const SerializableObject&) const;
     bool operator<(const SerializableObject&) const;
     bool operator>(const SerializableObject&) const;
     virtual ~SerializableObject();
+    /*
+     * POST: va a rimuovere i caratteri di escape e restituisce una coppia composta da un valore
+     * booleano che indica se il file è stato compromesso, e in caso non sia compromesso contiene
+     * come secondo valore le parole corrette estratte dal file per ricostruire l'oggetto da
+     * recuperare.
+     */
+    static std::pair<bool,std::vector<std::string>> deSanitize(const std::string&);
 protected:
     /*
      * POST: va ad aggiungere caratteri di escape per evitare che l'utente corrompa accidentalmente
-     * il file solo posizionando una virgola (che è il carattere separatore)
+     * il file solo posizionando una virgola (che è il carattere separatore).
      */
     static std::string sanitize(const std::string&);
-    static std::string deSanitize(const std::string&);
-    static int wow;
 };
 
 #endif

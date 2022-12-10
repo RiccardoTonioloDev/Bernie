@@ -12,7 +12,7 @@ private:
    std::string username;
    std::string password;
 public:
-    Account(const std::string&, const std::string&, const std::string& = "", const std::string&);
+    Account(const std::string&, const std::string&,  const std::string&,const std::string& = "");
     std::string serialize() const override;
     Account * clone() const override;
 };

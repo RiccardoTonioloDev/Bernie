@@ -1,6 +1,6 @@
 //#notReviewed
-#ifndef CREDITCARD.H
-#define CREDITCARD.H
+#ifndef CREDITCARD_H
+#define CREDITCARD_H
 
 #include <iostream>
 #include "SerializableObject.h"

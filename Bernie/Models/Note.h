@@ -1,6 +1,6 @@
 //#notReviewed
-#ifndef NOTE.H
-#define NOTE.H
+#ifndef NOTE_H
+#define NOTE_H
 
 #include <iostream>
 #include "SerializableObject.h"

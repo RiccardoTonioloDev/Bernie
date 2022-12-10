@@ -1,12 +1,13 @@
 //#notReviewed
-#ifndef CONTACTS.H
-#define CONTACTS.H
+#ifndef CONTACTS_H
+#define CONTACTS_H
 
 #include <iostream>
 #include "SerializableObject.h"
 #include "Date.h"
+#include "Telephone.h"
 
-class Contact : SerializableObject {
+class Contact :public SerializableObject {
 private:
     std::string contactName;
     std::string contatcSurname;
