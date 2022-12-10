@@ -10,6 +10,9 @@ private:
     std::string number;
 public:
     Telephone(const std::string&,const std::string&);
+    /*
+     * POST: restituisce il numero di telefono sotto forma di stringa.
+     */
     std::string getNumber() const;
 };
 

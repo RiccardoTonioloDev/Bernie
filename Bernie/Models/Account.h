@@ -13,7 +13,13 @@ private:
    std::string password;
 public:
     Account(const std::string&, const std::string&,  const std::string&,const std::string& = "");
+    /*
+     * POST: ritorna sotto forma di string l'oggetto Account, usando come carattere separatore la ",".
+     */
     std::string serialize() const override;
+    /*
+     * POST: ritorna un puntatore ad Account essendo covariante come tipo di ritorno a un puntatore SerializableObject
+     */
     Account * clone() const override;
 };
 
