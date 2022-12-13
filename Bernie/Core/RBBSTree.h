@@ -29,7 +29,11 @@ private:
     static void rotateRight(Node*, Node*);
     static void recInOrder(Node*);
     static Node* findMin(Node*);
-
+    /*
+     * POST: passando un nodo come argomento, andiamo ricorsivamente a eliminare il figlio sinistro e il figlio destro.
+     * Successivamente eliminiamo le informazioni contenute dal nodo corrente, e solo in fine il nodo corrente.
+     */
+    static void recDestroy(Node*);
 public:
     class const_iterator{
     private:
@@ -68,6 +72,7 @@ public:
      * POST: restituisce un const_iterator che punta all'elemento dopo l'ultimo elemento.
      */
     const_iterator end() const;
+    ~RBBSTree();
 };
 
 #endif

@@ -126,6 +126,21 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::end() const {
     return cit;
 }
 
+template<class T>
+void RBBSTree<T>::recDestroy(RBBSTree::Node* ptr) {
+    if(ptr!= nullptr){
+        recDestroy(ptr->left);
+        recDestroy(ptr->right);
+        delete ptr->info;
+        delete ptr;
+    }
+}
+
+template<class T>
+RBBSTree<T>::~RBBSTree() {
+    recDestroy(root);
+}
+
 //############################################ITERATOR#####################################################
 template<class T>
 typename RBBSTree<T>::const_iterator& RBBSTree<T>::const_iterator::operator++() {
