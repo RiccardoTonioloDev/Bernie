@@ -1,6 +1,7 @@
 //#notReviewed
 #include "RBBSTree.h"
 #include <iostream>
+enum COLORS {RED, BLACK};
 
 template<class T>
 RBBSTree<T>::Node::Node(const T& i, Node* p, Node* s,Node* par, Node* l,Node* r, int c): info(i), pre(p), succ(s), parent(par), left(l), right(r), color(c) { }
@@ -32,15 +33,17 @@ void RBBSTree<T>::insertInTree(Node*& root, const T& info){
         }
     }
 
-    Node* newNode = new Node(info, prec->pre, prec, prec, nullptr, nullptr);
-    if(info < prec->info){
-        prec->left = newNode;
+    Node* newNode = new Node(info, nullptr, nullptr, prec, nullptr, nullptr,COLORS::RED);
+    if(info <= prec->info){
+        newNode->pre = prec->pre;
         prec->pre = newNode;
-    }
-
-    else if(info > prec->info){
-        prec->right = newNode;
+        newNode->succ = prec;
+        prec->left = newNode;
+    }else{
+        newNode->succ = prec->succ;
         prec->succ = newNode;
+        newNode->pre = prec;
+        prec->right = newNode;
     }
 }
 
@@ -85,6 +88,121 @@ void RBBSTree<T>::rotateLeft(Node*& r, Node*&){
 
 }
 
-template class RBBSTree<int>;
+template<class T>
+typename RBBSTree<T>::const_iterator RBBSTree<T>::begin() const {
+    const_iterator cit;
+    cit.currentPointer = min;
+    cit.isStart = false;
+    cit.isEnd = false;
+    return cit;
+}
 
+template<class T>
+typename RBBSTree<T>::const_iterator RBBSTree<T>::start() const {
+    const_iterator cit;
+    cit.currentPointer = min;
+    --cit.currentPointer;
+    cit.isStart = true;
+    cit.isEnd = false;
+    return cit;
+}
 
+template<class T>
+typename RBBSTree<T>::const_iterator RBBSTree<T>::last() const {
+    const_iterator cit;
+    cit.currentPointer = max;
+    cit.isStart = false;
+    cit.isEnd = false;
+    return cit;
+}
+
+template<class T>
+typename RBBSTree<T>::const_iterator RBBSTree<T>::end() const {
+    const_iterator cit;
+    cit.currentPointer = max;
+    ++cit.currentPointer;
+    cit.isStart = false;
+    cit.isEnd = true;
+    return cit;
+}
+
+//############################################ITERATOR#####################################################
+template<class T>
+typename RBBSTree<T>::const_iterator& RBBSTree<T>::const_iterator::operator++() {
+    if(!isEnd && !isStart){
+        if(currentPointer->succ == nullptr) {
+            isEnd = true;
+            currentPointer++;
+        }else{
+            currentPointer = currentPointer->succ;
+        }
+    }
+    if(isStart){
+       isStart = false;
+       currentPointer++;
+    }
+    return (*this);
+}
+template<class T>
+typename RBBSTree<T>::const_iterator RBBSTree<T>::const_iterator::operator++(int){
+    const_iterator cit = (*this);
+    //Essendo che isEnd e isStart non possono essere true assieme (accadrebbe con un albero vuoto, ma presupponiamo
+    //che non si iteri su un albero vuoto): qui controllo se entrambi sono a false
+    if(!isEnd && !isStart){
+        if(currentPointer->succ == nullptr) {
+            isEnd = true;
+            currentPointer = currentPointer++;
+        }else{
+            currentPointer = currentPointer->succ;
+        }
+    }
+    //In questo caso controllo se isStart è true (e quindi ha rotto la condizione di prima)
+    else if(isStart){
+        isStart = false;
+
+        currentPointer++;
+    }
+    //Non mi occupo della isEnd==true perchè in tal caso non devo fare niente
+    return cit;
+}
+template<class T>
+typename RBBSTree<T>::const_iterator& RBBSTree<T>::const_iterator::operator--() {
+    if(!isStart && !isEnd){
+        if(currentPointer->pre == nullptr) {
+            isStart = true;
+            currentPointer--;
+        }else{
+            currentPointer = currentPointer->pre;
+        }
+    }
+    if(isEnd){
+        isEnd = false;
+        currentPointer--;
+    }
+    return (*this);
+}
+template<class T>
+typename RBBSTree<T>::const_iterator RBBSTree<T>::const_iterator::operator--(int){
+    const_iterator cit = (*this);
+    if(!isStart && !isEnd){
+        if(currentPointer->pre == nullptr) {
+            isStart = true;
+            currentPointer = currentPointer--;
+        }else{
+            currentPointer = currentPointer->pre;
+        }
+    }else if(isEnd){
+        isEnd = false;
+        currentPointer--;
+    }
+    return cit;
+}
+template<class T>
+const typename RBBSTree<T>::Node* RBBSTree<T>::const_iterator::operator->() {
+    return currentPointer;
+}
+
+template<class T>
+bool RBBSTree<T>::const_iterator::operator!=(const RBBSTree<T>::const_iterator& cit) {
+    return !(cit.currentPointer == currentPointer && cit.isEnd = isEnd && cit.isStart == isStart);
+}
