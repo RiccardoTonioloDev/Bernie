@@ -12,7 +12,7 @@ private:
    std::string username;
    std::string password;
 public:
-    Account(const std::string&, const std::string&,  const std::string&,const std::string& = "");
+    Account(const std::string& name, const std::string& email,  const std::string& password,const std::string& username = "");
     /*
      * POST: ritorna sotto forma di string l'oggetto Account, usando come carattere separatore la ",".
      */

@@ -9,7 +9,7 @@ private:
     std::string prefix;
     std::string number;
 public:
-    Telephone(const std::string&,const std::string&);
+    Telephone(const std::string& prefix,const std::string& number);
     /*
      * POST: restituisce il numero di telefono sotto forma di stringa.
      */

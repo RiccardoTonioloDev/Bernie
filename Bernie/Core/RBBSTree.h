@@ -14,7 +14,7 @@ private:
             Node* left;
             Node* right;
             int color;
-            Node(const T&, Node* =nullptr,Node* =nullptr,Node* =nullptr,Node* =nullptr,Node* =nullptr, int = 0);
+            Node(const T& info, Node* prev=nullptr,Node* succ=nullptr,Node* parent=nullptr,Node* left=nullptr,Node* right=nullptr, int color= 0);
             ~Node();
     };
 

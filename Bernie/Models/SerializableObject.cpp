@@ -3,7 +3,8 @@
 
 SerializableObject::SerializableObject(const std::string& n): name(n){}
 
-char SerializableObject::SEPARATOR = '&';
+char SerializableObject::ESCAPE = '&';
+char SerializableObject::SEPARATOR = ',';
 
 bool SerializableObject::operator==(const SerializableObject & obj) const {
     return name == obj.name;
@@ -19,8 +20,8 @@ SerializableObject::~SerializableObject()= default;
 std::string SerializableObject::sanitize(const std::string & text) {
     std::string temp;
     for(int i = 0; i < text.length(); i++){
-        if(text[i] == ',' || text[i] == SerializableObject::SEPARATOR)
-            temp+=SerializableObject::SEPARATOR;
+        if(text[i] == SerializableObject::SEPARATOR || text[i] == SerializableObject::ESCAPE)
+            temp+=SerializableObject::ESCAPE;
         temp+=text[i];
     }
     return temp;
@@ -31,20 +32,17 @@ std::pair<bool, std::vector<std::string>> SerializableObject::deSanitize(const s
     std::string currentString;
     bool isCorrupted = false;
     for (int i = 0; i<str.length() && !isCorrupted; i++) {
-       if(str[i] == SerializableObject::SEPARATOR) {
-           if ((i + 1) < str.length() && (str[i + 1] == ',' || str[i + 1] == SerializableObject::SEPARATOR)){
+       if(str[i] == SerializableObject::ESCAPE) {
+           if ((i + 1) < str.length() && (str[i + 1] == SerializableObject::SEPARATOR || str[i + 1] == SerializableObject::ESCAPE)){
                currentString += str[i + 1];
                i++;
            }
            else isCorrupted = true;
-       }else if(str[i] == ',' ){
-           if(str.empty()) isCorrupted = true;
-           else{
-               wordsInLine.push_back(currentString);
-               currentString = "";
-           }
+       }else if(str[i] == SerializableObject::SEPARATOR ){
+           wordsInLine.push_back(currentString);
+           currentString = "";
        }else currentString += str[i];
     }
-    if(!currentString.empty()) wordsInLine.push_back(currentString);
+    wordsInLine.push_back(currentString);
     return std::make_pair(isCorrupted,wordsInLine);
 }

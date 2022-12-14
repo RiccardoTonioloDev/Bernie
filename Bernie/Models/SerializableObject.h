@@ -10,7 +10,7 @@ class SerializableObject {
 protected:
     std::string name;
 public:
-    SerializableObject(const std::string&);
+    SerializableObject(const std::string& name);
     /*
      * POST: va a serializzare in formato CSV il contenuto dell'oggetto.
      */
@@ -30,6 +30,7 @@ public:
      * recuperare.
      */
     static std::pair<bool,std::vector<std::string>> deSanitize(const std::string&);
+    static char ESCAPE;
     static char SEPARATOR;
 protected:
     /*

@@ -12,7 +12,7 @@ private:
     std::string blockchain_name;
     std::vector<std::string> words;
 public:
-    CryptoWallet(const std::string&, const std::string&, const std::vector<std::string>&);
+    CryptoWallet(const std::string& name, const std::string& blockchainName, const std::vector<std::string>& words);
     /*
      * POST: ritorna sotto forma di string l'oggetto CryptoWallet, usando come carattere separatore la ",".
      */

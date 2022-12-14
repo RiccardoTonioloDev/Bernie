@@ -4,7 +4,7 @@
 Note::Note(const std::string& n, const std::string& t) : SerializableObject(n), text(t) {}
 
 std::string Note::serialize() const {
-    return "NOTE,"+text;
+    return "NOTE,"+ SerializableObject::sanitize(name) + "," + SerializableObject::sanitize(text);
 }
 
 Note* Note::clone() const{
