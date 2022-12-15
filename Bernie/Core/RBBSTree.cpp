@@ -84,8 +84,23 @@ void RBBSTree<T>::transplant(Node*& root, Node*& old, Node*& newN){
 }
 
 template<class T>
-void RBBSTree<T>::rotateLeft(Node*& r, Node*&){
+void RBBSTree<T>::rotateLeft(RBBSTree::Node*& r, RBBSTree::Node* x){
+    Node* y = x->right;
+    x->right = y->left;
+    x->right->parent = x;
+    RBBSTree::transplant(r,x,y);
+    y->left = x;
+    x->parent = y;
+}
 
+template<class T>
+void RBBSTree<T>::rotateRight(RBBSTree::Node*& r, RBBSTree::Node* x) {
+    Node* y = x->left;
+    x->left = y->right;
+    x->left->parent = x;
+    RBBSTree::transplant(r,x,y);
+    y->right = x;
+    x->parent = y;
 }
 
 template<class T>
@@ -141,6 +156,67 @@ RBBSTree<T>::~RBBSTree() {
     recDestroy(root);
 }
 
+template<class T>
+void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
+    while(toFix != nullptr && toFix != root && toFix->color == BLACK){
+        if (toFix == toFix->parent->left){
+            Node* sibling = toFix->parent->right;
+            if(sibling->color == COLORS::RED){
+                sibling->color = COLORS::BLACK;
+                toFix->parent->color = COLORS::RED;
+                rotateLeft(root,toFix);
+                sibling = toFix->parent->right;
+            }
+            if(sibling->left->color == COLORS::BLACK && sibling->right->color == COLORS::BLACK){
+               sibling->color = COLORS::BLACK;
+               toFix = toFix->parent;
+            }else{
+                if(sibling->right->color == COLORS::BLACK){
+                    sibling->left->color == COLORS::BLACK;
+                    sibling->color = COLORS::RED;
+                    rotateRight(root,sibling);
+                    sibling = toFix->parent->right;
+                }
+                sibling->color = toFix->parent->color;
+                toFix->parent->color = COLORS::BLACK;
+            }
+        }else{
+
+        }
+    }
+}
+
+template<class T>
+typename RBBSTree<T>::Node* RBBSTree<T>::deleteInTree(RBBSTree::Node *&r, RBBSTree::Node* toDelete) {
+    Node* y = toDelete;
+    Node* toSave;
+    int y_original_color = y->color;
+    if(toDelete->left == nullptr){
+        toSave = toDelete->right;
+        transplant(r,toDelete,toDelete->right);
+    }else if(toDelete->right == nullptr){
+        toSave = toDelete->left;
+        transplant(r,toDelete,toDelete->left);
+    }else{
+        //In questo caso devo salvarmi il nuovo y (elemento che uso per sostituire toDelete)
+        y = findMin(toDelete);
+        y_original_color = y->color;
+        toSave = y->right;
+        if(y != toDelete->right){
+            transplant(r,y,y->right);
+            y->right = toDelete->right;
+            y->right->parent = y;
+        }else toSave->parent = y;
+        transplant(r,toDelete,y);
+        y->left = toDelete->left;
+        y->left->parent = y;
+    }
+    delete toDelete;
+    if(y_original_color == COLORS::BLACK) deleteFixUp(r,toSave);
+}
+
+template<class T>
+void RBBSTree<T>::deleteT(const std::string &nameToSearch) {}
 //############################################ITERATOR#####################################################
 template<class T>
 typename RBBSTree<T>::const_iterator& RBBSTree<T>::const_iterator::operator++() {
