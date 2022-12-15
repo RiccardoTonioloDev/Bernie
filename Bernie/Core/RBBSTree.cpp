@@ -164,11 +164,11 @@ void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
             if(sibling->color == COLORS::RED){
                 sibling->color = COLORS::BLACK;
                 toFix->parent->color = COLORS::RED;
-                rotateLeft(root,toFix);
+                rotateLeft(root,toFix->parent);
                 sibling = toFix->parent->right;
             }
             if(sibling->left->color == COLORS::BLACK && sibling->right->color == COLORS::BLACK){
-               sibling->color = COLORS::BLACK;
+               sibling->color = COLORS::RED;
                toFix = toFix->parent;
             }else{
                 if(sibling->right->color == COLORS::BLACK){
@@ -179,11 +179,37 @@ void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
                 }
                 sibling->color = toFix->parent->color;
                 toFix->parent->color = COLORS::BLACK;
+                sibling->right->color = COLORS::BLACK;
+                rotateLeft(root, toFix->parent);
+                toFix = root;
             }
         }else{
-
+            Node* sibling = toFix->parent->left;
+            if(sibling->color == COLORS::RED){
+                sibling->color = COLORS::BLACK;
+                toFix->parent->color = COLORS::RED;
+                rotateRight(root,toFix->parent);
+                sibling = toFix->parent->left;
+            }
+            if(sibling->right->color == COLORS::BLACK && sibling->left->color == COLORS::BLACK){
+                sibling->color = COLORS::RED;
+                toFix = toFix->parent;
+            }else{
+                if(sibling->left->color == COLORS::BLACK){
+                    sibling->right->color == COLORS::BLACK;
+                    sibling->color = COLORS::RED;
+                    rotateLeft(root,sibling);
+                    sibling = toFix->parent->left;
+                }
+                sibling->color = toFix->parent->color;
+                toFix->parent->color = COLORS::BLACK;
+                sibling->left->color = COLORS::BLACK;
+                rotateRight(root, toFix->parent);
+                toFix = root;
+            }
         }
     }
+    toFix->color = COLORS::BLACK;
 }
 
 template<class T>
