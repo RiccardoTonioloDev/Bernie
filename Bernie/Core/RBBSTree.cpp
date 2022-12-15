@@ -36,11 +36,13 @@ void RBBSTree<T>::insertInTree(Node*& root, const T& info){
     Node* newNode = new Node(info, nullptr, nullptr, prec, nullptr, nullptr,COLORS::RED);
     if(info <= prec->info){
         newNode->pre = prec->pre;
+        if(newNode->pre) newNode->pre->succ = newNode;
         prec->pre = newNode;
         newNode->succ = prec;
         prec->left = newNode;
     }else{
         newNode->succ = prec->succ;
+        if(newNode->succ) newNode->succ->pre = newNode;
         prec->succ = newNode;
         newNode->pre = prec;
         prec->right = newNode;
@@ -219,13 +221,15 @@ typename RBBSTree<T>::Node* RBBSTree<T>::deleteInTree(RBBSTree::Node *&r, RBBSTr
     int y_original_color = y->color;
     if(toDelete->left == nullptr){
         toSave = toDelete->right;
+        toDelete->pre->succ = toDelete->succ;
+        toDelete->succ->pre = toDelete->pre;
         transplant(r,toDelete,toDelete->right);
     }else if(toDelete->right == nullptr){
         toSave = toDelete->left;
         transplant(r,toDelete,toDelete->left);
     }else{
         //In questo caso devo salvarmi il nuovo y (elemento che uso per sostituire toDelete)
-        y = findMin(toDelete);
+        y = toDelete->succ;
         y_original_color = y->color;
         toSave = y->right;
         if(y != toDelete->right){
@@ -237,6 +241,8 @@ typename RBBSTree<T>::Node* RBBSTree<T>::deleteInTree(RBBSTree::Node *&r, RBBSTr
         y->left = toDelete->left;
         y->left->parent = y;
     }
+    if(toDelete->pre) toDelete->pre->succ = toDelete->succ;
+    if(toDelete->succ) toDelete->succ->pre = toDelete->pre;
     delete toDelete;
     if(y_original_color == COLORS::BLACK) deleteFixUp(r,toSave);
 }
