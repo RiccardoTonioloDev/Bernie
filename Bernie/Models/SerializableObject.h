@@ -3,11 +3,13 @@
 #define SERIALIZABLEOBJECT_H
 #include <string>
 #include <vector>
-#include<utility>
+#include <utility>
+#include <iostream>
 #include "SerializableObjectsEnum.h"
 
 
 class SerializableObject {
+    friend std::ostream& operator<<(std::ostream&,const SerializableObject&);
 protected:
     std::string name;
 public:
@@ -23,6 +25,7 @@ public:
     bool operator==(const SerializableObject&) const;
     bool operator<(const SerializableObject&) const;
     bool operator>(const SerializableObject&) const;
+    bool operator<=(const SerializableObject&) const;
     virtual ~SerializableObject();
     /*
      * POST: va a rimuovere i caratteri di escape e restituisce una coppia composta da un valore

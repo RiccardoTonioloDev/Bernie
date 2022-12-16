@@ -2,20 +2,21 @@
 #ifndef RBBSTREE
 #define RBBSTREE
 #include <string>
+#include "../Models/SerializableObject.h"
 
 template <class T>
 class RBBSTree {
 private:
     class Node {
         public:
-            const T& info;
+            const T* info;
             Node* pre;
             Node* succ;
             Node* parent;
             Node* left;
             Node* right;
             int color;
-            Node(const T& info, Node* prev=nullptr,Node* succ=nullptr,Node* parent=nullptr,Node* left=nullptr,Node* right=nullptr, int color= 0);
+            Node(const T* info, Node* prev=nullptr,Node* succ=nullptr,Node* parent=nullptr,Node* left=nullptr,Node* right=nullptr, int color= 0);
             ~Node();
     };
 
@@ -23,14 +24,14 @@ private:
     Node* min;
     Node* max;
 
-    static Node* insertInTree(Node*&, const T&);
+    static Node* insertInTree(RBBSTree<T>& Tree, const T*);
     static void transplant(Node*& r, Node*& x, Node*& toTransplant);
     static void insertFixUp(Node*, Node*&);
     static void rotateLeft(Node*& r, Node* x);
     static void rotateRight(Node*& r, Node* x);
     static void recInOrder(Node*);
     static Node* findMin(Node* n);
-    static Node* deleteInTree(Node*& r,Node* nameToDelete);
+    static void deleteInTree(RBBSTree<T>& Tree,Node* nameToDelete);
     static void deleteFixUp(Node*&, Node*);
     /*
      * POST: passando un nodo come argomento, andiamo ricorsivamente a eliminare il figlio sinistro e il figlio destro.
@@ -49,11 +50,12 @@ public:
         const_iterator& operator++();
         const_iterator operator--(int);
         const_iterator& operator--();
-        const Node* operator->();
+        const T* operator->();
+        const T& operator*();
         bool operator!=(const const_iterator&);
     };
     RBBSTree();
-    void insert(const T&);
+    void insert(const T*);
     void deleteT(const std::string& nameToSearch);
     void InOrder();
     /*
@@ -78,5 +80,4 @@ public:
     const_iterator end() const;
     ~RBBSTree();
 };
-
 #endif

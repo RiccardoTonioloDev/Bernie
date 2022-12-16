@@ -15,6 +15,9 @@ bool SerializableObject::operator<(const SerializableObject & obj) const {
 bool SerializableObject::operator>(const SerializableObject & obj) const {
     return name > obj.name;
 }
+bool SerializableObject::operator<=(const SerializableObject & obj) const {
+    return name <= obj.name;
+}
 SerializableObject::~SerializableObject()= default;
 
 std::string SerializableObject::sanitize(const std::string & text) {
@@ -45,4 +48,9 @@ std::pair<bool, std::vector<std::string>> SerializableObject::deSanitize(const s
     }
     wordsInLine.push_back(currentString);
     return std::make_pair(isCorrupted,wordsInLine);
+}
+
+std::ostream& operator<<(std::ostream& os,const SerializableObject& s){
+    os << s.serialize();
+    return os;
 }

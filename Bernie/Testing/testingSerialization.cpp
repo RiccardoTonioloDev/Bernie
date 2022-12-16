@@ -6,6 +6,8 @@
 #include <utility>
 #include <vector>
 #include <iostream>
+#include "../Core/RBBSTree.h"
+
 
 void serializationTest(SerializableObject& input, const std::string& expected, const std::string& testName){
     std::string serializedObj = input.serialize();
@@ -102,4 +104,29 @@ int main(){
     deSanitizationTest(nNotCorrupted.serialize(), std::make_pair(false,std::vector<std::string>{"NOTE","","&&,&&"}),"deSanitization Note notCorrupted");
     std::string corruptedNote("NOTE,pr&ova,prov&a");
     deSanitizationTest(corruptedNote,std::make_pair(true, std::vector<std::string>{}),"deSanitization Note Corrupted");
+
+
+    std::cout << "//Tree Unit Testing ----------------------------------------------------------------------------------"<<std::endl;
+    RBBSTree<SerializableObject> container;
+    Account* p5 = new Account("5","ciao","come5","stai5");
+    Account* p3 = new Account("3","ciao3","come3","stai3");
+    Account* p7 = new Account("7","ciao7","come7","stai7");
+    Account* p1p = new Account("1","ciao1","come1","stai1");
+    Account* p4 = new Account("4","ciao4","come4","stai4");
+    Account* p6 = new Account("6","ciao6","come6","stai6");
+    Account* p8 = new Account("8","ciao8","come8","stai8");
+    container.insert(p5);
+    container.insert(p3);
+    container.insert(p7);
+    container.insert(p1p);
+    container.insert(p4);
+    container.insert(p6);
+    container.insert(p8);
+    container.InOrder();
+    RBBSTree<SerializableObject>::const_iterator cit;
+    std::cout << std::endl;
+    for (cit = container.begin(); cit != container.end() ; ++cit) {
+       std::cout << *cit;
+    }
+    std::cout << std::endl;
 }

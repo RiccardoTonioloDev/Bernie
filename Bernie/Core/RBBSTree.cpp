@@ -4,16 +4,21 @@
 enum COLORS {RED, BLACK};
 
 template<class T>
-RBBSTree<T>::Node::Node(const T& i, Node* p, Node* s,Node* par, Node* l,Node* r, int c): info(i), pre(p), succ(s), parent(par), left(l), right(r), color(c) { }
+RBBSTree<T>::Node::Node(const T* i, Node* p, Node* s,Node* par, Node* l,Node* r, int c): info(i), pre(p), succ(s), parent(par), left(l), right(r), color(c) { }
+
+template<class T>
+RBBSTree<T>::Node::~Node() {
+    delete info;
+}
 
 template<class T>
 RBBSTree<T>::RBBSTree() : root(nullptr), min(nullptr), max(nullptr) {}
 
 template<class T>
-void RBBSTree<T>::insert(const T& info){
-    Node* newNode = insertInTree(root, info);
+void RBBSTree<T>::insert(const T* info){
+    Node* newNode = insertInTree(*this, info);
     if(newNode->parent == nullptr){
-        newNode->color == COLORS::BLACK;
+        newNode->color = COLORS::BLACK;
         return;
     }
     if(newNode->parent->parent == nullptr) return;
@@ -21,7 +26,8 @@ void RBBSTree<T>::insert(const T& info){
 }
 
 template<class T>
-typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(Node*& root, const T& info){
+typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(RBBSTree<T>& Tree, const T* info){
+    Node*& root = Tree.root;
     if(root == nullptr){
         root = new Node(info);
         return root;
@@ -32,15 +38,15 @@ typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(Node*& root, const T& info
 
     while(it != nullptr){
         prec = it;
-        if(info < it->info)
+        if((*info) <= *(it->info))
             it = it->left;
-        else if (info > it->info){       
+        else{
             it = it->right;
         }
     }
 
     Node* newNode = new Node(info, nullptr, nullptr, prec, nullptr, nullptr,COLORS::RED);
-    if(info <= prec->info){
+    if((*info) <= *(prec->info)){
         newNode->pre = prec->pre;
         if(newNode->pre) newNode->pre->succ = newNode;
         prec->pre = newNode;
@@ -53,13 +59,20 @@ typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(Node*& root, const T& info
         newNode->pre = prec;
         prec->right = newNode;
     }
+    if(Tree.min != nullptr){
+        if((*info)<=(*(Tree.min->info))) Tree.min = newNode;
+        if(!((*info)<=(*(Tree.max->info)))) Tree.max = newNode;
+    }else{
+        Tree.min = newNode;
+        Tree.max = newNode;
+    }
 
     return newNode;
 }
 
 template<class T>
 void RBBSTree<T>::insertFixUp(Node *root, Node* &z){
-    while(z->parent->color == COLORS::RED){
+    while(z->parent != nullptr && z->parent->color == COLORS::RED){
         std::cout<<"SAS"<<std::endl;
         if(z->parent == z->parent->parent->left){
             Node* y = z->parent->parent->right;
@@ -103,7 +116,7 @@ template<class T>
 void RBBSTree<T>::recInOrder(Node* r){
     if(r != nullptr){
         recInOrder(r->left);
-        std::cout<<"|" << r->info << " color: " << r->color << "|";
+        std::cout<<"|" << *(r->info) << " color: " << r->color << "|";
         recInOrder(r->right);
     }
 }
@@ -198,7 +211,6 @@ void RBBSTree<T>::recDestroy(RBBSTree::Node* ptr) {
     if(ptr!= nullptr){
         recDestroy(ptr->left);
         recDestroy(ptr->right);
-        delete ptr->info;
         delete ptr;
     }
 }
@@ -207,6 +219,7 @@ template<class T>
 RBBSTree<T>::~RBBSTree() {
     recDestroy(root);
 }
+
 
 template<class T>
 void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
@@ -224,7 +237,7 @@ void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
                toFix = toFix->parent;
             }else{
                 if(sibling->right->color == COLORS::BLACK){
-                    sibling->left->color == COLORS::BLACK;
+                    sibling->left->color = COLORS::BLACK;
                     sibling->color = COLORS::RED;
                     rotateRight(root,sibling);
                     sibling = toFix->parent->right;
@@ -248,7 +261,7 @@ void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
                 toFix = toFix->parent;
             }else{
                 if(sibling->left->color == COLORS::BLACK){
-                    sibling->right->color == COLORS::BLACK;
+                    sibling->right->color = COLORS::BLACK;
                     sibling->color = COLORS::RED;
                     rotateLeft(root,sibling);
                     sibling = toFix->parent->left;
@@ -265,7 +278,8 @@ void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
 }
 
 template<class T>
-typename RBBSTree<T>::Node* RBBSTree<T>::deleteInTree(RBBSTree::Node *&r, RBBSTree::Node* toDelete) {
+void RBBSTree<T>::deleteInTree(RBBSTree<T>& Tree, RBBSTree::Node* toDelete) {
+    Node*& r = Tree.root;
     Node* y = toDelete;
     Node* toSave;
     int y_original_color = y->color;
@@ -293,6 +307,8 @@ typename RBBSTree<T>::Node* RBBSTree<T>::deleteInTree(RBBSTree::Node *&r, RBBSTr
     }
     if(toDelete->pre) toDelete->pre->succ = toDelete->succ;
     if(toDelete->succ) toDelete->succ->pre = toDelete->pre;
+    if(toDelete == Tree.min) Tree.min = toDelete->succ;
+    if(toDelete == Tree.max) Tree.max = toDelete->pre;
     delete toDelete;
     if(y_original_color == COLORS::BLACK) deleteFixUp(r,toSave);
 }
@@ -371,11 +387,17 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::const_iterator::operator--(int
     return cit;
 }
 template<class T>
-const typename RBBSTree<T>::Node* RBBSTree<T>::const_iterator::operator->() {
-    return currentPointer;
+const T* RBBSTree<T>::const_iterator::operator->() {
+    return currentPointer->info;
+}
+
+template<class T>
+const T& RBBSTree<T>::const_iterator::operator*() {
+    return *(currentPointer->info);
 }
 
 template<class T>
 bool RBBSTree<T>::const_iterator::operator!=(const RBBSTree<T>::const_iterator& cit) {
-    return !(cit.currentPointer == currentPointer && cit.isEnd = isEnd && cit.isStart == isStart);
+    return !(cit.currentPointer == currentPointer && cit.isEnd == isEnd && cit.isStart == isStart);
 }
+template class RBBSTree<SerializableObject>;
