@@ -11,14 +11,20 @@ RBBSTree<T>::RBBSTree() : root(nullptr), min(nullptr), max(nullptr) {}
 
 template<class T>
 void RBBSTree<T>::insert(const T& info){
-    insertInTree(root, info);
+    Node* newNode = insertInTree(root, info);
+    if(newNode->parent == nullptr){
+        newNode->color == COLORS::BLACK;
+        return;
+    }
+    if(newNode->parent->parent == nullptr) return;
+    insertFixUp(root, newNode);
 }
 
 template<class T>
-void RBBSTree<T>::insertInTree(Node*& root, const T& info){
+typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(Node*& root, const T& info){
     if(root == nullptr){
         root = new Node(info);
-        return;
+        return root;
     }
 
     Node* it = root;
@@ -47,6 +53,50 @@ void RBBSTree<T>::insertInTree(Node*& root, const T& info){
         newNode->pre = prec;
         prec->right = newNode;
     }
+
+    return newNode;
+}
+
+template<class T>
+void RBBSTree<T>::insertFixUp(Node *root, Node* &z){
+    while(z->parent->color == COLORS::RED){
+        std::cout<<"SAS"<<std::endl;
+        if(z->parent == z->parent->parent->left){
+            Node* y = z->parent->parent->right;
+            if(y->color == COLORS::RED){
+                z->parent->color = COLORS::BLACK;
+                y->color = COLORS::BLACK;
+                z->parent->parent->color = COLORS::RED;
+                z = z->parent->parent;
+            } else {
+                if(z == z->parent->right){
+                    z = z->parent;
+                    rotateLeft(root, z);
+                }
+                z->parent->color = COLORS::BLACK;
+                z->parent->parent->color = COLORS::RED;
+                rotateRight(root, z->parent->parent);
+            }
+        }else{
+            Node* y = z->parent->parent->left;
+            if(y->color == COLORS::RED){
+                z->parent->color = COLORS::BLACK;
+                y->color = COLORS::BLACK;
+                z->parent->parent->color = COLORS::RED;
+                z = z->parent->parent;
+            }
+            else {
+                if(z == z->parent->left){
+                    z = z->parent;
+                    rotateRight(root, z);
+                }
+                z->parent->color = COLORS::BLACK;
+                z->parent->parent->color = COLORS::RED;
+                rotateLeft(root, z->parent->parent);
+            }
+        }
+    }
+    root->color = COLORS::BLACK;
 }
 
 template<class T>

@@ -23,9 +23,9 @@ private:
     Node* min;
     Node* max;
 
-    static void insertInTree(Node*&, const T&);
+    static Node* insertInTree(Node*&, const T&);
     static void transplant(Node*& r, Node*& x, Node*& toTransplant);
-    static void insertFixUp(Node*, Node&);
+    static void insertFixUp(Node*, Node*&);
     static void rotateLeft(Node*& r, Node* x);
     static void rotateRight(Node*& r, Node* x);
     static void recInOrder(Node*);
