@@ -24,13 +24,36 @@ private:
     Node* min;
     Node* max;
 
+    /*
+    * POST: restituisce un puntatore al nodo appena aggiunto
+    */
     static Node* insertInTree(RBBSTree<T>& Tree, const T*);
-    static void transplant(Node*& r, Node*& x, Node*& toTransplant);
+    /*
+    * PRE: r, x, toTransplant sono tutti nodi non nulli
+    * POST: l'albero radicato in root avrà il nodo toTransplant e il suo sottolbero piantato al posto di x
+    */
+    static void transplant(Node*& r, Node* x, Node* toTransplant);
+    /*
+    * PRE: i due nodi passati non sono nulli
+    * POST: assicura che l'albero Red-and-Black mantenga le proprietà di struttura, occupandosi dell'aggiustamento dei colori dei nodi dopo l'inserimento
+    */
     static void insertFixUp(Node*, Node*&);
+    /*
+    * PRE: r e x sono nodi non nulli
+    * POST: rotazione del nodo x e del suo sottoalbero mantenendo le proprietà d'ordine
+    */
     static void rotateLeft(Node*& r, Node* x);
     static void rotateRight(Node*& r, Node* x);
     static void recInOrder(Node*);
+    /*
+    * PRE: n non è nullo
+    * POST: restituisce il puntatore al nodo contenente il valore minimo dell'albero
+    */
     static Node* findMin(Node* n);
+    /*
+    * POST: restituisce, se presente, il puntatore al nodo il cui name è uguale al nameToSearch, altrimenti ritorna nullptr
+    */
+    static Node* searchRec(Node* r, const std::string& nameToSearch);
     static void deleteInTree(RBBSTree<T>& Tree,Node* nameToDelete);
     static void deleteFixUp(Node*&, Node*);
     /*
@@ -58,6 +81,7 @@ public:
     void insert(const T*);
     void deleteT(const std::string& nameToSearch);
     void InOrder();
+    Node* search(const std::string& nameToSearch);
     /*
      * PRE: deve essere utilizzato su un albero non vuoto.
      * POST: restituisce un const_iterator che punta al primo elemento dell'albero (nell'ordine inOrder)(il minore)

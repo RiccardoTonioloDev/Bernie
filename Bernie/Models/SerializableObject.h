@@ -23,8 +23,11 @@ public:
      */
     virtual SerializableObject* clone() const = 0;
     bool operator==(const SerializableObject&) const;
+    bool operator==(const std::string& nameToCompare) const;
     bool operator<(const SerializableObject&) const;
+    bool operator<(const std::string& nameToCompare) const;
     bool operator>(const SerializableObject&) const;
+    bool operator>(const std::string& nameToCompare) const;
     bool operator<=(const SerializableObject&) const;
     virtual ~SerializableObject();
     /*

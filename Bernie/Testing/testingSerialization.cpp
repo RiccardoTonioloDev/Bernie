@@ -129,4 +129,6 @@ int main(){
        std::cout << *cit;
     }
     std::cout << std::endl;
+    std::cout << "risultato ricerca account 8:" << (container.search("8")? "PRESENTE" : "ASSENTE") << std::endl;
+    std::cout << "risultato ricerca account 13:" << (container.search("13")? "PRESENTE" : "ASSENTE") << std::endl;
 }

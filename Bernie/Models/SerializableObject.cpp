@@ -9,11 +9,20 @@ char SerializableObject::SEPARATOR = ',';
 bool SerializableObject::operator==(const SerializableObject & obj) const {
     return name == obj.name;
 }
+bool SerializableObject::operator==(const std::string& nameToCompare) const {
+    return name == nameToCompare;
+}
 bool SerializableObject::operator<(const SerializableObject & obj) const {
     return name < obj.name;
 }
+bool SerializableObject::operator<(const std::string& nameToCompare) const {
+    return name < nameToCompare;
+}
 bool SerializableObject::operator>(const SerializableObject & obj) const {
     return name > obj.name;
+}
+bool SerializableObject::operator>(const std::string& nameToCompare) const {
+    return name > nameToCompare;
 }
 bool SerializableObject::operator<=(const SerializableObject & obj) const {
     return name <= obj.name;
