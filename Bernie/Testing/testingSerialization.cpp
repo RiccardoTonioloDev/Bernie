@@ -56,13 +56,32 @@ void RBBSTreeTest(const RBBSTree<SerializableObject>& input, const std::string& 
     std::cout << std::endl;
 }
 
-void RBBSInsertionWhenEmptied(RBBSTree<SerializableObject>& tree,const SerializableObject& input,const std::string& expectedInside){
+void RBBSInsertionWhenEmptiedTest(RBBSTree<SerializableObject>& tree,const SerializableObject& input,const std::string& expectedInside){
     tree.insert(&input);
     std::string saved("");
     RBBSTree<SerializableObject>::const_iterator cit = tree.begin();
     saved = cit->serialize();
     if(saved == expectedInside) std::cout << "TEST (insertion when emptied): \033[32mPASSED\033[0m";
     else std::cout << "TEST (insertion when emptied): \033[31mNOT PASSED\033[0m";
+    std::cout << std::endl;
+}
+
+void RBBSTreeDeletionWhenEmptiedTest(RBBSTree<SerializableObject>& tree){
+    try{
+        tree.deleteT("prova");
+    }catch(...)
+    //Questo catch prende ogni tipo di eccezione possibile e la gestisce.
+    {
+        std::cout << "TEST (deletion when emptied): \033[31mNOT PASSED\033[0m";
+    }
+    std::cout << "TEST (deletion when emptied): \033[32mPASSED\033[0m";
+    std::cout << std::endl;
+}
+
+void RBBSTreeSearchTest(const RBBSTree<SerializableObject>& tree,const std::string& toFind,bool expected, const std::string& testName){
+    void* node = tree.search(toFind);
+    if((node && expected) || (!node && !expected)) std::cout << "TEST ("+testName+"): \033[32mPASSED\033[0m";
+    else std::cout << "TEST ("+testName+"): \033[31mNOT PASSED\033[0m";
     std::cout << std::endl;
 }
 
@@ -143,6 +162,8 @@ int main(){
     container.insert(p4);
     container.insert(p6);
     container.insert(p8);
+    RBBSTreeSearchTest(container,"1",true,"search an existing value (1)");
+    RBBSTreeSearchTest(container,"prova",false,"search a non existing value (prova)");
     RBBSTreeTest(container,"CONTACT,1,Nome,Cognome,1/1/1,prova prova2,Email"
                            "CREDITCARD,3,provaProva,prova,1/1/1"
                            "ACCOUNT,4,ciao4,come4,stai4"
@@ -154,6 +175,7 @@ int main(){
     container.deleteT("1");
     container.deleteT("5");
     container.deleteT("8");
+    RBBSTreeSearchTest(container,"1",false,"search a non existing value (1)");
     RBBSTreeTest(container,"CREDITCARD,3,provaProva,prova,1/1/1"
                            "ACCOUNT,4,ciao4,come4,stai4"
                            "ACCOUNT,6,ciao6,come6,stai6"
@@ -163,12 +185,10 @@ int main(){
     container.deleteT("7");
     container.deleteT("6");
     RBBSTreeTest(container,"", "tree deletion (entire tree)");
+    RBBSTreeSearchTest(container,"prova",false,"search a non existing value (prova)");
     Account* p4new = new Account("4","ciao4","come4","stai4");
-    RBBSInsertionWhenEmptied(container,*p4new,"ACCOUNT,4,ciao4,come4,stai4");
-    std::cout << std::endl;
-
-    std::cout << "//Garbage to get rid off -----------------------------------------------------------------------------"<<std::endl;
-    std::cout << "risultato ricerca account 8:" << (container.search("8")? "PRESENTE" : "ASSENTE") << std::endl;
-    std::cout << "risultato ricerca account 13:" << (container.search("13")? "PRESENTE" : "ASSENTE") << std::endl;
+    RBBSInsertionWhenEmptiedTest(container,*p4new,"ACCOUNT,4,ciao4,come4,stai4");
+    RBBSTreeDeletionWhenEmptiedTest(container);
+    RBBSTreeSearchTest(container,"1",false,"search a non existing value (1)");
     std::cout << std::endl;
 }

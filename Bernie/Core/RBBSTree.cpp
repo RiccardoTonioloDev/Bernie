@@ -123,7 +123,7 @@ void RBBSTree<T>::recInOrder(Node* r){
 }
 
 template<class T>
-void RBBSTree<T>::InOrder(){
+void RBBSTree<T>::InOrder() const{
     recInOrder(root);
 }
 
@@ -357,7 +357,7 @@ typename RBBSTree<T>::Node* RBBSTree<T>::searchRec(Node *r, const std::string& n
 }
 
 template<class T>
-typename RBBSTree<T>::Node* RBBSTree<T>::search(const std::string& nameToSearch) {
+typename RBBSTree<T>::Node* RBBSTree<T>::search(const std::string& nameToSearch) const {
     return searchRec(root, nameToSearch);
 }
 
