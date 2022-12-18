@@ -30,6 +30,8 @@ typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(RBBSTree<T>& Tree, const T
     Node*& root = Tree.root;
     if(root == nullptr){
         root = new Node(info);
+        Tree.min = root;
+        Tree.max = root;
         return root;
     }
 
@@ -73,7 +75,6 @@ typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(RBBSTree<T>& Tree, const T
 template<class T>
 void RBBSTree<T>::insertFixUp(Node *root, Node* &z){
     while(z->parent != nullptr && z->parent->color == COLORS::RED){
-        std::cout<<"SAS"<<std::endl;
         if(z->parent == z->parent->parent->left){
             Node* y = z->parent->parent->right;
             if(y->color == COLORS::RED){
@@ -171,38 +172,62 @@ void RBBSTree<T>::rotateRight(RBBSTree::Node*& r, RBBSTree::Node* x) {
 template<class T>
 typename RBBSTree<T>::const_iterator RBBSTree<T>::begin() const {
     const_iterator cit;
-    cit.currentPointer = min;
-    cit.isStart = false;
-    cit.isEnd = false;
+    if(root){
+        cit.currentPointer = min;
+        cit.isStart = false;
+        cit.isEnd = false;
+    }else{
+        cit.currentPointer = nullptr;
+        cit.isStart = true;
+        cit.isEnd = true;
+    }
     return cit;
 }
 
 template<class T>
 typename RBBSTree<T>::const_iterator RBBSTree<T>::start() const {
     const_iterator cit;
-    cit.currentPointer = min;
-    --cit.currentPointer;
-    cit.isStart = true;
-    cit.isEnd = false;
+    if(root){
+        cit.currentPointer = min;
+        --cit.currentPointer;
+        cit.isStart = true;
+        cit.isEnd = false;
+    }else{
+        cit.currentPointer = nullptr;
+        cit.isStart = true;
+        cit.isEnd = true;
+    }
     return cit;
 }
 
 template<class T>
 typename RBBSTree<T>::const_iterator RBBSTree<T>::last() const {
     const_iterator cit;
-    cit.currentPointer = max;
-    cit.isStart = false;
-    cit.isEnd = false;
+    if(root){
+        cit.currentPointer = max;
+        cit.isStart = false;
+        cit.isEnd = false;
+    }else{
+        cit.currentPointer = nullptr;
+        cit.isStart = true;
+        cit.isEnd = true;
+    }
     return cit;
 }
 
 template<class T>
 typename RBBSTree<T>::const_iterator RBBSTree<T>::end() const {
     const_iterator cit;
-    cit.currentPointer = max;
-    ++cit.currentPointer;
-    cit.isStart = false;
-    cit.isEnd = true;
+    if(root){
+        cit.currentPointer = max;
+        ++cit.currentPointer;
+        cit.isStart = false;
+        cit.isEnd = true;
+    }else{
+        cit.currentPointer = nullptr;
+        cit.isStart = true;
+        cit.isEnd = true;
+    }
     return cit;
 }
 
@@ -274,7 +299,7 @@ void RBBSTree<T>::deleteFixUp(RBBSTree::Node *& root, RBBSTree::Node *toFix) {
             }
         }
     }
-    toFix->color = COLORS::BLACK;
+    if(toFix) toFix->color = COLORS::BLACK;
 }
 
 template<class T>
@@ -285,8 +310,6 @@ void RBBSTree<T>::deleteInTree(RBBSTree<T>& Tree, RBBSTree::Node* toDelete) {
     int y_original_color = y->color;
     if(toDelete->left == nullptr){
         toSave = toDelete->right;
-        toDelete->pre->succ = toDelete->succ;
-        toDelete->succ->pre = toDelete->pre;
         transplant(r,toDelete,toDelete->right);
     }else if(toDelete->right == nullptr){
         toSave = toDelete->left;
@@ -314,7 +337,10 @@ void RBBSTree<T>::deleteInTree(RBBSTree<T>& Tree, RBBSTree::Node* toDelete) {
 }
 
 template<class T>
-void RBBSTree<T>::deleteT(const std::string &nameToSearch) {}
+void RBBSTree<T>::deleteT(const std::string &nameToSearch) {
+    Node* toDelete = searchRec(root,nameToSearch);
+    if(toDelete) deleteInTree(*this,toDelete);
+}
 
 template<class T>
 typename RBBSTree<T>::Node* RBBSTree<T>::searchRec(Node *r, const std::string& nameToSearch) {

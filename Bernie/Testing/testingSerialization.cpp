@@ -45,6 +45,27 @@ void deSanitizationTest(const std::string& input, const std::pair<bool,std::vect
     std::cout << std::endl;
 }
 
+void RBBSTreeTest(const RBBSTree<SerializableObject>& input, const std::string& expected, const std::string& testName){
+    std::string saved("");
+    RBBSTree<SerializableObject>::const_iterator cit;
+    for(cit = input.begin();cit != input.end(); ++cit){
+       saved = saved + cit->serialize();
+    }
+    if(saved == expected) std::cout << "TEST (" + testName + "): \033[32mPASSED\033[0m";
+    else std::cout << "TEST (" + testName + "): \033[31mNOT PASSED\033[0m";
+    std::cout << std::endl;
+}
+
+void RBBSInsertionWhenEmptied(RBBSTree<SerializableObject>& tree,const SerializableObject& input,const std::string& expectedInside){
+    tree.insert(&input);
+    std::string saved("");
+    RBBSTree<SerializableObject>::const_iterator cit = tree.begin();
+    saved = cit->serialize();
+    if(saved == expectedInside) std::cout << "TEST (insertion when emptied): \033[32mPASSED\033[0m";
+    else std::cout << "TEST (insertion when emptied): \033[31mNOT PASSED\033[0m";
+    std::cout << std::endl;
+}
+
 int main(){
     std::cout << "//Account Unit Testing -------------------------------------------------------------------------------"<<std::endl;
     Account p1("NameProva1","EmailProva1","PasswordProva1","UsernameProva1");
@@ -104,14 +125,14 @@ int main(){
     deSanitizationTest(nNotCorrupted.serialize(), std::make_pair(false,std::vector<std::string>{"NOTE","","&&,&&"}),"deSanitization Note notCorrupted");
     std::string corruptedNote("NOTE,pr&ova,prov&a");
     deSanitizationTest(corruptedNote,std::make_pair(true, std::vector<std::string>{}),"deSanitization Note Corrupted");
-
+    std::cout << std::endl;
 
     std::cout << "//Tree Unit Testing ----------------------------------------------------------------------------------"<<std::endl;
     RBBSTree<SerializableObject> container;
-    Account* p5 = new Account("5","ciao","come5","stai5");
-    Account* p3 = new Account("3","ciao3","come3","stai3");
-    Account* p7 = new Account("7","ciao7","come7","stai7");
-    Account* p1p = new Account("1","ciao1","come1","stai1");
+    CryptoWallet* p5 = new CryptoWallet("5","blockchainName",std::vector<std::string>{"1","2","3","4"});;
+    CreditCard* p3 = new CreditCard("3","provaProva","prova",d1);;
+    Note* p7 = new Note("7","ciao7");
+    Contact* p1p = new Contact("1","Nome","Cognome",d1,t1,"Email");
     Account* p4 = new Account("4","ciao4","come4","stai4");
     Account* p6 = new Account("6","ciao6","come6","stai6");
     Account* p8 = new Account("8","ciao8","come8","stai8");
@@ -122,13 +143,32 @@ int main(){
     container.insert(p4);
     container.insert(p6);
     container.insert(p8);
-    container.InOrder();
-    RBBSTree<SerializableObject>::const_iterator cit;
+    RBBSTreeTest(container,"CONTACT,1,Nome,Cognome,1/1/1,prova prova2,Email"
+                           "CREDITCARD,3,provaProva,prova,1/1/1"
+                           "ACCOUNT,4,ciao4,come4,stai4"
+                           "CRYPTOWALLET,5,blockchainName,1,2,3,4"
+                           "ACCOUNT,6,ciao6,come6,stai6"
+                           "NOTE,7,ciao7"
+                           "ACCOUNT,8,ciao8,come8,stai8","tree insertion");
+    container.deleteT("5");
+    container.deleteT("1");
+    container.deleteT("5");
+    container.deleteT("8");
+    RBBSTreeTest(container,"CREDITCARD,3,provaProva,prova,1/1/1"
+                           "ACCOUNT,4,ciao4,come4,stai4"
+                           "ACCOUNT,6,ciao6,come6,stai6"
+                           "NOTE,7,ciao7", "tree deletion");
+    container.deleteT("4");
+    container.deleteT("3");
+    container.deleteT("7");
+    container.deleteT("6");
+    RBBSTreeTest(container,"", "tree deletion (entire tree)");
+    Account* p4new = new Account("4","ciao4","come4","stai4");
+    RBBSInsertionWhenEmptied(container,*p4new,"ACCOUNT,4,ciao4,come4,stai4");
     std::cout << std::endl;
-    for (cit = container.begin(); cit != container.end() ; ++cit) {
-       std::cout << *cit;
-    }
-    std::cout << std::endl;
+
+    std::cout << "//Garbage to get rid off -----------------------------------------------------------------------------"<<std::endl;
     std::cout << "risultato ricerca account 8:" << (container.search("8")? "PRESENTE" : "ASSENTE") << std::endl;
     std::cout << "risultato ricerca account 13:" << (container.search("13")? "PRESENTE" : "ASSENTE") << std::endl;
+    std::cout << std::endl;
 }
