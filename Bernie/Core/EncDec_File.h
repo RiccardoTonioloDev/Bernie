@@ -11,7 +11,7 @@ private:
 public:
     EncDec_File(const std::string& k, const std::string& fN);
     bool fileExists() const;
-    void encInFile(const std::string& inputToEnc);
+    void encInFile(std::string inputToEnc);
 };
 
 
