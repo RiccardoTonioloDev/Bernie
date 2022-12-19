@@ -2,6 +2,11 @@
 #define RBBSTREE
 #include <string>
 #include "../Models/SerializableObject.h"
+#include "../Models/Account.h"
+#include "../Models/CryptoWallet.h"
+#include "../Models/CreditCard.h"
+#include "../Models/Contact.h"
+#include "../Models/Note.h"
 
 template <class T>
 class RBBSTree {
@@ -48,10 +53,6 @@ private:
     */
     static void rotateRight(Node*& r, Node* x);
     /*
-     * Funzione helper per la funzione inOrder.
-     */
-    static void recInOrder(Node*);
-    /*
      * POST: Dato un albero, e il puntatore di un nodo da eliminare all'interno di esso, va a eliminare il nodo, occupandosi
      * di mantenere le informazioni su min, max, predecessore e successore, coerenti.
      */
@@ -60,11 +61,6 @@ private:
      * POST: Attraverso delle rotazioni e dei trapianti va a sistemare l'albero per fare rispettare alcune regole rosso nere.
      */
     static void deleteFixUp(Node*&, Node*);
-    /*
-     * POST: passando un nodo come argomento, andiamo ricorsivamente a eliminare il figlio sinistro e il figlio destro.
-     * Successivamente eliminiamo le informazioni contenute dal nodo corrente, e solo in fine il nodo corrente.
-     */
-    static void recDestroy(Node*);
     /*
      * POST: restituisce un puntatore nullo se non trova niente, altrimenti restituisce il puntatore al nodo che contiene
      * l'informazione con nome uguale a nameToSearch
@@ -99,30 +95,21 @@ public:
      */
     void deleteT(const std::string& nameToSearch);
     /*
-     * POST: esegue una scansione inOrder dell'albero
-     */
-    void InOrder() const;
-    /*
      * PRE: deve essere utilizzato su un albero non vuoto.
      * POST: restituisce un const_iterator che punta al primo elemento dell'albero (nell'ordine inOrder)(il minore)
      */
     const T* search(const std::string& nameToSearch) const;
+    /*
+     * POST: restituisce un const_iterator che punta al primo elemento.
+     */
     const_iterator begin() const;
     /*
-     * PRE: deve essere utilizzato su un albero non vuoto.
-     * POST: restituisce un const_iterator che punta all'elemento prima del primo elemento.
-     */
-    const_iterator start() const;
-    /*
-     * PRE: deve essere utilizzato su un albero non vuoto.
-     * POST: restituisce un const_iterator che punta all'ultimo elemento dell'albero (nell'ordine inOrder)(il massimo)
-     */
-    const_iterator last() const;
-    /*
-     * PRE: deve essere utilizzato su un albero non vuoto.
      * POST: restituisce un const_iterator che punta all'elemento dopo l'ultimo elemento.
      */
     const_iterator end() const;
+
+    template<class U>
+            std::vector<const T*> filter() const;
     ~RBBSTree();
 };
 #endif

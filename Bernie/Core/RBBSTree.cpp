@@ -113,20 +113,6 @@ void RBBSTree<T>::insertFixUp(Node *root, Node* &z){
 }
 
 template<class T>
-void RBBSTree<T>::recInOrder(Node* r){
-    if(r != nullptr){
-        recInOrder(r->left);
-        std::cout<<"|" << *(r->info) << " color: " << r->color << "|";
-        recInOrder(r->right);
-    }
-}
-
-template<class T>
-void RBBSTree<T>::InOrder() const{
-    recInOrder(root);
-}
-
-template<class T>
 void RBBSTree<T>::transplant(Node*& root, Node* old, Node* newN){
     if(old->parent == nullptr)
         root = newN;
@@ -176,36 +162,6 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::begin() const {
     return cit;
 }
 
-template<class T>
-typename RBBSTree<T>::const_iterator RBBSTree<T>::start() const {
-    const_iterator cit;
-    if(root){
-        cit.currentPointer = min;
-        --cit.currentPointer;
-        cit.isStart = true;
-        cit.isEnd = false;
-    }else{
-        cit.currentPointer = nullptr;
-        cit.isStart = true;
-        cit.isEnd = true;
-    }
-    return cit;
-}
-
-template<class T>
-typename RBBSTree<T>::const_iterator RBBSTree<T>::last() const {
-    const_iterator cit;
-    if(root){
-        cit.currentPointer = max;
-        cit.isStart = false;
-        cit.isEnd = false;
-    }else{
-        cit.currentPointer = nullptr;
-        cit.isStart = true;
-        cit.isEnd = true;
-    }
-    return cit;
-}
 
 template<class T>
 typename RBBSTree<T>::const_iterator RBBSTree<T>::end() const {
@@ -223,18 +179,16 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::end() const {
     return cit;
 }
 
-template<class T>
-void RBBSTree<T>::recDestroy(RBBSTree::Node* ptr) {
-    if(ptr!= nullptr){
-        recDestroy(ptr->left);
-        recDestroy(ptr->right);
-        delete ptr;
-    }
-}
 
 template<class T>
 RBBSTree<T>::~RBBSTree() {
-    recDestroy(root);
+    Node* start = min; Node* next = nullptr;
+    while (start){
+        if(start->succ) next = start->succ;
+        delete start;
+        start = next;
+        next = nullptr;
+    }
 }
 
 
@@ -350,6 +304,22 @@ const T* RBBSTree<T>::search(const std::string& nameToSearch) const {
     Node* test = searchNode(nameToSearch);
     return (test)? test->info : nullptr;
 }
+
+template<class T>
+template<class U>
+std::vector<const T *> RBBSTree<T>::filter() const {
+    Node* start = min; Node* next = nullptr;
+    std::vector<const T*> saved;
+    while (start){
+        if(start->succ) next = start->succ;
+        const U* savedPointer = dynamic_cast<const U*>(start->info);
+        if(savedPointer) saved.push_back(static_cast<const T*>(savedPointer));
+        start = next;
+        next = nullptr;
+    }
+    return saved;
+}
+
 //############################################ITERATOR#####################################################
 template<class T>
 typename RBBSTree<T>::const_iterator& RBBSTree<T>::const_iterator::operator++() {
@@ -436,3 +406,8 @@ bool RBBSTree<T>::const_iterator::operator!=(const RBBSTree<T>::const_iterator& 
     return !(cit.currentPointer == currentPointer && cit.isEnd == isEnd && cit.isStart == isStart);
 }
 template class RBBSTree<SerializableObject>;
+template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<Account>() const;
+template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<CryptoWallet>() const;
+template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<CreditCard>() const;
+template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<Note>() const;
+template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<Contact>() const;
