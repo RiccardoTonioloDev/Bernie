@@ -1,89 +1,14 @@
-#include "../Models/Account.h"
-#include "../Models/CryptoWallet.h"
-#include "../Models/CreditCard.h"
-#include "../Models/Contact.h"
-#include "../Models/Note.h"
+#include "Account.h"
+#include "CryptoWallet.h"
+#include "CreditCard.h"
+#include "Contact.h"
+#include "Note.h"
 #include <utility>
 #include <vector>
 #include <iostream>
-#include "../Core/RBBSTree.h"
-
-
-void serializationTest(SerializableObject& input, const std::string& expected, const std::string& testName){
-    std::string serializedObj = input.serialize();
-    /*
-    std::cout << input.serialize() << std::endl;
-    std::cout << expected << std::endl;
-     */
-    if(serializedObj == expected){
-        std::cout << "TEST (" + testName + "): \033[92mPASSED\033[0m";
-    }else std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
-    std::cout << std::endl;
-}
-void deSanitizationTest(const std::string& input, const std::pair<bool,std::vector<std::string>>& expected, const std::string& testName){
-    std::pair<bool,std::vector<std::string>> couple = SerializableObject::deSanitize(input);
-    if(expected.first != couple.first){
-        std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
-    }else{
-       std::vector<std::string>::const_iterator citExpected = expected.second.begin();
-       std::vector<std::string>::const_iterator citCouple = couple.second.begin();
-       bool areEqual = true;
-       while(areEqual && citExpected!=expected.second.end() && citCouple != couple.second.end()){
-           if(*citCouple != *citExpected){
-               std::cout << std::endl;
-               areEqual = false;
-           }
-           ++citCouple;
-           ++citExpected;
-       }
-       if (areEqual){
-           std::cout << "TEST (" + testName + "): \033[92mPASSED\033[0m";
-       }else{
-           std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
-       }
-    }
-    std::cout << std::endl;
-}
-
-void RBBSTreeTest(const RBBSTree<SerializableObject>& input, const std::string& expected, const std::string& testName){
-    std::string saved("");
-    RBBSTree<SerializableObject>::const_iterator cit;
-    for(cit = input.begin();cit != input.end(); ++cit){
-       saved = saved + cit->serialize();
-    }
-    if(saved == expected) std::cout << "TEST (" + testName + "): \033[92mPASSED\033[0m";
-    else std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
-    std::cout << std::endl;
-}
-
-void RBBSInsertionWhenEmptiedTest(RBBSTree<SerializableObject>& tree,const SerializableObject& input,const std::string& expectedInside){
-    tree.insert(&input);
-    std::string saved("");
-    RBBSTree<SerializableObject>::const_iterator cit = tree.begin();
-    saved = cit->serialize();
-    if(saved == expectedInside) std::cout << "TEST (insertion when emptied): \033[92mPASSED\033[0m";
-    else std::cout << "TEST (insertion when emptied): \033[91mNOT PASSED\033[0m";
-    std::cout << std::endl;
-}
-
-void RBBSTreeDeletionWhenEmptiedTest(RBBSTree<SerializableObject>& tree){
-    try{
-        tree.deleteT("prova");
-    }catch(...)
-    //Questo catch prende ogni tipo di eccezione possibile e la gestisce.
-    {
-        std::cout << "TEST (deletion when emptied): \033[91mNOT PASSED\033[0m";
-    }
-    std::cout << "TEST (deletion when emptied): \033[92mPASSED\033[0m";
-    std::cout << std::endl;
-}
-
-void RBBSTreeSearchTest(const RBBSTree<SerializableObject>& tree,const std::string& toFind,bool expected, const std::string& testName){
-    const void* info = tree.search(toFind);
-    if((info && expected) || (!info && !expected)) std::cout << "TEST ("+testName+"): \033[92mPASSED\033[0m";
-    else std::cout << "TEST ("+testName+"): \033[91mNOT PASSED\033[0m";
-    std::cout << std::endl;
-}
+#include "RBBSTree.h"
+#include "TreeTestingFunctions.h"
+#include "SerializationTestingFunctions.h"
 
 int main(){
     std::cout << "//Account Unit Testing -------------------------------------------------------------------------------"<<std::endl;
@@ -171,6 +96,13 @@ int main(){
                            "ACCOUNT,6,ciao6,come6,stai6"
                            "NOTE,7,ciao7"
                            "ACCOUNT,8,ciao8,come8,stai8","tree insertion");
+    RBBSTreeFilterTest<Account>(container,"ACCOUNT,4,ciao4,come4,stai4"
+                                          "ACCOUNT,6,ciao6,come6,stai6"
+                                          "ACCOUNT,8,ciao8,come8,stai8","filtering tree (multiple account)(ACCOUNT)");
+    RBBSTreeFilterTest<CryptoWallet>(container,"CRYPTOWALLET,5,blockchainName,1,2,3,4","filtering tree (CRYPTOWALLET)");
+    RBBSTreeFilterTest<Contact>(container,"CONTACT,1,Nome,Cognome,1/1/1,prova prova2,Email","filtering tree (CONTACT)");
+    RBBSTreeFilterTest<CreditCard>(container,"CREDITCARD,3,provaProva,prova,1/1/1","filtering tree (CREDITCARD)");
+    RBBSTreeFilterTest<Note>(container,"NOTE,7,ciao7","filtering tree (NOTE)");
     container.deleteT("5");
     container.deleteT("1");
     container.deleteT("5");
@@ -190,5 +122,10 @@ int main(){
     RBBSInsertionWhenEmptiedTest(container,*p4new,"ACCOUNT,4,ciao4,come4,stai4");
     RBBSTreeDeletionWhenEmptiedTest(container);
     RBBSTreeSearchTest(container,"1",false,"search a non existing value (1)");
+    RBBSTreeFilterTest<Account>(container,"ACCOUNT,4,ciao4,come4,stai4","filtering tree (ACCOUNT)");
+    RBBSTreeFilterTest<CryptoWallet>(container,"","filtering tree (no CryptoWallet elements)(CRYPTOWALLET)");
+    RBBSTreeFilterTest<Contact>(container,"","filtering tree (no Contact elements)(CONTACT)");
+    RBBSTreeFilterTest<CreditCard>(container,"","filtering tree (no CreditCard elements)(CREDITCARD)");
+    RBBSTreeFilterTest<Note>(container,"","filtering tree (no NOTE elements)(NOTE)");
     std::cout << std::endl;
 }
