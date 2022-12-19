@@ -1,4 +1,3 @@
-//#notReviewed
 #ifndef CREDITCARD_H
 #define CREDITCARD_H
 

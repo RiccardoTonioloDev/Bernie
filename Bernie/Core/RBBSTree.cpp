@@ -1,4 +1,3 @@
-//#notReviewed
 #include "RBBSTree.h"
 #include <iostream>
 enum COLORS {RED, BLACK};
@@ -63,7 +62,7 @@ typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(RBBSTree<T>& Tree, const T
     }
     if(Tree.min != nullptr){
         if((*info)<=(*(Tree.min->info))) Tree.min = newNode;
-        if(!((*info)<=(*(Tree.max->info)))) Tree.max = newNode;
+        if((*info) > (*(Tree.max->info))) Tree.max = newNode;
     }else{
         Tree.min = newNode;
         Tree.max = newNode;
@@ -386,7 +385,7 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::const_iterator::operator++(int
     if(!isEnd && !isStart){
         if(currentPointer->succ == nullptr) {
             isEnd = true;
-            currentPointer = currentPointer++;
+            currentPointer++;
         }else{
             currentPointer = currentPointer->succ;
         }
@@ -422,7 +421,7 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::const_iterator::operator--(int
     if(!isStart && !isEnd){
         if(currentPointer->pre == nullptr) {
             isStart = true;
-            currentPointer = currentPointer--;
+            currentPointer--;
         }else{
             currentPointer = currentPointer->pre;
         }
@@ -433,17 +432,17 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::const_iterator::operator--(int
     return cit;
 }
 template<class T>
-const T* RBBSTree<T>::const_iterator::operator->() {
+const T* RBBSTree<T>::const_iterator::operator->() const {
     return currentPointer->info;
 }
 
 template<class T>
-const T& RBBSTree<T>::const_iterator::operator*() {
+const T& RBBSTree<T>::const_iterator::operator*() const {
     return *(currentPointer->info);
 }
 
 template<class T>
-bool RBBSTree<T>::const_iterator::operator!=(const RBBSTree<T>::const_iterator& cit) {
+bool RBBSTree<T>::const_iterator::operator!=(const RBBSTree<T>::const_iterator& cit) const {
     return !(cit.currentPointer == currentPointer && cit.isEnd == isEnd && cit.isStart == isStart);
 }
 template class RBBSTree<SerializableObject>;

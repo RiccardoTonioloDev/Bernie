@@ -1,5 +1,3 @@
-//#notReviewed
-
 #ifndef CRYPTOWALLET_H
 #define CRYPTOWALLET_H
 #include "SerializableObject.h"

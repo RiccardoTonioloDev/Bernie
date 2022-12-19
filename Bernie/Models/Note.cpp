@@ -1,10 +1,11 @@
-//#notReviewed
 #include "Note.h"
 
 Note::Note(const std::string& n, const std::string& t) : SerializableObject(n), text(t) {}
 
 std::string Note::serialize() const {
-    return "NOTE,"+ SerializableObject::sanitize(name) + "," + SerializableObject::sanitize(text);
+    std::string serializedStr = "NOTE";
+    serializedStr += SerializableObject::SEPARATOR + SerializableObject::sanitize(name) + SerializableObject::SEPARATOR + SerializableObject::sanitize(text);
+    return serializedStr;
 }
 
 Note* Note::clone() const{

@@ -1,4 +1,3 @@
-//#notReviewed
 #include "SerializableObject.h"
 
 SerializableObject::SerializableObject(const std::string& n): name(n){}

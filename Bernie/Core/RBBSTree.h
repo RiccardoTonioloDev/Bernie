@@ -1,4 +1,3 @@
-//#notReviewed
 #ifndef RBBSTREE
 #define RBBSTREE
 #include <string>
@@ -65,7 +64,7 @@ private:
      * POST: Dato un albero, e il puntatore di un nodo da eliminare all'interno di esso, va a eliminare il nodo, occupandosi
      * di mantenere le informazioni su min, max, predecessore e successore, coerenti.
      */
-    static void deleteInTree(RBBSTree<T>& Tree,Node* nameToDelete);
+    static void deleteInTree(RBBSTree<T>& Tree,Node* toDelete);
     /*
      * POST: Attraverso delle rotazioni e dei trapianti va a sistemare l'albero per fare rispettare alcune regole rosso nere.
      */
@@ -87,9 +86,9 @@ public:
         const_iterator& operator++();
         const_iterator operator--(int);
         const_iterator& operator--();
-        const T* operator->();
-        const T& operator*();
-        bool operator!=(const const_iterator&);
+        const T* operator->() const;
+        const T& operator*() const;
+        bool operator!=(const const_iterator&) const;
     };
     RBBSTree();
     /*

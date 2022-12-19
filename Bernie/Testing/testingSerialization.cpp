@@ -16,14 +16,14 @@ void serializationTest(SerializableObject& input, const std::string& expected, c
     std::cout << expected << std::endl;
      */
     if(serializedObj == expected){
-        std::cout << "TEST (" + testName + "): \033[32mPASSED\033[0m";
-    }else std::cout << "TEST (" + testName + "): \033[31mNOT PASSED\033[0m";
+        std::cout << "TEST (" + testName + "): \033[92mPASSED\033[0m";
+    }else std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
     std::cout << std::endl;
 }
 void deSanitizationTest(const std::string& input, const std::pair<bool,std::vector<std::string>>& expected, const std::string& testName){
     std::pair<bool,std::vector<std::string>> couple = SerializableObject::deSanitize(input);
     if(expected.first != couple.first){
-        std::cout << "TEST (" + testName + "): \033[31mNOT PASSED\033[0m";
+        std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
     }else{
        std::vector<std::string>::const_iterator citExpected = expected.second.begin();
        std::vector<std::string>::const_iterator citCouple = couple.second.begin();
@@ -37,9 +37,9 @@ void deSanitizationTest(const std::string& input, const std::pair<bool,std::vect
            ++citExpected;
        }
        if (areEqual){
-           std::cout << "TEST (" + testName + "): \033[32mPASSED\033[0m";
+           std::cout << "TEST (" + testName + "): \033[92mPASSED\033[0m";
        }else{
-           std::cout << "TEST (" + testName + "): \033[31mNOT PASSED\033[0m";
+           std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
        }
     }
     std::cout << std::endl;
@@ -51,8 +51,8 @@ void RBBSTreeTest(const RBBSTree<SerializableObject>& input, const std::string& 
     for(cit = input.begin();cit != input.end(); ++cit){
        saved = saved + cit->serialize();
     }
-    if(saved == expected) std::cout << "TEST (" + testName + "): \033[32mPASSED\033[0m";
-    else std::cout << "TEST (" + testName + "): \033[31mNOT PASSED\033[0m";
+    if(saved == expected) std::cout << "TEST (" + testName + "): \033[92mPASSED\033[0m";
+    else std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
     std::cout << std::endl;
 }
 
@@ -61,8 +61,8 @@ void RBBSInsertionWhenEmptiedTest(RBBSTree<SerializableObject>& tree,const Seria
     std::string saved("");
     RBBSTree<SerializableObject>::const_iterator cit = tree.begin();
     saved = cit->serialize();
-    if(saved == expectedInside) std::cout << "TEST (insertion when emptied): \033[32mPASSED\033[0m";
-    else std::cout << "TEST (insertion when emptied): \033[31mNOT PASSED\033[0m";
+    if(saved == expectedInside) std::cout << "TEST (insertion when emptied): \033[92mPASSED\033[0m";
+    else std::cout << "TEST (insertion when emptied): \033[91mNOT PASSED\033[0m";
     std::cout << std::endl;
 }
 
@@ -72,16 +72,16 @@ void RBBSTreeDeletionWhenEmptiedTest(RBBSTree<SerializableObject>& tree){
     }catch(...)
     //Questo catch prende ogni tipo di eccezione possibile e la gestisce.
     {
-        std::cout << "TEST (deletion when emptied): \033[31mNOT PASSED\033[0m";
+        std::cout << "TEST (deletion when emptied): \033[91mNOT PASSED\033[0m";
     }
-    std::cout << "TEST (deletion when emptied): \033[32mPASSED\033[0m";
+    std::cout << "TEST (deletion when emptied): \033[92mPASSED\033[0m";
     std::cout << std::endl;
 }
 
 void RBBSTreeSearchTest(const RBBSTree<SerializableObject>& tree,const std::string& toFind,bool expected, const std::string& testName){
-    void* node = tree.search(toFind);
-    if((node && expected) || (!node && !expected)) std::cout << "TEST ("+testName+"): \033[32mPASSED\033[0m";
-    else std::cout << "TEST ("+testName+"): \033[31mNOT PASSED\033[0m";
+    void* info = tree.search(toFind);
+    if((info && expected) || (!info && !expected)) std::cout << "TEST ("+testName+"): \033[92mPASSED\033[0m";
+    else std::cout << "TEST ("+testName+"): \033[91mNOT PASSED\033[0m";
     std::cout << std::endl;
 }
 

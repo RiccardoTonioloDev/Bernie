@@ -1,4 +1,3 @@
-//#notReviewed
 #include "Telephone.h"
 
 Telephone::Telephone(const std::string & p, const std::string & n): prefix(p), number(n) {}

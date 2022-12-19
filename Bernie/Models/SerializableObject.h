@@ -12,8 +12,13 @@ class SerializableObject {
     friend std::ostream& operator<<(std::ostream&,const SerializableObject&);
 protected:
     std::string name;
+    /*
+     * POST: va ad aggiungere caratteri di escape per evitare che l'utente corrompa accidentalmente
+     * il file solo posizionando una virgola (che è il carattere separatore).
+     */
+    static std::string sanitize(const std::string&);
 public:
-    SerializableObject(const std::string& name);
+    explicit SerializableObject(const std::string& name);
     /*
      * POST: va a serializzare in formato CSV il contenuto dell'oggetto.
      */
@@ -39,12 +44,6 @@ public:
     static std::pair<bool,std::vector<std::string>> deSanitize(const std::string&);
     static char ESCAPE;
     static char SEPARATOR;
-protected:
-    /*
-     * POST: va ad aggiungere caratteri di escape per evitare che l'utente corrompa accidentalmente
-     * il file solo posizionando una virgola (che è il carattere separatore).
-     */
-    static std::string sanitize(const std::string&);
 };
 
 #endif
