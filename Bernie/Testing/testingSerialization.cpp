@@ -79,7 +79,7 @@ void RBBSTreeDeletionWhenEmptiedTest(RBBSTree<SerializableObject>& tree){
 }
 
 void RBBSTreeSearchTest(const RBBSTree<SerializableObject>& tree,const std::string& toFind,bool expected, const std::string& testName){
-    void* info = tree.search(toFind);
+    const void* info = tree.search(toFind);
     if((info && expected) || (!info && !expected)) std::cout << "TEST ("+testName+"): \033[92mPASSED\033[0m";
     else std::cout << "TEST ("+testName+"): \033[91mNOT PASSED\033[0m";
     std::cout << std::endl;

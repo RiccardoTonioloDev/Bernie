@@ -127,13 +127,6 @@ void RBBSTree<T>::InOrder() const{
 }
 
 template<class T>
-typename RBBSTree<T>::Node* RBBSTree<T>::findMin(Node* r){
-    Node* it = r;
-    for(;it->left != nullptr; it = it->left);
-    return it;
-}
-
-template<class T>
 void RBBSTree<T>::transplant(Node*& root, Node* old, Node* newN){
     if(old->parent == nullptr)
         root = newN;
@@ -337,29 +330,26 @@ void RBBSTree<T>::deleteInTree(RBBSTree<T>& Tree, RBBSTree::Node* toDelete) {
 
 template<class T>
 void RBBSTree<T>::deleteT(const std::string &nameToSearch) {
-    Node* toDelete = searchRec(root,nameToSearch);
+    Node* toDelete = searchNode(nameToSearch);
     if(toDelete) deleteInTree(*this,toDelete);
 }
 
 template<class T>
-typename RBBSTree<T>::Node* RBBSTree<T>::searchRec(Node *r, const std::string& nameToSearch) {
-    if(r){
-        if(*(r->info) == nameToSearch)
-            return r;
-        else if(*(r->info) > nameToSearch)
-            return searchRec(r->left, nameToSearch);
-        else if(*(r->info) < nameToSearch)
-            return searchRec(r->right, nameToSearch);
-        else return nullptr;
+typename RBBSTree<T>::Node* RBBSTree<T>::searchNode(const std::string& nameToSearch) const {
+    Node* tmp = root;
+    while(tmp != nullptr){
+        if(*(tmp->info) == nameToSearch)
+            return tmp;
+        else tmp = (*(tmp->info) < nameToSearch) ? tmp->right : tmp->left;
     }
-    else return nullptr;
+    return nullptr;
 }
 
 template<class T>
-typename RBBSTree<T>::Node* RBBSTree<T>::search(const std::string& nameToSearch) const {
-    return searchRec(root, nameToSearch);
+const T* RBBSTree<T>::search(const std::string& nameToSearch) const {
+    Node* test = searchNode(nameToSearch);
+    return (test)? test->info : nullptr;
 }
-
 //############################################ITERATOR#####################################################
 template<class T>
 typename RBBSTree<T>::const_iterator& RBBSTree<T>::const_iterator::operator++() {

@@ -52,15 +52,6 @@ private:
      */
     static void recInOrder(Node*);
     /*
-    * PRE: n non è nullo.
-    * POST: restituisce il puntatore al nodo contenente il valore minimo dell'albero.
-    */
-    static Node* findMin(Node* n);
-    /*
-    * POST: restituisce, se presente, il puntatore al nodo il cui name è uguale al nameToSearch, altrimenti ritorna nullptr.
-    */
-    static Node* searchRec(Node* r, const std::string& nameToSearch);
-    /*
      * POST: Dato un albero, e il puntatore di un nodo da eliminare all'interno di esso, va a eliminare il nodo, occupandosi
      * di mantenere le informazioni su min, max, predecessore e successore, coerenti.
      */
@@ -74,6 +65,11 @@ private:
      * Successivamente eliminiamo le informazioni contenute dal nodo corrente, e solo in fine il nodo corrente.
      */
     static void recDestroy(Node*);
+    /*
+     * POST: restituisce un puntatore nullo se non trova niente, altrimenti restituisce il puntatore al nodo che contiene
+     * l'informazione con nome uguale a nameToSearch
+     */
+    Node* searchNode (const std::string& nameToSearch) const;
 public:
     class const_iterator{
     private:
@@ -107,14 +103,10 @@ public:
      */
     void InOrder() const;
     /*
-     * POST: restituisce un puntatore nullo se non trova niente, altrimenti restituisce il puntatore al nodo che contiene
-     * l'informazione con nome uguale a nameToSearch
-     */
-    Node* search (const std::string& nameToSearch) const;
-    /*
      * PRE: deve essere utilizzato su un albero non vuoto.
      * POST: restituisce un const_iterator che punta al primo elemento dell'albero (nell'ordine inOrder)(il minore)
      */
+    const T* search(const std::string& nameToSearch) const;
     const_iterator begin() const;
     /*
      * PRE: deve essere utilizzato su un albero non vuoto.
