@@ -411,3 +411,4 @@ template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::fi
 template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<CreditCard>() const;
 template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<Note>() const;
 template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<Contact>() const;
+template std::vector<const SerializableObject*> RBBSTree<SerializableObject>::filter<SerializableObject>() const;

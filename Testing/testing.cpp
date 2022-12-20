@@ -107,6 +107,10 @@ int main(){
     container.deleteT("1");
     container.deleteT("5");
     container.deleteT("8");
+    RBBSTreeFilterTest<SerializableObject>(container,"CREDITCARD,3,provaProva,prova,1/1/1"
+                                                     "ACCOUNT,4,ciao4,come4,stai4"
+                                                     "ACCOUNT,6,ciao6,come6,stai6"
+                                                     "NOTE,7,ciao7","filtering tree (SerializableObject)");
     RBBSTreeSearchTest(container,"1",false,"search a non existing value (1)");
     RBBSTreeTest(container,"CREDITCARD,3,provaProva,prova,1/1/1"
                            "ACCOUNT,4,ciao4,come4,stai4"

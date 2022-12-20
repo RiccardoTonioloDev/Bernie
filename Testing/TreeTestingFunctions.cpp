@@ -57,3 +57,4 @@ template void RBBSTreeFilterTest<CryptoWallet>(const RBBSTree<SerializableObject
 template void RBBSTreeFilterTest<Contact>(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName);
 template void RBBSTreeFilterTest<Note>(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName);
 template void RBBSTreeFilterTest<CreditCard>(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName);
+template void RBBSTreeFilterTest<SerializableObject>(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName);
