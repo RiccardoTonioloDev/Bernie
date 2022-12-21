@@ -25,13 +25,13 @@ int main(){
 
     std::cout << "//CreditCard Unit Testing ----------------------------------------------------------------------------"<<std::endl;
     Date d1(1,1,1);
-    CreditCard c1("NameProva","provaProva","prova",d1);
-    serializationTest(c1,std::string("CREDITCARD,NameProva,provaProva,prova,1/1/1"),"serialization CreditCard 1");
-    deSanitizationTest(c1.serialize(),std::make_pair(false,std::vector<std::string>{"CREDITCARD","NameProva","provaProva","prova",d1.getData()}),"deSanitization CreditCard 1");
-    CreditCard cNotCorrupted("&,,",",&,&,","&&&,",d1);
-    serializationTest(cNotCorrupted,std::string("CREDITCARD,&&&,&,,&,&&&,&&&,,&&&&&&&,,1/1/1"),"serialization CreditCard notCorrupted");
-    deSanitizationTest(cNotCorrupted.serialize(),std::make_pair(false,std::vector<std::string>{"CREDITCARD","&,,",",&,&,","&&&,",d1.getData()}),"deSanitization CreditCard notCorrupted");
-    std::string corruptedCreditCard("CREDITCARD,Nam&eProva,provaProva,prova,1/1/1");
+    CreditCard c1("NameProva","OwnerProva","provaProva","prova",d1);
+    serializationTest(c1,std::string("CREDITCARD,NameProva,OwnerProva,provaProva,prova,1/1/1"),"serialization CreditCard 1");
+    deSanitizationTest(c1.serialize(),std::make_pair(false,std::vector<std::string>{"CREDITCARD","NameProva","OwnerProva","provaProva","prova",d1.getData()}),"deSanitization CreditCard 1");
+    CreditCard cNotCorrupted("&,,","OwnerProva",",&,&,","&&&,",d1);
+    serializationTest(cNotCorrupted,std::string("CREDITCARD,&&&,&,,OwnerProva,&,&&&,&&&,,&&&&&&&,,1/1/1"),"serialization CreditCard notCorrupted");
+    deSanitizationTest(cNotCorrupted.serialize(),std::make_pair(false,std::vector<std::string>{"CREDITCARD","&,,","OwnerProva",",&,&,","&&&,",d1.getData()}),"deSanitization CreditCard notCorrupted");
+    std::string corruptedCreditCard("CREDITCARD,Nam&eProva,OwnerProva,provaProva,prova,1/1/1");
     deSanitizationTest(corruptedCreditCard,std::make_pair(true,std::vector<std::string>{}),"deSanitization CreditCard Corrupted");
     std::cout << std::endl;
 
@@ -74,7 +74,7 @@ int main(){
     std::cout << "//Tree Unit Testing ----------------------------------------------------------------------------------"<<std::endl;
     RBBSTree<SerializableObject> container;
     CryptoWallet* p5 = new CryptoWallet("5","blockchainName",std::vector<std::string>{"1","2","3","4"});;
-    CreditCard* p3 = new CreditCard("3","provaProva","prova",d1);;
+    CreditCard* p3 = new CreditCard("3","OwnerProva","provaProva","prova",d1);;
     Note* p7 = new Note("7","ciao7");
     Contact* p1p = new Contact("1","Nome","Cognome",d1,t1,"Email");
     Account* p4 = new Account("4","ciao4","come4","stai4");
@@ -87,32 +87,38 @@ int main(){
     container.insert(p4);
     container.insert(p6);
     container.insert(p8);
-    RBBSTreeSearchTest(container,"1",true,"search an existing value (1)");
-    RBBSTreeSearchTest(container,"prova",false,"search a non existing value (prova)");
+    RBBSTreeSearchTest(container.search("6"),"ACCOUNT,6,ciao6,come6,stai6","searching for 6");
     RBBSTreeTest(container,"CONTACT,1,Nome,Cognome,1/1/1,prova prova2,Email"
-                           "CREDITCARD,3,provaProva,prova,1/1/1"
+                           "CREDITCARD,3,OwnerProva,provaProva,prova,1/1/1"
                            "ACCOUNT,4,ciao4,come4,stai4"
                            "CRYPTOWALLET,5,blockchainName,1,2,3,4"
                            "ACCOUNT,6,ciao6,come6,stai6"
                            "NOTE,7,ciao7"
                            "ACCOUNT,8,ciao8,come8,stai8","tree insertion");
+    container.insert(p8);
+    RBBSTreeTest(container,"CONTACT,1,Nome,Cognome,1/1/1,prova prova2,Email"
+                           "CREDITCARD,3,OwnerProva,provaProva,prova,1/1/1"
+                           "ACCOUNT,4,ciao4,come4,stai4"
+                           "CRYPTOWALLET,5,blockchainName,1,2,3,4"
+                           "ACCOUNT,6,ciao6,come6,stai6"
+                           "NOTE,7,ciao7"
+                           "ACCOUNT,8,ciao8,come8,stai8","failed insert because of name duplicate");
     RBBSTreeFilterTest<Account>(container,"ACCOUNT,4,ciao4,come4,stai4"
                                           "ACCOUNT,6,ciao6,come6,stai6"
                                           "ACCOUNT,8,ciao8,come8,stai8","filtering tree (multiple account)(ACCOUNT)");
     RBBSTreeFilterTest<CryptoWallet>(container,"CRYPTOWALLET,5,blockchainName,1,2,3,4","filtering tree (CRYPTOWALLET)");
     RBBSTreeFilterTest<Contact>(container,"CONTACT,1,Nome,Cognome,1/1/1,prova prova2,Email","filtering tree (CONTACT)");
-    RBBSTreeFilterTest<CreditCard>(container,"CREDITCARD,3,provaProva,prova,1/1/1","filtering tree (CREDITCARD)");
+    RBBSTreeFilterTest<CreditCard>(container,"CREDITCARD,3,OwnerProva,provaProva,prova,1/1/1","filtering tree (CREDITCARD)");
     RBBSTreeFilterTest<Note>(container,"NOTE,7,ciao7","filtering tree (NOTE)");
     container.deleteT("5");
     container.deleteT("1");
     container.deleteT("5");
     container.deleteT("8");
-    RBBSTreeFilterTest<SerializableObject>(container,"CREDITCARD,3,provaProva,prova,1/1/1"
+    RBBSTreeFilterTest<SerializableObject>(container,"CREDITCARD,3,OwnerProva,provaProva,prova,1/1/1"
                                                      "ACCOUNT,4,ciao4,come4,stai4"
                                                      "ACCOUNT,6,ciao6,come6,stai6"
                                                      "NOTE,7,ciao7","filtering tree (SerializableObject)");
-    RBBSTreeSearchTest(container,"1",false,"search a non existing value (1)");
-    RBBSTreeTest(container,"CREDITCARD,3,provaProva,prova,1/1/1"
+    RBBSTreeTest(container,"CREDITCARD,3,OwnerProva,provaProva,prova,1/1/1"
                            "ACCOUNT,4,ciao4,come4,stai4"
                            "ACCOUNT,6,ciao6,come6,stai6"
                            "NOTE,7,ciao7", "tree deletion");
@@ -121,15 +127,24 @@ int main(){
     container.deleteT("7");
     container.deleteT("6");
     RBBSTreeTest(container,"", "tree deletion (entire tree)");
-    RBBSTreeSearchTest(container,"prova",false,"search a non existing value (prova)");
     Account* p4new = new Account("4","ciao4","come4","stai4");
     RBBSInsertionWhenEmptiedTest(container,*p4new,"ACCOUNT,4,ciao4,come4,stai4");
     RBBSTreeDeletionWhenEmptiedTest(container);
-    RBBSTreeSearchTest(container,"1",false,"search a non existing value (1)");
     RBBSTreeFilterTest<Account>(container,"ACCOUNT,4,ciao4,come4,stai4","filtering tree (ACCOUNT)");
     RBBSTreeFilterTest<CryptoWallet>(container,"","filtering tree (no CryptoWallet elements)(CRYPTOWALLET)");
     RBBSTreeFilterTest<Contact>(container,"","filtering tree (no Contact elements)(CONTACT)");
     RBBSTreeFilterTest<CreditCard>(container,"","filtering tree (no CreditCard elements)(CREDITCARD)");
     RBBSTreeFilterTest<Note>(container,"","filtering tree (no NOTE elements)(NOTE)");
     std::cout << std::endl;
+    Note *n0 = new Note("asdòlkfjadfj","prova 0 prova");
+    Note *n2 = new Note("dfadfajdfl4l","prova 1 prova");
+    Note *n3 = new Note("faflaksjdfal","prova 2 prova");
+    Note *n4 = new Note("jfdkjfaifnwe","prova 3 prova");
+    container.insert(n0);
+    container.insert(n2);
+    container.insert(n3);
+    container.insert(n4);
+    RBBSTreeSearchTest(container.search("adl"),"NOTE,asdòlkfjadfj,prova 0 prova"
+                                               "NOTE,dfadfajdfl4l,prova 1 prova"
+                                               "NOTE,faflaksjdfal,prova 2 prova","searching for adl");
 }

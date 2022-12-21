@@ -15,7 +15,7 @@ RBBSTree<T>::RBBSTree() : root(nullptr), min(nullptr), max(nullptr) {}
 
 template<class T>
 bool RBBSTree<T>::insert(const T* info){
-    if(searchNode(*info)){ //it will be converted in the name string thanks to the overloading of operator string()
+    if(searchNode(*info) == nullptr){ //it will be converted in the name string thanks to the overloading of operator string()
         Node* newNode = insertInTree(*this, info);
         if(newNode->parent == nullptr){
             newNode->color = COLORS::BLACK;
@@ -79,7 +79,7 @@ void RBBSTree<T>::insertFixUp(Node *root, Node* &z){
     while(z->parent != nullptr && z->parent->color == COLORS::RED){
         if(z->parent == z->parent->parent->left){
             Node* y = z->parent->parent->right;
-            if(y->color == COLORS::RED){
+            if(y && y->color == COLORS::RED){
                 z->parent->color = COLORS::BLACK;
                 y->color = COLORS::BLACK;
                 z->parent->parent->color = COLORS::RED;
@@ -95,7 +95,7 @@ void RBBSTree<T>::insertFixUp(Node *root, Node* &z){
             }
         }else{
             Node* y = z->parent->parent->left;
-            if(y->color == COLORS::RED){
+            if(y && y->color == COLORS::RED){
                 z->parent->color = COLORS::BLACK;
                 y->color = COLORS::BLACK;
                 z->parent->parent->color = COLORS::RED;
@@ -134,7 +134,7 @@ template<class T>
 void RBBSTree<T>::rotateLeft(RBBSTree::Node*& r, RBBSTree::Node* x){
     Node* y = x->right;
     x->right = y->left;
-    x->right->parent = x;
+    if(x->right) x->right->parent = x;
     RBBSTree::transplant(r,x,y);
     y->left = x;
     x->parent = y;
@@ -144,7 +144,7 @@ template<class T>
 void RBBSTree<T>::rotateRight(RBBSTree::Node*& r, RBBSTree::Node* x) {
     Node* y = x->left;
     x->left = y->right;
-    x->left->parent = x;
+    if(x->left) x->left->parent = x;
     RBBSTree::transplant(r,x,y);
     y->right = x;
     x->parent = y;

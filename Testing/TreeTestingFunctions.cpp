@@ -34,12 +34,12 @@ void RBBSTreeDeletionWhenEmptiedTest(RBBSTree<SerializableObject>& tree){
     std::cout << std::endl;
 }
 
-void RBBSTreeSearchTest(const RBBSTree<SerializableObject>& tree,const std::string& toFind,bool expected, const std::string& testName){
+/*void RBBSTreeSearchTest(const RBBSTree<SerializableObject>& tree,const std::string& toFind,bool expected, const std::string& testName){
     const void* info = tree.search(toFind);
     if((info && expected) || (!info && !expected)) std::cout << "TEST ("+testName+"): \033[92mPASSED\033[0m";
     else std::cout << "TEST ("+testName+"): \033[91mNOT PASSED\033[0m";
     std::cout << std::endl;
-}
+}*/
 
 template<class T>
 void RBBSTreeFilterTest(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName){
@@ -58,3 +58,13 @@ template void RBBSTreeFilterTest<Contact>(const RBBSTree<SerializableObject>& tr
 template void RBBSTreeFilterTest<Note>(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName);
 template void RBBSTreeFilterTest<CreditCard>(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName);
 template void RBBSTreeFilterTest<SerializableObject>(const RBBSTree<SerializableObject>& tree,const std::string& expected,const std::string& testName);
+
+void RBBSTreeSearchTest(const std::vector<const SerializableObject*> input,const std::string& expected,const std::string& testName){
+    std::string vectorFound("");
+    for (typename std::vector<const SerializableObject*>::const_iterator cit = input.begin();cit != input.end();++cit) {
+        vectorFound += (*cit)->serialize();
+    }
+    if(vectorFound == expected) std::cout << "TEST ("+testName+"): \033[92mPASSED\033[0m";
+    else std::cout << "TEST ("+testName+"): \033[91mNOT PASSED\033[0m";
+    std::cout << std::endl;
+}
