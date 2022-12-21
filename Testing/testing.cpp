@@ -165,4 +165,25 @@ int main(){
                            "NOTE,jfdkjfaifnwe,prova 3 prova", "tree deletion (single node)");
     container.deleteT("jfdkjfaifnwe");
     RBBSTreeTest(container,"ACCOUNT,4,ciao4,come4,stai4", "tree deletion (single node)");
+    encInFileTest(container, "true", "enc in file");  //the only node written is ACCOUNT4ciao4come4stai4
+    VerifyPasswordInFileTest(container, false, "wrongPsw", "wrong password");
+    VerifyPasswordInFileTest(container, true, "1234", "right password");
+
+    decFromFileTest(container,"ACCOUNT 4 ciao4 come4 stai4 \n","dec - test");
+
+    n0 = new Note("prima","prova 0 prova");
+    n2 = new Note("seconda","prova 1 prova");
+    n3 = new Note("terza","prova 2 prova");
+    n4 = new Note("quarta","prova 3 prova");
+    container.insert(n0);
+    container.insert(n2);
+    container.insert(n3);
+    container.insert(n4);
+    EncDec_File prova("1234", "prova.txt");
+    prova.encInFile(container);
+    decFromFileTest(container,"ACCOUNT 4 ciao4 come4 stai4 \n"
+                              "NOTE prima prova 0 prova \n"
+                              "NOTE quarta prova 3 prova \n"
+                              "NOTE seconda prova 1 prova \n"
+                              "NOTE terza prova 2 prova \n","dec - test");
 }

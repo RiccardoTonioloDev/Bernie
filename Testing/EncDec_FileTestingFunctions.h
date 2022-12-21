@@ -5,5 +5,6 @@
 #include "../Bernie/Models/SerializableObject.h"
 
 void encInFileTest(const RBBSTree<SerializableObject>& input, const std::string& expected, const std::string& testName);
-
+void VerifyPasswordInFileTest(const RBBSTree<SerializableObject>& input, bool expected, const std::string& password, const std::string& testName);
+void decFromFileTest(const RBBSTree<SerializableObject>& input, const std::string& expected, const std::string& testName);
 #endif //ENCDEC_FILETESTINGFUNCTIONS_H

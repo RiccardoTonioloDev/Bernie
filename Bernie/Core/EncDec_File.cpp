@@ -13,7 +13,7 @@ bool EncDec_File::fileExists() const {
 }
 
 bool EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const{
-    std::ofstream file(fileName);
+    std::ofstream file("../"+fileName);
     if(file.is_open() != true){
         return false;
     }
@@ -32,26 +32,40 @@ bool EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const
        }
        inputOnFile += currentSerialized + '\n';
    }
-   file.open(fileName);
+   //file.open(fileName);
    file << inputOnFile;
    file.close();
    return true;
 }
 
-std::vector<std::vector<std::string>> EncDec_File::decFromFile() const{
+bool EncDec_File::verifyPassword(const std::string& fileName, const std::string& insertedPassword) {
     std::ifstream file;
     file.open(fileName);
+    std::string firstLine;
+    std::getline(file, firstLine);
+    file.close();
+    int i = 0;
+    for(std::string::iterator it = firstLine.begin(); it != firstLine.end(); ++it,++i){
+        *it -= (insertedPassword[i%insertedPassword.length()]);
+    }
+
+    return firstLine == "[correct]";
+}
+
+std::vector<std::vector<std::string>> EncDec_File::decFromFile() const{
+    std::ifstream file;
+    file.open("../"+fileName);
     std::string currentLine;
     std::getline(file, currentLine); //ignoring the first line containing "correct" string
     std::vector<std::vector<std::string>> result;
-    int i = 0;
+    int i = 9; //during encryption first 9 character of the string "[correct]" increment the value of i... so now that I ignore the first line I have to start with i = 9
     while(std::getline(file, currentLine)){ //reading the line
         for(std::string::iterator it = currentLine.begin();it != currentLine.end(); ++it, ++i)
-            *it -= key[i%key.length()]; //decryption of the line
-        std::vector<std::string> currentLineVector;
+            *it -= (key[i%key.length()]+11); //decryption of the line
         std::pair<bool, std::vector<std::string>> currentPair = SerializableObject::deSanitize(currentLine); //after decryption I have to deSanitize the string
-        if(currentPair.first)
-            result.push_back(currentLineVector);
-        }
+        result.push_back(currentPair.second);
+    }
+    file.close();
     return result;
 }
+
