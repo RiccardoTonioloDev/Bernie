@@ -12,7 +12,7 @@ private:
 public:
     EncDec_File(const std::string& k, const std::string& fN);
     bool fileExists() const;
-    void encInFile(const RBBSTree<SerializableObject>& treeToEnc);
+    void encInFile(const RBBSTree<SerializableObject>& treeToEnc) const;
     std::vector<std::vector<std::string>> decFromFile() const;
 };
 

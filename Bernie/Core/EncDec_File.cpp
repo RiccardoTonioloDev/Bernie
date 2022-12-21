@@ -12,7 +12,7 @@ bool EncDec_File::fileExists() const {
     }
 }
 
-void EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) {
+void EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const{
    std::ofstream file;
    int i = 0;
    std::string correctFlag("[correct]");
