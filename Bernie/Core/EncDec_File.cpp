@@ -19,6 +19,7 @@ void EncDec_File::encInFile(std::string inputToEnc) {
         *it += key[i%key.length()];
    }
    file.open(fileName);
+   file << "[correct]\n";
    file << inputToEnc;
    file.close();
 }

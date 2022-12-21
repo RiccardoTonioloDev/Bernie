@@ -75,7 +75,7 @@ typename RBBSTree<T>::Node* RBBSTree<T>::insertInTree(RBBSTree<T>& Tree, const T
 }
 
 template<class T>
-void RBBSTree<T>::insertFixUp(Node *root, Node* &z){
+void RBBSTree<T>::insertFixUp(Node *& root, Node* &z){
     while(z->parent != nullptr && z->parent->color == COLORS::RED){
         if(z->parent == z->parent->parent->left){
             Node* y = z->parent->parent->right;
@@ -272,7 +272,7 @@ void RBBSTree<T>::deleteInTree(RBBSTree<T>& Tree, RBBSTree::Node* toDelete) {
             transplant(r,y,y->right);
             y->right = toDelete->right;
             y->right->parent = y;
-        }else toSave->parent = y;
+        }else if(toSave) toSave->parent = y;
         transplant(r,toDelete,y);
         y->left = toDelete->left;
         y->left->parent = y;
@@ -306,9 +306,17 @@ template<class T>
 const std::vector<const T*> RBBSTree<T>::search(const std::string& subStrToSearch) const {
     std::vector<const T*> result;
     for(Node* start = min;start;start=start->succ){
+        int indexOfSubStrToSearch = 0;
         std::string currentName = *(start->info);
-        if(currentName.find(subStrToSearch) != std::string::npos)
+        for(std::string::const_iterator cit = currentName.begin();cit != currentName.end();++cit){
+            if(*cit == subStrToSearch[indexOfSubStrToSearch]){
+                indexOfSubStrToSearch++;
+            }
+        }
+
+        if(indexOfSubStrToSearch == subStrToSearch.size()){
             result.push_back(start->info);
+        }
     }
     return result;
 }

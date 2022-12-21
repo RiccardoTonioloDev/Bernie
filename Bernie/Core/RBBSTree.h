@@ -7,6 +7,7 @@
 #include "../Models/CreditCard.h"
 #include "../Models/Contact.h"
 #include "../Models/Note.h"
+#include <algorithm>
 
 template <class T>
 class RBBSTree {
@@ -41,7 +42,7 @@ private:
     * PRE: i due nodi passati non sono nulli.
     * POST: assicura che l'albero Red-and-Black mantenga le proprietà di struttura, occupandosi dell'aggiustamento dei colori dei nodi dopo l'inserimento.
     */
-    static void insertFixUp(Node*, Node*&);
+    static void insertFixUp(Node*&, Node*&);
     /*
     * PRE: r e x sono nodi non nulli.
     * POST: rotazione del nodo x e del suo sotto albero verso sinistra mantenendo le proprietà d'ordine.

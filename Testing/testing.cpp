@@ -135,7 +135,6 @@ int main(){
     RBBSTreeFilterTest<Contact>(container,"","filtering tree (no Contact elements)(CONTACT)");
     RBBSTreeFilterTest<CreditCard>(container,"","filtering tree (no CreditCard elements)(CREDITCARD)");
     RBBSTreeFilterTest<Note>(container,"","filtering tree (no NOTE elements)(NOTE)");
-    std::cout << std::endl;
     Note *n0 = new Note("asdòlkfjadfj","prova 0 prova");
     Note *n2 = new Note("dfadfajdfl4l","prova 1 prova");
     Note *n3 = new Note("faflaksjdfal","prova 2 prova");
@@ -146,5 +145,22 @@ int main(){
     container.insert(n4);
     RBBSTreeSearchTest(container.search("adl"),"NOTE,asdòlkfjadfj,prova 0 prova"
                                                "NOTE,dfadfajdfl4l,prova 1 prova"
-                                               "NOTE,faflaksjdfal,prova 2 prova","searching for adl");
+                                               "NOTE,faflaksjdfal,prova 2 prova","searching for 'adl'");
+    RBBSTreeSearchTest(container.search("4"),"ACCOUNT,4,ciao4,come4,stai4"
+                                             "NOTE,dfadfajdfl4l,prova 1 prova","searching for '4'");
+    RBBSTreeSearchTest(container.search("asdfalskdjfaòlsdfjafja"),"","searching for something not in");
+    container.deleteT("asdòlkfjadfj");
+    RBBSTreeTest(container,"ACCOUNT,4,ciao4,come4,stai4"
+                           "NOTE,dfadfajdfl4l,prova 1 prova"
+                           "NOTE,faflaksjdfal,prova 2 prova"
+                           "NOTE,jfdkjfaifnwe,prova 3 prova", "tree deletion (single node)");
+    container.deleteT("dfadfajdfl4l");
+    RBBSTreeTest(container,"ACCOUNT,4,ciao4,come4,stai4"
+                           "NOTE,faflaksjdfal,prova 2 prova"
+                           "NOTE,jfdkjfaifnwe,prova 3 prova", "tree deletion (single node)");
+    container.deleteT("faflaksjdfal");
+    RBBSTreeTest(container,"ACCOUNT,4,ciao4,come4,stai4"
+                           "NOTE,jfdkjfaifnwe,prova 3 prova", "tree deletion (single node)");
+    container.deleteT("jfdkjfaifnwe");
+    RBBSTreeTest(container,"ACCOUNT,4,ciao4,come4,stai4", "tree deletion (single node)");
 }
