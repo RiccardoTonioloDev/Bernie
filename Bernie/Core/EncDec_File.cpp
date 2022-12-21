@@ -12,15 +12,25 @@ bool EncDec_File::fileExists() const {
     }
 }
 
-void EncDec_File::encInFile(std::string inputToEnc) {
+void EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) {
    std::ofstream file;
    int i = 0;
-   for(std::string::iterator it = inputToEnc.begin();it != inputToEnc.end(); ++it, ++i){
-        *it += key[i%key.length()];
+   std::string correctFlag("[correct]");
+   for(std::string::iterator it = correctFlag.begin();it != correctFlag.end(); ++it, ++i){
+       *it += key[i%key.length()];
+   }
+   std::string inputOnFile("");
+   inputOnFile += correctFlag + '\n';
+   for(RBBSTree<SerializableObject>::const_iterator cit = treeToEnc.begin();cit != treeToEnc.end(); ++cit){
+       std::string currentSerialized = cit->serialize();
+       for(std::string::iterator it = currentSerialized.begin(); it != currentSerialized.end();++it, i++){
+           *it += key[i%key.length() + 11]; //Added 11 to escape the situation where the char with ASCII value 0 is inserted
+           //and with a combination of key, the '\n' char is generated, corrupting the file as a result.
+       }
+       inputOnFile += currentSerialized + '\n';
    }
    file.open(fileName);
-   file << "[correct]\n";
-   file << inputToEnc;
+   file << inputOnFile;
    file.close();
 }
 

@@ -2,6 +2,7 @@
 #define ENCDEC_FILE_H
 #include <string>
 #include "RBBSTree.h"
+#include "../Models/SerializableObject.h"
 
 
 class EncDec_File {
@@ -11,7 +12,7 @@ private:
 public:
     EncDec_File(const std::string& k, const std::string& fN);
     bool fileExists() const;
-    void encInFile(std::string inputToEnc);
+    void encInFile(const RBBSTree<SerializableObject>& treeToEnc);
     std::vector<std::vector<std::string>> decFromFile() const;
 };
 
