@@ -62,3 +62,7 @@ std::ostream& operator<<(std::ostream& os,const SerializableObject& s){
     os << s.serialize();
     return os;
 }
+
+SerializableObject::operator std::string() const {
+    return name;
+}

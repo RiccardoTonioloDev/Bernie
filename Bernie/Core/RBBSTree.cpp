@@ -14,14 +14,17 @@ template<class T>
 RBBSTree<T>::RBBSTree() : root(nullptr), min(nullptr), max(nullptr) {}
 
 template<class T>
-void RBBSTree<T>::insert(const T* info){
-    Node* newNode = insertInTree(*this, info);
-    if(newNode->parent == nullptr){
-        newNode->color = COLORS::BLACK;
-        return;
-    }
-    if(newNode->parent->parent == nullptr) return;
-    insertFixUp(root, newNode);
+bool RBBSTree<T>::insert(const T* info){
+    if(searchNode(*info)){ //it will be converted in the name string thanks to the overloading of operator string()
+        Node* newNode = insertInTree(*this, info);
+        if(newNode->parent == nullptr){
+            newNode->color = COLORS::BLACK;
+            return true;
+        }
+        if(newNode->parent->parent == nullptr) return true;
+        insertFixUp(root, newNode);
+        return true;
+    } else return false;
 }
 
 template<class T>
@@ -300,9 +303,14 @@ typename RBBSTree<T>::Node* RBBSTree<T>::searchNode(const std::string& nameToSea
 }
 
 template<class T>
-const T* RBBSTree<T>::search(const std::string& nameToSearch) const {
-    Node* test = searchNode(nameToSearch);
-    return (test)? test->info : nullptr;
+const std::vector<const T*> RBBSTree<T>::search(const std::string& subStrToSearch) const {
+    std::vector<const T*> result;
+    for(Node* start = min;start;start=start->succ){
+        std::string currentName = *(start->info);
+        if(currentName.find(subStrToSearch) != std::string::npos)
+            result.push_back(start->info);
+    }
+    return result;
 }
 
 template<class T>
@@ -318,6 +326,13 @@ std::vector<const T *> RBBSTree<T>::filter() const {
         next = nullptr;
     }
     return saved;
+}
+
+template<class T>
+const std::vector<const T*> RBBSTree<T>::toVector() const {
+    std::vector<const T*> result;
+    for(Node* start = min;start; start= start->succ) result.push_back(start->info);
+    return result;
 }
 
 //############################################ITERATOR#####################################################

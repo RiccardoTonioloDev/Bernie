@@ -88,7 +88,7 @@ public:
      * rispetto al nome, giusta. Restituisce vero se l'operazione va a buon fine, mentre restituisce falso se
      * il nome dell'oggetto che vogliamo inserire è già presente nell'albero.
      */
-    void insert(const T*);
+    bool insert(const T*);
     /*
      * POST: se trova un nome uguale a nameToSearch all'interno delle informazioni dei vari nodi, allora va a eliminare
      * il nodo corrispondente, altrimenti non fa niente.
@@ -98,7 +98,8 @@ public:
      * PRE: deve essere utilizzato su un albero non vuoto.
      * POST: restituisce un const_iterator che punta al primo elemento dell'albero (nell'ordine inOrder)(il minore)
      */
-    const T* search(const std::string& nameToSearch) const;
+    const std::vector<const T*> search(const std::string& nameToSearch) const;
+    const std::vector<const T*> toVector() const;
     /*
      * POST: restituisce un const_iterator che punta al primo elemento.
      */

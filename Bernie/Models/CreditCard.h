@@ -7,11 +7,12 @@
 
 class CreditCard : public SerializableObject{
 private:
+    std::string owner;
     std::string number;
     std::string cvv;
     Date date;
 public:
-    CreditCard(const std::string& name, const std::string& cardNumber, const std::string& cvv, const Date& expirationDate);
+    CreditCard(const std::string& name,const std::string& owner, const std::string& cardNumber, const std::string& cvv, const Date& expirationDate);
     /*
     POST: restituisce la stringa composta da il tipo dell'oggetto e il valore dei suoi campi, usando come carattere di separazione ','
     */

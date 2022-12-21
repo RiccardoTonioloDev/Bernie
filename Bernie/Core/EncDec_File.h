@@ -12,6 +12,7 @@ public:
     EncDec_File(const std::string& k, const std::string& fN);
     bool fileExists() const;
     void encInFile(std::string inputToEnc);
+    std::vector<std::vector<std::string>> decFromFile() const;
 };
 
 

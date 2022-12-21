@@ -34,6 +34,7 @@ public:
     bool operator>(const SerializableObject&) const;
     bool operator>(const std::string& nameToCompare) const;
     bool operator<=(const SerializableObject&) const;
+    operator std::string() const;
     virtual ~SerializableObject();
     /*
      * POST: va a rimuovere i caratteri di escape e restituisce una coppia composta da un valore
