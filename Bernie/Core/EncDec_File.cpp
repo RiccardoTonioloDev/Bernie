@@ -12,8 +12,11 @@ bool EncDec_File::fileExists() const {
     }
 }
 
-void EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const{
-   std::ofstream file;
+bool EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const{
+    std::ofstream file(fileName);
+    if(file.is_open() != true){
+        return false;
+    }
    int i = 0;
    std::string correctFlag("[correct]");
    for(std::string::iterator it = correctFlag.begin();it != correctFlag.end(); ++it, ++i){
@@ -24,7 +27,7 @@ void EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const
    for(RBBSTree<SerializableObject>::const_iterator cit = treeToEnc.begin();cit != treeToEnc.end(); ++cit){
        std::string currentSerialized = cit->serialize();
        for(std::string::iterator it = currentSerialized.begin(); it != currentSerialized.end();++it, i++){
-           *it += key[i%key.length() + 11]; //Added 11 to escape the situation where the char with ASCII value 0 is inserted
+           *it += key[i%key.length()]+11; //Added 11 to escape the situation where the char with ASCII value 0 is inserted
            //and with a combination of key, the '\n' char is generated, corrupting the file as a result.
        }
        inputOnFile += currentSerialized + '\n';
@@ -32,6 +35,7 @@ void EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const
    file.open(fileName);
    file << inputOnFile;
    file.close();
+   return true;
 }
 
 std::vector<std::vector<std::string>> EncDec_File::decFromFile() const{

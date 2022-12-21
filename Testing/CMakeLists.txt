@@ -14,7 +14,6 @@ add_executable(Bernie
         ../Bernie/Models/Account.h
         ../Bernie/Models/Contact.cpp
         ../Bernie/Models/Contact.h
-        ../Bernie/Models/SerializableObjectsEnum.h
         ../Bernie/Models/CreditCard.cpp
         ../Bernie/Models/CreditCard.h
         ../Bernie/Models/CryptoWallet.cpp

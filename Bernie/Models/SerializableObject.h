@@ -5,7 +5,6 @@
 #include <vector>
 #include <utility>
 #include <iostream>
-#include "SerializableObjectsEnum.h"
 
 
 class SerializableObject {

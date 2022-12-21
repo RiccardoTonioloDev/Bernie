@@ -9,6 +9,7 @@
 #include "RBBSTree.h"
 #include "TreeTestingFunctions.h"
 #include "SerializationTestingFunctions.h"
+#include "EncDec_FileTestingFunctions.h"
 
 int main(){
     std::cout << "//Account Unit Testing -------------------------------------------------------------------------------"<<std::endl;
@@ -87,6 +88,7 @@ int main(){
     container.insert(p4);
     container.insert(p6);
     container.insert(p8);
+    encInFileTest(container,"","saving in file container");
     RBBSTreeSearchTest(container.search("6"),"ACCOUNT,6,ciao6,come6,stai6","searching for 6");
     RBBSTreeTest(container,"CONTACT,1,Nome,Cognome,1/1/1,prova prova2,Email"
                            "CREDITCARD,3,OwnerProva,provaProva,prova,1/1/1"
