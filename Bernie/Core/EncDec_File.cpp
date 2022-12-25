@@ -1,4 +1,5 @@
 #include "EncDec_File.h"
+#include <iostream>
 #include <fstream>
 #include <sstream>
 EncDec_File::EncDec_File(const std::string &k, const std::string &fN): key(k), fileName(fN){}
@@ -13,10 +14,10 @@ bool EncDec_File::fileExists() const {
 }
 
 bool EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const{
-    std::ofstream file("../"+fileName);
-    if(file.is_open() != true){
-        return false;
-    }
+   std::ofstream file(fileName, std::ios::trunc);
+   if(file.is_open() != true){
+       return false;
+   }
    int i = 0;
    std::string correctFlag("[correct]");
    for(std::string::iterator it = correctFlag.begin();it != correctFlag.end(); ++it, ++i){
@@ -48,13 +49,12 @@ bool EncDec_File::verifyPassword(const std::string& fileName, const std::string&
     for(std::string::iterator it = firstLine.begin(); it != firstLine.end(); ++it,++i){
         *it -= (insertedPassword[i%insertedPassword.length()]);
     }
-
     return firstLine == "[correct]";
 }
 
 std::vector<std::vector<std::string>> EncDec_File::decFromFile() const{
     std::ifstream file;
-    file.open("../"+fileName);
+    file.open(fileName);
     std::string currentLine;
     std::getline(file, currentLine); //ignoring the first line containing "correct" string
     std::vector<std::vector<std::string>> result;

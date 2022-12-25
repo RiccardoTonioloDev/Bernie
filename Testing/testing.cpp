@@ -179,7 +179,7 @@ int main(){
     container.insert(n2);
     container.insert(n3);
     container.insert(n4);
-    EncDec_File prova("1234", "prova.txt");
+    EncDec_File prova("1234", "../prova.txt");
     prova.encInFile(container);
     decFromFileTest(container,"ACCOUNT 4 ciao4 come4 stai4 \n"
                               "NOTE prima prova 0 prova \n"
