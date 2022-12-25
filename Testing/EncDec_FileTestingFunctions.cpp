@@ -11,7 +11,7 @@ void encInFileTest(const RBBSTree<SerializableObject>& input, const std::string&
 
 void VerifyPasswordInFileTest(const RBBSTree<SerializableObject>& input, bool expected,  const std::string& password, const std::string& testName){
     EncDec_File prova("1234","../prova.txt");
-    if(EncDec_File::verifyPassword("prova.txt", password) == expected) std::cout << "TEST ("+testName+"): \033[92mPASSED\033[0m";
+    if(EncDec_File::verifyPassword("../prova.txt", password) == expected) std::cout << "TEST ("+testName+"): \033[92mPASSED\033[0m";
     else std::cout << "TEST ("+testName+"): \033[91mNOT PASSED\033[0m";
     std::cout << std::endl;
 }
