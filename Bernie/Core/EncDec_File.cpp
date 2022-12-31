@@ -4,15 +4,6 @@
 #include <sstream>
 EncDec_File::EncDec_File(const std::string &k, const std::string &fN): key(k), fileName(fN){}
 
-bool EncDec_File::fileExists() const {
-    if (FILE *file = fopen(fileName.c_str(), "r")) {
-        fclose(file);
-        return true;
-    } else {
-        return false;
-    }
-}
-
 bool EncDec_File::encInFile(const RBBSTree<SerializableObject>& treeToEnc) const{
    std::ofstream file(fileName, std::ios::trunc);
    if(file.is_open() != true){

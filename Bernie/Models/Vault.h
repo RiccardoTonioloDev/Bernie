@@ -16,17 +16,18 @@ private:
    std::string pathToDirectory;
 public:
    explicit Vault(const std::string& path);
-   void loadStorage(std::string vaultName, std::string password);
+   void loadStorage(const std::string& vaultName, const std::string& password);
    void unloadStorage();
    bool loadFromStorage();
    bool loadToStorage();
    void reset();
+   std::vector<std::string> fetchDBNames() const;
    bool addSerializableObject(const SerializableObject* ptr);
    void deleteSerializableObject(const std::string& nameToSearch);
-   const std::vector<const SerializableObject*> searchSerializableObjects(const std::string& nameToSearch) const;
-   const std::vector<const SerializableObject*> vectorize() const;
+   std::vector<const SerializableObject*> searchSerializableObjects(const std::string& nameToSearch) const;
+   std::vector<const SerializableObject*> vectorize() const;
    template<class T>
-    std::vector<const T*> filteredVectorize() const;
+    std::vector<const SerializableObject*> filteredVectorize() const;
    bool operator=(const Vault&) = delete;
    Vault(const Vault&) = delete;
 };

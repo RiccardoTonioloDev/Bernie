@@ -11,7 +11,6 @@ private:
     std::string fileName;
 public:
     EncDec_File(const std::string& k, const std::string& fN);
-    bool fileExists() const;
     bool encInFile(const RBBSTree<SerializableObject>& treeToEnc) const;
     std::vector<std::vector<std::string>> decFromFile() const;
     static bool verifyPassword(const std::string&, const std::string&);

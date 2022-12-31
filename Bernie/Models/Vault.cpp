@@ -1,8 +1,9 @@
 #include "Vault.h"
+#include <dirent.h>
 
 Vault::Vault(const std::string& path): tree(nullptr),storage(nullptr),pathToDirectory(path) {}
 
-void Vault::loadStorage(std::string vaultName, std::string password) {
+void Vault::loadStorage(const std::string& vaultName, const std::string& password) {
     storage = new EncDec_File(password,pathToDirectory+vaultName);
 }
 void Vault::unloadStorage() {
@@ -24,7 +25,7 @@ bool Vault::loadFromStorage() {
             return false;
         }
     }
-    if(tree) delete tree;
+    delete tree;
     tree = trialTree;
     return true;
 }
@@ -35,3 +36,58 @@ bool Vault::loadToStorage() {
     storage->encInFile(*tree);
     return true;
 }
+
+void Vault::reset() {
+    delete storage;
+    delete tree;
+}
+
+std::vector<std::string> Vault::fetchDBNames() const {
+    std::vector<std::string> fileNames;
+    DIR* dir = opendir(pathToDirectory.c_str());
+    if (dir == nullptr){
+        std::cerr << "Could not open directory: " << pathToDirectory << std::endl;
+        return fileNames;
+    }
+    struct dirent* entry;
+    while ((entry = readdir(dir)) != nullptr){
+        if (entry->d_type == DT_REG){
+            fileNames.push_back(entry->d_name);
+        }
+    }
+    closedir(dir);
+
+    return fileNames;
+}
+
+bool Vault::addSerializableObject(const SerializableObject *ptr) {
+    if(storage == nullptr) return false;
+    if(tree == nullptr) return false;
+    return tree->insert(ptr);
+}
+
+void Vault::deleteSerializableObject(const std::string &nameToSearch) {
+    if(tree == nullptr) return;
+    tree->deleteT(nameToSearch);
+}
+
+std::vector<const SerializableObject*> Vault::searchSerializableObjects(const std::string &nameToSearch) const {
+    if(tree == nullptr) return {};
+    return tree->search(nameToSearch);
+}
+
+std::vector<const SerializableObject *> Vault::vectorize() const {
+    if(tree == nullptr) return {};
+    return tree->toVector();
+}
+
+template <class T>
+std::vector<const SerializableObject *> Vault::filteredVectorize() const {
+    if(tree == nullptr) return {};
+    return tree->template filter<T>();
+}
+template std::vector<const SerializableObject *> Vault::filteredVectorize<Account>() const;
+template std::vector<const SerializableObject *> Vault::filteredVectorize<CreditCard>() const;
+template std::vector<const SerializableObject *> Vault::filteredVectorize<CryptoWallet>() const;
+template std::vector<const SerializableObject *> Vault::filteredVectorize<Contact>() const;
+template std::vector<const SerializableObject *> Vault::filteredVectorize<Note>() const;
