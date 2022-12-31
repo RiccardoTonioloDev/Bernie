@@ -4,7 +4,7 @@
 Vault::Vault(const std::string& path): tree(nullptr),storage(nullptr),pathToDirectory(path) {}
 
 void Vault::loadStorage(const std::string& vaultName, const std::string& password) {
-    storage = new EncDec_File(password,pathToDirectory+vaultName);
+    storage = new EncDec_File(password,pathToDirectory+"/"+vaultName);
 }
 void Vault::unloadStorage() {
     delete storage;

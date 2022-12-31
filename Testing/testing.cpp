@@ -1,3 +1,4 @@
+#include "Vault.h"
 #include "Account.h"
 #include "CryptoWallet.h"
 #include "CreditCard.h"
@@ -10,6 +11,7 @@
 #include "TreeTestingFunctions.h"
 #include "SerializationTestingFunctions.h"
 #include "EncDec_FileTestingFunctions.h"
+#include "VaultTestingFunctions.h"
 
 int main(){
     std::cout << "//Account Unit Testing -------------------------------------------------------------------------------"<<std::endl;
@@ -134,6 +136,7 @@ int main(){
     container.deleteT("7");
     container.deleteT("6");
     RBBSTreeTest(container,"", "tree deletion (entire tree)");
+    RBBSTreeSearchTest(container.search("4"),"","searching for '4' (empty tree)");
     Account* p4new = new Account("4","ciao4","come4","stai4");
     RBBSInsertionWhenEmptiedTest(container,*p4new,"ACCOUNT,4,ciao4,come4,stai4");
     RBBSTreeDeletionWhenEmptiedTest(container);
@@ -194,4 +197,25 @@ int main(){
                               "NOTE quarta prova 3 prova \n"
                               "NOTE seconda prova 1 prova \n"
                               "NOTE terza prova 2 prova \n","dec - test");
+    std::cout << std::endl;
+
+    std::cout << "//EncDec Unit Testing ----------------------------------------------------------------------------------"<<std::endl;
+    Vault vlt("../../Bernie/Savings/Databases");
+    readFileNamesTest(vlt,std::vector<std::string>{"prova1.txt",
+                          "prova2.txt",
+                          "prova3.txt"},"reading files in the savings folder");
+    std::vector<std::string> serializedVec;
+    for(auto & srlObj : container) serializedVec.push_back(srlObj.serialize());
+    loadFromStorageTest(vlt,std::make_pair<std::string,std::string>("prova1.txt","1234"),std::make_pair(true,serializedVec),"loading from file");
+    Note* n5 = new Note("prima","prova 0 prova");
+    Note* n6 = new Note("seconda","prova 1 prova");
+    Note* n7 = new Note("terza","prova 2 prova");
+    Note* n8 = new Note("quarta","prova 3 prova");
+    vlt.addSerializableObject(n5);
+    vlt.addSerializableObject(n6);
+    vlt.addSerializableObject(n7);
+    vlt.addSerializableObject(n8);
+    std::vector<std::string> serializedVlt;
+    for(auto & srlObj : vlt.vectorize()) serializedVlt.push_back(srlObj->serialize());
+    loadToStorageTest(vlt,std::make_pair<std::string,std::string>("prova2.txt","1234"),std::make_pair(true,serializedVlt),"loading to file and backwards");
 }
