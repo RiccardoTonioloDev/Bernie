@@ -11,6 +11,7 @@ private:
     std::vector<std::string> words;
 public:
     CryptoWallet(const std::string& name, const std::string& blockchainName, const std::vector<std::string>& words);
+    CryptoWallet(std::vector<std::string> serializedVectorized);
     /*
      * POST: ritorna sotto forma di string l'oggetto CryptoWallet, usando come carattere separatore la ",".
      */

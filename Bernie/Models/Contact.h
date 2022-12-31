@@ -15,6 +15,7 @@ private:
     std::string mail;
 public:
     Contact(const std::string& name, const std::string& contactName, const std::string& contactSurname, const Date& birthdayDate, const Telephone& telephone, const std::string& email);
+    Contact(std::vector<std::string> serializedVectorized);
     /*
     POST: restituisce la stringa composta da il tipo dell'oggetto e il valore dei suoi campi, usando come carattere di separazione ','
     */

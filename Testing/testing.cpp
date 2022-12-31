@@ -16,6 +16,7 @@ int main(){
     Account p1("NameProva1","EmailProva1","PasswordProva1","UsernameProva1");
     serializationTest(p1,std::string("ACCOUNT,NameProva1,EmailProva1,PasswordProva1,UsernameProva1"),std::string("serialization Account 1"));
     deSanitizationTest(p1.serialize(),std::make_pair<bool,std::vector<std::string>>(false,std::vector<std::string>{"ACCOUNT","NameProva1","EmailProva1","PasswordProva1","UsernameProva1"}),"deSanitization Account 1");
+    deSanitizationTest(Account(std::vector<std::string>{"ACCOUNT","NameProva1","EmailProva1","PasswordProva1","UsernameProva1"}).serialize(),std::make_pair<bool,std::vector<std::string>>(false,std::vector<std::string>{"ACCOUNT","NameProva1","EmailProva1","PasswordProva1","UsernameProva1"}),"Creating Account with vector");
     Account pNotCorrupted("&,,",",&&&,","&&,&,&,","&&&&,&,&&,");
     serializationTest(pNotCorrupted,std::string("ACCOUNT,&&&,&,,&,&&&&&&&,,&&&&&,&&&,&&&,,&&&&&&&&&,&&&,&&&&&,"),std::string("serialization stressing on escape and commas"));
     deSanitizationTest(pNotCorrupted.serialize(),std::make_pair<bool,std::vector<std::string>>(false,std::vector<std::string>{"ACCOUNT","&,,",",&&&,","&&,&,&,","&&&&,&,&&,"}),"deSanitization Account notCorrupted");
@@ -32,6 +33,7 @@ int main(){
     CreditCard cNotCorrupted("&,,","OwnerProva",",&,&,","&&&,",d1);
     serializationTest(cNotCorrupted,std::string("CREDITCARD,&&&,&,,OwnerProva,&,&&&,&&&,,&&&&&&&,,1/1/1"),"serialization CreditCard notCorrupted");
     deSanitizationTest(cNotCorrupted.serialize(),std::make_pair(false,std::vector<std::string>{"CREDITCARD","&,,","OwnerProva",",&,&,","&&&,",d1.getData()}),"deSanitization CreditCard notCorrupted");
+    deSanitizationTest(CreditCard(std::vector<std::string>{"CREDITCARD","&,,","OwnerProva",",&,&,","&&&,",d1.getData()}).serialize(),std::make_pair(false,std::vector<std::string>{"CREDITCARD","&,,","OwnerProva",",&,&,","&&&,",d1.getData()}),"Creating CreditCard with string vector");
     std::string corruptedCreditCard("CREDITCARD,Nam&eProva,OwnerProva,provaProva,prova,1/1/1");
     deSanitizationTest(corruptedCreditCard,std::make_pair(true,std::vector<std::string>{}),"deSanitization CreditCard Corrupted");
     std::cout << std::endl;
@@ -45,6 +47,7 @@ int main(){
     Contact coNotCorrupted("&,,",",&&,","&",d1,t1,"");
     serializationTest(coNotCorrupted,std::string("CONTACT,&&&,&,,&,&&&&&,,&&,1/1/1,prova prova2,"),"serialization Contact notCorrupted");
     deSanitizationTest(coNotCorrupted.serialize(),std::make_pair(false, std::vector<std::string>{"CONTACT","&,,",",&&,","&",d1.getData(),t1.getNumber(),""}),"deSanitization Contact notCorrupted");
+    deSanitizationTest(Contact(std::vector<std::string>{"CONTACT","&,,",",&&,","&",d1.getData(),t1.getNumber(),""}).serialize(),std::make_pair(false, std::vector<std::string>{"CONTACT","&,,",",&&,","&",d1.getData(),t1.getNumber(),""}),"Creating Contact with string vector");
     std::string corruptedContact("CONTACT,NomeProv&a,Nome,Cognome,1/1/1,prova prova2,Email");
     deSanitizationTest(corruptedContact,std::make_pair(true, std::vector<std::string>{}),"deSanitization Contact Corrupted");
     std::cout << std::endl;
@@ -57,6 +60,7 @@ int main(){
     CryptoWallet crNotCorrupted("&&,","",std::vector<std::string>{"&&,","",",,&"});
     serializationTest(crNotCorrupted,std::string("CRYPTOWALLET,&&&&&,,,&&&&&,,,&,&,&&"),"serialization CryptoWallet notCorrupted");
     deSanitizationTest(crNotCorrupted.serialize(),std::make_pair(false, std::vector<std::string>{"CRYPTOWALLET","&&,","","&&,","",",,&"}),"deSanitization CryptoWallet notCorrupted");
+    deSanitizationTest(CryptoWallet(std::vector<std::string>{"CRYPTOWALLET","&&,","","&&,","",",,&"}).serialize(),std::make_pair(false, std::vector<std::string>{"CRYPTOWALLET","&&,","","&&,","",",,&"}),"Creating CryptoWallet with string vector");
     std::string corruptedCryptoWallet("CRYPTOWAL&LET,NomeProva,blockchainName,1,2,3,4");
     deSanitizationTest(corruptedCryptoWallet, std::make_pair(true, std::vector<std::string>{}), "deSanitization CryptoWallet Corrupted");
     std::cout << std::endl;
@@ -68,6 +72,7 @@ int main(){
     Note nNotCorrupted("","&&,&&");
     serializationTest(nNotCorrupted,std::string("NOTE,,&&&&&,&&&&"),"serialization Note notCorrupted");
     deSanitizationTest(nNotCorrupted.serialize(), std::make_pair(false,std::vector<std::string>{"NOTE","","&&,&&"}),"deSanitization Note notCorrupted");
+    deSanitizationTest(Note(std::vector<std::string>{"NOTE","","&&,&&"}).serialize(), std::make_pair(false,std::vector<std::string>{"NOTE","","&&,&&"}),"Creating Note with string vector");
     std::string corruptedNote("NOTE,pr&ova,prov&a");
     deSanitizationTest(corruptedNote,std::make_pair(true, std::vector<std::string>{}),"deSanitization Note Corrupted");
     std::cout << std::endl;
@@ -165,6 +170,9 @@ int main(){
                            "NOTE,jfdkjfaifnwe,prova 3 prova", "tree deletion (single node)");
     container.deleteT("jfdkjfaifnwe");
     RBBSTreeTest(container,"ACCOUNT,4,ciao4,come4,stai4", "tree deletion (single node)");
+    std::cout << std::endl;
+
+    std::cout << "//EncDec Unit Testing ----------------------------------------------------------------------------------"<<std::endl;
     encInFileTest(container, "true", "enc in file");  //the only node written is ACCOUNT4ciao4come4stai4
     VerifyPasswordInFileTest(container, false, "wrongPsw", "wrong password");
     VerifyPasswordInFileTest(container, true, "1234", "right password");

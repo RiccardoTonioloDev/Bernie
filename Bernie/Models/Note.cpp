@@ -1,6 +1,7 @@
 #include "Note.h"
 
 Note::Note(const std::string& n, const std::string& t) : SerializableObject(n), text(t) {}
+Note::Note(std::vector<std::string> serializedVectorized): SerializableObject(serializedVectorized[1]), text(serializedVectorized[2]) {}
 
 std::string Note::serialize() const {
     std::string serializedStr = "NOTE";

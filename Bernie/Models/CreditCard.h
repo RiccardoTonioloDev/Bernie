@@ -13,6 +13,7 @@ private:
     Date date;
 public:
     CreditCard(const std::string& name,const std::string& owner, const std::string& cardNumber, const std::string& cvv, const Date& expirationDate);
+    CreditCard(std::vector<std::string> serializedVectorized);
     /*
     POST: restituisce la stringa composta da il tipo dell'oggetto e il valore dei suoi campi, usando come carattere di separazione ','
     */

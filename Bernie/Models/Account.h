@@ -11,6 +11,7 @@ private:
    std::string password;
 public:
     Account(const std::string& name, const std::string& email,  const std::string& password,const std::string& username = "");
+    Account(std::vector<std::string> serializedVectorized);
     /*
      * POST: ritorna sotto forma di string l'oggetto Account, usando come carattere separatore la ",".
      */

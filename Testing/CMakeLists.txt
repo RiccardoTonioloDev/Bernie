@@ -28,4 +28,4 @@ add_executable(Bernie
         ../Bernie/Models/Telephone.h
         TreeTestingFunctions.cpp
         testing.cpp
-        SerializationTestingFunctions.cpp SerializationTestingFunctions.h TreeTestingFunctions.h ../Bernie/Core/EncDec_File.cpp ../Bernie/Core/EncDec_File.h EncDec_FileTestingFunctions.cpp EncDec_FileTestingFunctions.h)
+        SerializationTestingFunctions.cpp SerializationTestingFunctions.h TreeTestingFunctions.h ../Bernie/Core/EncDec_File.cpp ../Bernie/Core/EncDec_File.h EncDec_FileTestingFunctions.cpp EncDec_FileTestingFunctions.h ../Bernie/Models/Vault.cpp ../Bernie/Models/Vault.h)

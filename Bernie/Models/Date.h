@@ -10,6 +10,7 @@ private:
     unsigned short int year;
 public:
     Date(short unsigned int d = 0, short unsigned int m = 0, short unsigned int y = 0);
+    Date(std::string& strDate);
     /*
     POST: si ritorna una stringa composta da tutti i campi della data nel formato gg/mm/aaaa
     */
