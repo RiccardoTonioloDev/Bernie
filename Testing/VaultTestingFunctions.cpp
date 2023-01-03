@@ -24,7 +24,6 @@ void loadFromStorageTest(Vault &input, std::pair<std::string, std::string> nameA
 
 void loadToStorageTest(Vault &input, std::pair<std::string, std::string> nameAndPass,
                        std::pair<bool, const std::vector<std::string>> expected, const std::string &testName) {
-    input.loadStorage(nameAndPass.first, nameAndPass.second);
     input.loadToStorage();
     loadFromStorageTest(input, nameAndPass, expected, testName);
 }

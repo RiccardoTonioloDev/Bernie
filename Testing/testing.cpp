@@ -257,8 +257,9 @@ int main() {
             << "//EncDec Unit Testing ----------------------------------------------------------------------------------"
             << std::endl;
     encInFileTest(container, "true", "enc in file");  //the only node written is ACCOUNT4ciao4come4stai4
-    VerifyPasswordInFileTest(container, false, "wrongPsw", "wrong password");
-    VerifyPasswordInFileTest(container, true, "1234", "right password");
+    VerifyPasswordInFileTest("../../Bernie/Savings/Databases/prova1.txt", false, "wrong password",
+                             "wrong password test");
+    VerifyPasswordInFileTest("../../Bernie/Savings/Databases/prova1.txt", true, "1234", "right password");
 
     decFromFileTest(container, "ACCOUNT 4 ciao4 come4 stai4 \n", "dec - test");
 
@@ -280,10 +281,11 @@ int main() {
     std::cout << std::endl;
 
     std::cout
-            << "//EncDec Unit Testing + Vault---------------------------------------------------------------------------"
+            << "//EncDec Unit Testing + Vault --------------------------------------------------------------------------"
             << std::endl;
     Vault vlt("../../Bernie/Savings/Databases");
-    readFileNamesTest(vlt, std::vector<std::string>{"prova1.txt",
+    readFileNamesTest(vlt, std::vector<std::string>{"24SerializableObjectTest.txt",
+                                                    "prova1.txt",
                                                     "prova2.txt",
                                                     "prova3.txt",
                                                     "prova5.txt"}, "reading files in the savings folder");
@@ -305,4 +307,94 @@ int main() {
                       std::make_pair(true, serializedVlt), "loading to file and backwards");
     loadToStorageTest(vlt, std::make_pair<std::string, std::string>("prova5.txt", "1234"),
                       std::make_pair(true, serializedVlt), "loading to a non existing file");
+
+    std::cout << std::endl;
+
+    std::cout
+            << "//Extensive Stress Unit Test ---------------------------------------------------------------------------"
+            << std::endl;
+    Note *a = new Note("a", "nota a");
+    Note *b = new Note("b", "nota b");
+    Note *c = new Note("c", "nota c");
+    Note *d = new Note("d", "nota d");
+
+
+    Contact *e = new Contact("e", "Nome e", "Cognome e", Date(15, 07, 02), Telephone("+39", "999999"), "Email e");
+    Contact *f = new Contact("f", "Nome f", "Cognome f", Date(15, 07, 02), Telephone("+39", "999999"), "Email e");
+    Contact *g = new Contact("g", "Nome g", "Cognome g", Date(15, 07, 02), Telephone("+39", "999999"), "Email e");
+    Contact *h = new Contact("h", "Nome h", "Cognome h", Date(15, 07, 02), Telephone("+39", "999999"), "Email e");
+
+    CryptoWallet *i = new CryptoWallet("i", "Nome i", std::vector<std::string>{"word i1", "word i2"});
+    CryptoWallet *l = new CryptoWallet("l", "Nome l", std::vector<std::string>{"word l1", "word l2"});
+    CryptoWallet *m = new CryptoWallet("m", "Nome m", std::vector<std::string>{"word m1", "word m2"});
+    CryptoWallet *n = new CryptoWallet("n", "Nome n", std::vector<std::string>{"word n1", "word n2"});
+
+    CreditCard *o = new CreditCard("o", "Owner o", "Number o", "Cvv o", Date(15, 07, 02));
+    CreditCard *p = new CreditCard("p", "Owner p", "Number p", "Cvv p", Date(15, 07, 02));
+    CreditCard *q = new CreditCard("q", "Owner q", "Number q", "Cvv q", Date(15, 07, 02));
+    CreditCard *r = new CreditCard("r", "Owner r", "Number r", "Cvv r", Date(15, 07, 02));
+
+    Account *s = new Account("s", "Email s", "Password s", "Username s");
+    Account *t = new Account("t", "Email t", "Password t", "Username t");
+    Account *u = new Account("u", "Email u", "Password u", "Username u");
+    Account *v = new Account("v", "Email v", "Password v", "Username v");
+    Account *z = new Account("z", "Email z", "Password z", "Username z");
+
+    vlt.reset();
+    vlt.loadStorage("24SerializableObjectTest.txt", "0123456789");
+    vlt.addSerializableObject(l);
+    vlt.addSerializableObject(m);
+    vlt.addSerializableObject(b);
+    vlt.addSerializableObject(h);
+    vlt.addSerializableObject(t);
+    vlt.addSerializableObject(f);
+    vlt.addSerializableObject(r);
+    vlt.addSerializableObject(d);
+    vlt.addSerializableObject(a);
+    vlt.addSerializableObject(u);
+    vlt.addSerializableObject(i);
+    vlt.addSerializableObject(n);
+    vlt.addSerializableObject(p);
+    vlt.addSerializableObject(z);
+    vlt.addSerializableObject(g);
+    vlt.addSerializableObject(q);
+    vlt.addSerializableObject(e);
+    vlt.addSerializableObject(o);
+    vlt.addSerializableObject(s);
+    vlt.addSerializableObject(v);
+    vlt.addSerializableObject(c);
+    std::vector<std::string> vec{a->serialize(), b->serialize(), c->serialize(),
+                                 d->serialize(), e->serialize(), f->serialize(),
+                                 g->serialize(), h->serialize(), i->serialize(),
+                                 l->serialize(), m->serialize(), n->serialize(),
+                                 o->serialize(), p->serialize(), q->serialize(),
+                                 r->serialize(), s->serialize(), t->serialize(),
+                                 u->serialize(), v->serialize(), z->serialize()};
+    loadToStorageTest(vlt, std::make_pair<std::string, std::string>("24SerializableObjectTest.txt", "0123456789"),
+                      std::make_pair(true, vec),
+                      "Input of 24 serializable objects (checking saving order)");
+    vlt.deleteSerializableObject("l");
+    vlt.deleteSerializableObject("m");
+    vlt.deleteSerializableObject("b");
+    vlt.deleteSerializableObject("h");
+    vlt.deleteSerializableObject("t");
+    vlt.deleteSerializableObject("f");
+    vlt.deleteSerializableObject("r");
+    vlt.deleteSerializableObject("d");
+    vlt.deleteSerializableObject("a");
+    vlt.deleteSerializableObject("u");
+    vlt.deleteSerializableObject("i");
+    vlt.deleteSerializableObject("n");
+    vlt.deleteSerializableObject("p");
+    vlt.deleteSerializableObject("z");
+    vlt.deleteSerializableObject("g");
+    vlt.deleteSerializableObject("q");
+    vlt.deleteSerializableObject("e");
+    vlt.deleteSerializableObject("o");
+    vlt.deleteSerializableObject("s");
+    vlt.deleteSerializableObject("v");
+    vlt.deleteSerializableObject("c");
+    loadToStorageTest(vlt, std::make_pair<std::string, std::string>("24SerializableObjectTest.txt", "0123456789"),
+                      std::make_pair(true, std::vector<std::string>{}),
+                      "Deletion of 24 serializable objects (if it deletes it completely)");
 }

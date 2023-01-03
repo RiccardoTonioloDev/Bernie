@@ -4,11 +4,14 @@
 Vault::Vault(const std::string &path) : tree(nullptr), storage(nullptr), pathToDirectory(path) {}
 
 void Vault::loadStorage(const std::string &vaultName, const std::string &password) {
+    if (storage) return;
     storage = new EncDec_File(password, pathToDirectory + "/" + vaultName);
+    tree = new RBBSTree<SerializableObject>;
 }
 
 bool Vault::loadFromStorage() {
     if (storage == nullptr) return false;
+    if (!(storage->verifyPassword(*storage))) return false;
     std::vector<std::vector<std::string>> serializedVault = storage->decFromFile();
     RBBSTree<SerializableObject> *trialTree = new RBBSTree<SerializableObject>();
     for (auto rowsIterator = serializedVault.begin(); rowsIterator != serializedVault.end(); ++rowsIterator) {
@@ -36,12 +39,15 @@ bool Vault::loadToStorage() {
     if (storage == nullptr) return false;
     if (tree == nullptr) return false;
     storage->encInFile(*tree);
+
     return true;
 }
 
 void Vault::reset() {
     delete storage;
     delete tree;
+    storage = nullptr;
+    tree = nullptr;
 }
 
 std::vector<std::string> Vault::fetchDBNames() const {
