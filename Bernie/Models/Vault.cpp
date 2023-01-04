@@ -72,15 +72,14 @@ bool Vault::addSerializableObject(const SerializableObject *ptr) {
     if (storage == nullptr) return false;
     if (tree == nullptr) return false;
     bool result = tree->insert(ptr);
-    storage->encInFile(*tree);
+    if (result) storage->encInFile(*tree);
     return result;
 }
 
 void Vault::deleteSerializableObject(const std::string &nameToSearch) {
     if (tree == nullptr) return;
     if (storage == nullptr) return;
-    tree->deleteT(nameToSearch);
-    storage->encInFile(*tree);
+    if (tree->deleteT(nameToSearch)) storage->encInFile(*tree);
 }
 
 std::vector<const SerializableObject *> Vault::searchSerializableObjects(const std::string &nameToSearch) const {

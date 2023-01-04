@@ -1,7 +1,8 @@
 #ifndef VAULT_H
 #define VAULT_H
 
-#include "../Core/RBBSTree.h"
+//#include "../Core/RBBSTree.h"
+#include "../Core/RBBSTree2.h"
 #include "SerializableObject.h"
 #include "../Core/EncDec_File.h"
 #include "../Models/Account.h"

@@ -1,7 +1,8 @@
 #ifndef ENCDEC_FILETESTINGFUNCTIONS_H
 #define ENCDEC_FILETESTINGFUNCTIONS_H
 
-#include "../Bernie/Core/RBBSTree.h"
+#include "../Bernie/Core/RBBSTree2.h"
+//#include "../Bernie/Core/RBBSTree.h"
 #include "../Bernie/Core/EncDec_File.h"
 #include "../Bernie/Models/SerializableObject.h"
 

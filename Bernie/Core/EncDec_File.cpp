@@ -1,7 +1,6 @@
 #include "EncDec_File.h"
 #include <iostream>
 #include <fstream>
-#include <sstream>
 
 EncDec_File::EncDec_File(const std::string &k, const std::string &fN) : key(k), fileName(fN) {}
 

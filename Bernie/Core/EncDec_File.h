@@ -2,7 +2,8 @@
 #define ENCDEC_FILE_H
 
 #include <string>
-#include "RBBSTree.h"
+//#include "RBBSTree.h"
+#include "RBBSTree2.h"
 #include "../Models/SerializableObject.h"
 
 
