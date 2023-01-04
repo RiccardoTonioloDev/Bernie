@@ -3,10 +3,11 @@
 
 Vault::Vault(const std::string &path) : tree(nullptr), storage(nullptr), pathToDirectory(path) {}
 
-void Vault::loadStorage(const std::string &vaultName, const std::string &password) {
-    if (storage) return;
+bool Vault::loadStorage(const std::string &vaultName, const std::string &password) {
+    if (storage) reset();
     storage = new EncDec_File(password, pathToDirectory + "/" + vaultName);
     tree = new RBBSTree<SerializableObject>;
+    return loadFromStorage();
 }
 
 bool Vault::loadFromStorage() {
@@ -27,6 +28,7 @@ bool Vault::loadFromStorage() {
             trialTree->insert(new Note(*rowsIterator));
         else {
             delete trialTree;
+            reset();
             return false;
         }
     }
@@ -72,14 +74,14 @@ bool Vault::addSerializableObject(const SerializableObject *ptr) {
     if (storage == nullptr) return false;
     if (tree == nullptr) return false;
     bool result = tree->insert(ptr);
-    if (result) storage->encInFile(*tree);
+    if (result) loadToStorage();
     return result;
 }
 
 void Vault::deleteSerializableObject(const std::string &nameToSearch) {
     if (tree == nullptr) return;
     if (storage == nullptr) return;
-    if (tree->deleteT(nameToSearch)) storage->encInFile(*tree);
+    if (tree->deleteT(nameToSearch)) loadToStorage();
 }
 
 std::vector<const SerializableObject *> Vault::searchSerializableObjects(const std::string &nameToSearch) const {

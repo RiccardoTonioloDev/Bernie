@@ -2,7 +2,7 @@
 #define TREETESTINGFUNCTIONS_CPP_H
 
 //#include "RBBSTree.h"
-#include "RBBSTree2.h"
+#include "RBBSTree.h"
 
 void RBBSTreeTest(const RBBSTree<SerializableObject> &input, const std::string &expected, const std::string &testName);
 

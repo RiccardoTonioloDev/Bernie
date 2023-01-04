@@ -8,8 +8,7 @@ void readFileNamesTest(const Vault &input, const std::vector<std::string> expect
 
 void loadFromStorageTest(Vault &input, std::pair<std::string, std::string> nameAndPass,
                          std::pair<bool, const std::vector<std::string>> expected, const std::string &testName) {
-    input.loadStorage(nameAndPass.first, nameAndPass.second);
-    bool isLoadingFailed = input.loadFromStorage();
+    bool isLoadingFailed = input.loadStorage(nameAndPass.first, nameAndPass.second);
     if (isLoadingFailed != expected.first) {
         std::cout << "TEST (" + testName + "): \033[91mNOT PASSED\033[0m";
         return;
@@ -24,6 +23,5 @@ void loadFromStorageTest(Vault &input, std::pair<std::string, std::string> nameA
 
 void loadToStorageTest(Vault &input, std::pair<std::string, std::string> nameAndPass,
                        std::pair<bool, const std::vector<std::string>> expected, const std::string &testName) {
-    input.loadToStorage();
     loadFromStorageTest(input, nameAndPass, expected, testName);
 }

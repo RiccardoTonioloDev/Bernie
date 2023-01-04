@@ -1,8 +1,7 @@
 #ifndef VAULT_H
 #define VAULT_H
 
-//#include "../Core/RBBSTree.h"
-#include "../Core/RBBSTree2.h"
+#include "../Core/RBBSTree.h"
 #include "SerializableObject.h"
 #include "../Core/EncDec_File.h"
 #include "../Models/Account.h"
@@ -16,13 +15,6 @@ private:
     RBBSTree<SerializableObject> *tree;
     EncDec_File *storage;
     std::string pathToDirectory;
-public:
-    explicit Vault(const std::string &path);
-
-    /*
-     * POST: va a salvarsi dove andare a salvare e da dove estrarre, nella parte EncDec_File dell'oggetto
-     */
-    void loadStorage(const std::string &vaultName, const std::string &password);
 
     /*
      * PRE: lo storage delle essere stato caricato (eventualità comunque gestita)
@@ -41,6 +33,15 @@ public:
      *      - true: altrimenti.
      */
     bool loadToStorage();
+
+public:
+    explicit Vault(const std::string &path);
+
+    /*
+     * POST: va a salvarsi dove andare a salvare e da dove estrarre, nella parte EncDec_File dell'oggetto
+     */
+    bool loadStorage(const std::string &vaultName, const std::string &password);
+
 
     /*
      * POST: va a resettare l'oggetto. Esegue delete dell'albero e dello storage, di modo da poter riutilizzare l'oggetto

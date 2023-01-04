@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 #include <iostream>
-#include "RBBSTree2.h"
+#include "RBBSTree.h"
 #include "TreeTestingFunctions.h"
 #include "SerializationTestingFunctions.h"
 #include "EncDec_FileTestingFunctions.h"
@@ -285,6 +285,7 @@ int main() {
             << std::endl;
     Vault vlt("../../Bernie/Savings/Databases");
     readFileNamesTest(vlt, std::vector<std::string>{"24SerializableObjectTest.txt",
+                                                    "ciao.txt",
                                                     "prova1.txt",
                                                     "prova2.txt",
                                                     "prova3.txt",
@@ -303,9 +304,21 @@ int main() {
     vlt.addSerializableObject(n8);
     std::vector<std::string> serializedVlt;
     for (auto &srlObj: vlt.vectorize()) serializedVlt.push_back(srlObj->serialize());
-    loadToStorageTest(vlt, std::make_pair<std::string, std::string>("prova2.txt", "1234"),
+    loadToStorageTest(vlt, std::make_pair<std::string, std::string>("prova1.txt", "1234"),
                       std::make_pair(true, serializedVlt), "loading to file and backwards");
-    loadToStorageTest(vlt, std::make_pair<std::string, std::string>("prova5.txt", "1234"),
+    vlt.reset();
+    Note *n51 = new Note("prima", "prova 0 prova");
+    Note *n61 = new Note("seconda", "prova 1 prova");
+    Note *n71 = new Note("terza", "prova 2 prova");
+    Note *n81 = new Note("quarta", "prova 3 prova");
+    vlt.loadStorage("ciao.txt", "prova");
+    vlt.addSerializableObject(n51);
+    vlt.addSerializableObject(n61);
+    vlt.addSerializableObject(n71);
+    vlt.addSerializableObject(n81);
+    serializedVlt.clear();
+    for (auto &srlObj: vlt.vectorize()) serializedVlt.push_back(srlObj->serialize());
+    loadToStorageTest(vlt, std::make_pair<std::string, std::string>("ciao.txt", "prova"),
                       std::make_pair(true, serializedVlt), "loading to a non existing file");
 
     std::cout << std::endl;

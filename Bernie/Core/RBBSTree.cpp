@@ -1,4 +1,4 @@
-#include "RBBSTree2.h"
+#include "RBBSTree.h"
 
 template<class T>
 RBBSTree<T>::Node::Node(const T *i, Node *p, Node *s, Node *par, Node *l, Node *r, int c) : info(i), pre(p), succ(s),
@@ -26,7 +26,7 @@ bool RBBSTree<T>::insert(const T *info) {
 
     while (x != TNULL) {
         y = x;
-        if (node->info < x->info) {
+        if (*(node->info) < *(x->info)) {
             x = x->left;
         } else {
             x = x->right;
@@ -171,7 +171,7 @@ void RBBSTree<T>::rightRotate(Node *x) {
 template<class T>
 typename RBBSTree<T>::const_iterator RBBSTree<T>::begin() const {
     const_iterator cit;
-    if (root) {
+    if (root != TNULL) {
         cit.currentPointer = min;
         cit.isStart = false;
         cit.isEnd = false;
@@ -186,7 +186,7 @@ typename RBBSTree<T>::const_iterator RBBSTree<T>::begin() const {
 template<class T>
 typename RBBSTree<T>::const_iterator RBBSTree<T>::end() const {
     const_iterator cit;
-    if (root) {
+    if (root != TNULL) {
         cit.currentPointer = max;
         ++cit.currentPointer;
         cit.isStart = false;
@@ -209,6 +209,7 @@ RBBSTree<T>::~RBBSTree() {
         start = next;
         next = nullptr;
     }
+    delete TNULL;
 }
 
 template<class T>
@@ -252,7 +253,7 @@ void RBBSTree<T>::deleteNodeHelper(Node *toDelete) {
 template<class T>
 bool RBBSTree<T>::deleteT(const std::string &nameToSearch) {
     Node *toDelete = searchNode(nameToSearch);
-    if (toDelete) {
+    if (toDelete != TNULL) {
         deleteNodeHelper(toDelete);
         return true;
     } else return false;

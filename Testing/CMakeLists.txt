@@ -8,8 +8,8 @@ include_directories(../Bernie/Core)
 include_directories(../Bernie/Models)
 
 add_executable(Bernie
-        ../Bernie/Core/RBBSTree2.h
-        ../Bernie/Core/RBBSTree2.cpp
+        ../Bernie/Core/RBBSTree.h
+        ../Bernie/Core/RBBSTree.cpp
         ../Bernie/Models/Account.cpp
         ../Bernie/Models/Account.h
         ../Bernie/Models/Contact.cpp
@@ -30,5 +30,3 @@ add_executable(Bernie
         testing.cpp
         SerializationTestingFunctions.cpp SerializationTestingFunctions.h TreeTestingFunctions.h ../Bernie/Core/EncDec_File.cpp ../Bernie/Core/EncDec_File.h EncDec_FileTestingFunctions.cpp EncDec_FileTestingFunctions.h ../Bernie/Models/Vault.cpp ../Bernie/Models/Vault.h VaultTestingFunctions.cpp VaultTestingFunctions.h)
 
-#../Bernie/Core/RBBSTree.cpp
-#../Bernie/Core/RBBSTree.h
