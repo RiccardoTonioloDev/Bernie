@@ -72,10 +72,24 @@ public:
      */
     void deleteSerializableObject(const std::string &nameToSearch);
 
+    /*
+     * POST: restituisce un vector di puntatori costanti a SerializableObject, i quali posseggono all'interno del loro
+     * nome, la sotto sequenza specificata dal parametro nameToSearch. Il vettore è ordinato in modo crescente secondo
+     * l'ordine lessicografico.
+     */
     std::vector<const SerializableObject *> searchSerializableObjects(const std::string &nameToSearch) const;
 
+    /*
+     * POST: restituisce un vector di puntatori costanti a SerializableObject, rappresentanti l'albero sotto forma di
+     * vettore. Il vettore è ordinato in modo crescente secondo l'ordine lessicografico.
+     */
     std::vector<const SerializableObject *> vectorize() const;
 
+    /*
+     * POST: restituisce un vector di puntatori costanti a SerializableObject, ma del tipo dinamico specificato dal
+     * template, rappresentanti l'albero sotto forma di vettore, per quello specifico tipo T. Il vettore è ordinato in
+     * modo crescente secondo l'ordine lessicografico.
+     */
     template<class T>
     std::vector<const SerializableObject *> filteredVectorize() const;
 
