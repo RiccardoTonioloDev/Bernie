@@ -4,20 +4,23 @@
 #include <iostream>
 #include "SerializableObject.h"
 
-class Note : public SerializableObject{
+class Note : public SerializableObject {
 private:
     std::string text;
 public:
-    Note(const std::string& name, const std::string& text);
-    Note(std::vector<std::string> serializedVectorized);
+    Note(const std::string &name, const std::string &text);
+
+    Note(const std::vector<std::string> &serializedVectorized);
+
     /*
     POST: restituisce la stringa composta da il tipo dell'oggetto e il valore dei suoi campi, usando come carattere di separazione ','
     */
     std::string serialize() const override;
+
     /*
     POST: resituisce una copia dell'oggetto costruita mediante costruttore di copia passando come parametro il puntatore implicito this deferenziato
     */
-    Note* clone() const override;
+    Note *clone() const override;
 };
 
 #endif
