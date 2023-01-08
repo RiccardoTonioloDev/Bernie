@@ -36,3 +36,4 @@ add_executable(Bernie
         testing.cpp
         SerializationTestingFunctions.cpp SerializationTestingFunctions.h TreeTestingFunctions.h ../Bernie/Core/EncDec_File.cpp ../Bernie/Core/EncDec_File.h EncDec_FileTestingFunctions.cpp EncDec_FileTestingFunctions.h ../Bernie/Models/Vault.cpp ../Bernie/Models/Vault.h VaultTestingFunctions.cpp VaultTestingFunctions.h)
 
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
