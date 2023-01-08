@@ -11,6 +11,20 @@
 #include "../Models/Note.h"
 #include "../Models/SerializableObject.h"
 
+/*
+ * WARNINGS: il tipo di template utilizzato da questa classe è meglio che sia derivato da SerializableObject. Se così
+ * non dovesse essere, bisogna andare a re-implementare diversi operatori:
+ *      - operator== (che compara il tipo T con uno stesso tipo T);
+ *      - operator== (che compara il tipo T con una stringa);
+ *      - operator< (che compara il tipo T con uno stesso tipo T);
+ *      - operator< (che compara il tipo T con una stringa);
+ *      - operator> (che compara il tipo T con uno stesso tipo T);
+ *      - operator> (che compara il tipo T con una stringa);
+ *      - operator<= (che compara il tipo T con uno stesso tipo T);
+ *      - operator std::string (per poter effettuare casting implicito da tipo T a stringa [utilizzato per prelevare il
+ *      name]);
+ */
+
 template<class T>
 class RBBSTree {
 private:
@@ -36,10 +50,10 @@ private:
     Node *TNULL;
 
     /*
-     * POST: aggiusta la posizione del nodo passato x, mantenendo le 5 proprietà dell'albero rosso nero, rispetto alla
+     * POST: aggiusta la posizione del nodo passato x, mantenendo le cinque proprietà dell'albero rosso nero, rispetto alla
      * precedente cancellazione.
      */
-    void deleteFix(Node *x);
+    void deleteFixUp(Node *x);
 
     /*
      * POST: effettua il trapianto del nodo v nel nodo u (sposta sostanzialmente i parent di u su v).
@@ -117,7 +131,7 @@ public:
     /*
      * POST: permette d'inserire all'interno dell'albero un puntatore di tipo T (verrà incapsulato da un nodo)
      * Restituisce:
-     *      - false: se la insert non va a buon fine (esiste un altro elemento con lo stesso nome all'interno dell'albero.
+     *      - false: se la insert non va a buon fine (esiste un altro elemento con lo stesso nome all'interno dell'albero).
      *      - true: altrimenti.
      */
     bool insert(const T *info);

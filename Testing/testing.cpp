@@ -306,7 +306,6 @@ int main() {
     for (auto &srlObj: vlt.vectorize()) serializedVlt.push_back(srlObj->serialize());
     loadToStorageTest(vlt, std::make_pair<std::string, std::string>("prova1.txt", "1234"),
                       std::make_pair(true, serializedVlt), "loading to file and backwards");
-    vlt.reset();
     Note *n51 = new Note("prima", "prova 0 prova");
     Note *n61 = new Note("seconda", "prova 1 prova");
     Note *n71 = new Note("terza", "prova 2 prova");
@@ -353,7 +352,6 @@ int main() {
     Account *v = new Account("v", "Email v", "Password v", "Username v");
     Account *z = new Account("z", "Email z", "Password z", "Username z");
 
-    vlt.reset();
     vlt.loadStorage("24SerializableObjectTest.txt", "0123456789");
     vlt.addSerializableObject(l);
     vlt.addSerializableObject(m);

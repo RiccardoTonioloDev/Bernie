@@ -32,22 +32,23 @@ private:
      *      - false: se non è stato creato lo storage e/o l'albero.
      *      - true: altrimenti.
      */
-    bool loadToStorage();
-
-public:
-    explicit Vault(const std::string &path);
-
-    /*
-     * POST: va a salvarsi dove andare a salvare e da dove estrarre, nella parte EncDec_File dell'oggetto
-     */
-    bool loadStorage(const std::string &vaultName, const std::string &password);
-
+    bool loadToStorage() const;
 
     /*
      * POST: va a resettare l'oggetto. Esegue delete dell'albero e dello storage, di modo da poter riutilizzare l'oggetto
      * per leggere un altro file.
      */
     void reset();
+
+public:
+    explicit Vault(const std::string &path);
+
+    ~Vault();
+
+    /*
+     * POST: va a salvarsi dove andare a salvare e da dove estrarre, nella parte EncDec_File dell'oggetto
+     */
+    bool loadStorage(const std::string &vaultName, const std::string &password);
 
     /*
      * POST: fornisce un vettore di stringhe che specificano i nomi dei files all'interno della cartella di saving per
@@ -70,7 +71,7 @@ public:
      *      - false: se non è stato impostato lo storage e/o l'albero.
      *      - true: altrimenti.
      */
-    void deleteSerializableObject(const std::string &nameToSearch);
+    bool deleteSerializableObject(const std::string &nameToSearch);
 
     /*
      * POST: restituisce un vector di puntatori costanti a SerializableObject, i quali posseggono all'interno del loro

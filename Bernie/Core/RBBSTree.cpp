@@ -246,7 +246,7 @@ void RBBSTree<T>::deleteNodeHelper(Node *toDelete) {
     if (toDelete == max) max = toDelete->pre;
     delete toDelete;
     if (y_original_color == 0) {
-        deleteFix(x);
+        deleteFixUp(x);
     }
 }
 
@@ -260,7 +260,7 @@ bool RBBSTree<T>::deleteT(const std::string &nameToSearch) {
 }
 
 template<class T>
-void RBBSTree<T>::deleteFix(Node *x) {
+void RBBSTree<T>::deleteFixUp(Node *x) {
     Node *s;
     while (x != root && x->color == 0) {
         if (x == x->parent->left) {

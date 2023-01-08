@@ -1,7 +1,13 @@
 #include "Vault.h"
 #include <dirent.h>
+#include <algorithm>
 
 Vault::Vault(const std::string &path) : tree(nullptr), storage(nullptr), pathToDirectory(path) {}
+
+Vault::~Vault() {
+    delete storage;
+    delete tree;
+}
 
 bool Vault::loadStorage(const std::string &vaultName, const std::string &password) {
     if (storage) reset();
@@ -37,7 +43,7 @@ bool Vault::loadFromStorage() {
     return true;
 }
 
-bool Vault::loadToStorage() {
+bool Vault::loadToStorage() const {
     if (storage == nullptr) return false;
     if (tree == nullptr) return false;
     storage->encInFile(*tree);
@@ -67,6 +73,8 @@ std::vector<std::string> Vault::fetchDBNames() const {
     }
     closedir(dir);
 
+    std::sort(fileNames.begin(), fileNames.end());
+
     return fileNames;
 }
 
@@ -77,11 +85,14 @@ bool Vault::addSerializableObject(const SerializableObject *ptr) {
     if (result) loadToStorage();
     return result;
 }
-
-void Vault::deleteSerializableObject(const std::string &nameToSearch) {
-    if (tree == nullptr) return;
-    if (storage == nullptr) return;
-    if (tree->deleteT(nameToSearch)) loadToStorage();
+   
+bool Vault::deleteSerializableObject(const std::string &nameToSearch) {
+    if (tree == nullptr || storage == nullptr) return false;
+    if (tree->deleteT(nameToSearch)) {
+        loadToStorage();
+        return true;
+    }
+    return false;
 }
 
 std::vector<const SerializableObject *> Vault::searchSerializableObjects(const std::string &nameToSearch) const {
