@@ -18,6 +18,14 @@ std::string Account::serialize() const {
     return serializedObj;
 }
 
+bool Account::modify(const SerializableObject *ptr) {
+    if (dynamic_cast<const Account *>(ptr)) {
+        *this = *(static_cast<const Account *>(ptr));
+        return true;
+    }
+    return false;
+}
+
 Account *Account::clone() const {
     return new Account(*this);
 }

@@ -333,6 +333,18 @@ typename RBBSTree<T>::Node *RBBSTree<T>::searchNode(const std::string &nameToSea
 }
 
 template<class T>
+const SerializableObject *RBBSTree<T>::searchSingle(const std::string &nameToSearch) const {
+    Node *tmp = root;
+    while (tmp != TNULL) {
+        if (*(tmp->info) == nameToSearch)
+            return tmp->info;
+        else
+            tmp = (*(tmp->info) < nameToSearch) ? tmp->right : tmp->left;
+    }
+    return nullptr;
+}
+
+template<class T>
 const std::vector<const T *> RBBSTree<T>::search(const std::string &subStrToSearch) const {
     std::vector<const T *> result;
     for (Node *start = min; start != nullptr; start = start->succ) {

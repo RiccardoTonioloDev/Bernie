@@ -21,3 +21,11 @@ std::string CryptoWallet::serialize() const {
     }
     return serializedObj;
 }
+
+bool CryptoWallet::modify(const SerializableObject *ptr) {
+    if (dynamic_cast<const CryptoWallet *>(ptr)) {
+        *this = *(static_cast<const CryptoWallet *>(ptr));
+        return true;
+    }
+    return false;
+}

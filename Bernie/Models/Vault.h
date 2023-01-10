@@ -94,6 +94,16 @@ public:
     template<class T>
     std::vector<const SerializableObject *> filteredVectorize() const;
 
+    /*
+     * POST: va a modificare un elemento appartenente all'albero del vault, con un elemento che deve avere lo stesso
+     * tipo dinamico dell'oggetto da modificare.
+     * Restituisce:
+     *      - false: se il nome dell'oggetto che stiamo andando a modificare non è presente nell'albero, se i nomi degli
+     *      oggetti non sono uguali, oppure se i tipi dinamici dei due oggetti non coincidono.
+     *      - true: altrimenti.
+     */
+    bool modifyTreeObj(const SerializableObject *toModified, SerializableObject *toAssign);
+
     bool operator=(const Vault &) = delete;
 
     Vault(const Vault &) = delete;

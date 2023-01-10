@@ -76,7 +76,8 @@ private:
     void rightRotate(Node *x);
 
     /*
-     * POST: dato un nome cerca il nodo che possiede nel campo name nella parte info di tipo T, quel nome.
+     * POST: dato un nome cerca il nodo che possiede nel campo name nella parte info di tipo T, quel nome. Il nome è
+     * stato estratto tramite l'assegnazione a string.
      * Restituisce:
      *      - TNULL: se non trova alcun nodo con quel nome;
      *      - il puntatore del nodo trovato altrimenti.
@@ -157,6 +158,15 @@ public:
      * lessicografico dei nomi.
      */
     const std::vector<const T *> toVector() const;
+
+    /*
+     * POST: dato un nome cerca il nodo che possiede nel campo name nella parte info di tipo T, quel nome. Il nome è
+     * stato estratto tramite l'assegnazione a string.
+     * Restituisce:
+     *      - nullptr: se non trova alcun nodo con quel nome;
+     *      - il puntatore del SerializableObject trovato altrimenti.
+     */
+    const SerializableObject *searchSingle(const std::string &nameToSearch) const;
 };
 
 #endif

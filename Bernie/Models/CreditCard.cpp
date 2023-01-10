@@ -18,6 +18,14 @@ std::string CreditCard::serialize() const {
     return serializedStr;
 }
 
+bool CreditCard::modify(const SerializableObject *ptr) {
+    if (dynamic_cast<const CreditCard *>(ptr)) {
+        *this = *(static_cast<const CreditCard *>(ptr));
+        return true;
+    }
+    return false;
+}
+
 CreditCard *CreditCard::clone() const {
     return new CreditCard(*this);
 }

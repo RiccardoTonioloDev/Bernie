@@ -16,3 +16,11 @@ std::string Note::serialize() const {
 Note *Note::clone() const {
     return new Note(*this);
 }
+
+bool Note::modify(const SerializableObject *ptr) {
+    if (dynamic_cast<const Note *>(ptr)) {
+        *this = *(static_cast<const Note *>(ptr));
+        return true;
+    }
+    return false;
+}

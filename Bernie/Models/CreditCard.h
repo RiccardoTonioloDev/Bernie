@@ -22,6 +22,8 @@ public:
     */
     std::string serialize() const override;
 
+    virtual bool modify(const SerializableObject *);
+
     /*
     POST: resituisce una copia dell'oggetto costruita mediante costruttore di copia passando come parametro il puntatore implicito this deferenziato
     */

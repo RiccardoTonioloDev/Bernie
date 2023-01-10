@@ -85,7 +85,7 @@ bool Vault::addSerializableObject(const SerializableObject *ptr) {
     if (result) loadToStorage();
     return result;
 }
-   
+
 bool Vault::deleteSerializableObject(const std::string &nameToSearch) {
     if (tree == nullptr || storage == nullptr) return false;
     if (tree->deleteT(nameToSearch)) {
@@ -120,3 +120,11 @@ template std::vector<const SerializableObject *> Vault::filteredVectorize<Crypto
 template std::vector<const SerializableObject *> Vault::filteredVectorize<Contact>() const;
 
 template std::vector<const SerializableObject *> Vault::filteredVectorize<Note>() const;
+
+bool Vault::modifyTreeObj(const SerializableObject *toModify, SerializableObject *toAssign) {
+    std::string name = *toAssign;
+    std::string nameOfModified;
+    if (tree->searchSingle(nameOfModified) && nameOfModified != name)
+        return const_cast<SerializableObject *>(toModify)->modify(toAssign);
+    else return false;
+}

@@ -21,6 +21,14 @@ std::string Contact::serialize() const {
     return serializedStr;
 }
 
+bool Contact::modify(const SerializableObject *ptr) {
+    if (dynamic_cast<const Contact *>(ptr)) {
+        *this = *(static_cast<const Contact *>(ptr));
+        return true;
+    }
+    return false;
+}
+
 Contact *Contact::clone() const {
     return new Contact(*this);
 }

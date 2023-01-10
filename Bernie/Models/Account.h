@@ -21,6 +21,8 @@ public:
      */
     std::string serialize() const override;
 
+    virtual bool modify(const SerializableObject *);
+
     /*
      * POST: ritorna un puntatore ad Account essendo covariante come tipo di ritorno a un puntatore SerializableObject
      */
