@@ -20,7 +20,7 @@ public:
      */
     std::string serialize() const override;
 
-    virtual bool modify(const SerializableObject *);
+    virtual bool modify(const SerializableObject *) override;
 
     /*
      * POST: ritorna un puntatore a CryptoWallet essendo covariante come tipo di ritorno a un puntatore SerializableObject
