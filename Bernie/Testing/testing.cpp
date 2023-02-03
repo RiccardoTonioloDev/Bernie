@@ -257,9 +257,9 @@ int main() {
             << "//EncDec Unit Testing ----------------------------------------------------------------------------------"
             << std::endl;
     encInFileTest(container, "true", "enc in file");  //the only node written is ACCOUNT4ciao4come4stai4
-    VerifyPasswordInFileTest("../Savings/Databases/prova1.txt", false, "wrong password",
+    VerifyPasswordInFileTest("./Databases4Testing/prova1.txt", false, "wrong password",
                              "wrong password test");
-    VerifyPasswordInFileTest("../Savings/Databases/prova1.txt", true, "1234", "right password");
+    VerifyPasswordInFileTest("./Databases4Testing/prova1.txt", true, "1234", "right password");
 
     decFromFileTest(container, "ACCOUNT 4 ciao4 come4 stai4 \n", "dec - test");
 
@@ -283,7 +283,7 @@ int main() {
     std::cout
             << "//EncDec Unit Testing + Vault --------------------------------------------------------------------------"
             << std::endl;
-    Vault vlt("../Savings/Databases");
+    Vault vlt("./Databases4Testing");
     readFileNamesTest(vlt, std::vector<std::string>{"24SerializableObjectTest.txt",
                                                     "ciao.txt",
                                                     "prova1.txt",
