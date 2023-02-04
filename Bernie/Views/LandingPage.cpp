@@ -8,7 +8,7 @@ LandingPage::LandingPage(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *vbox = new QVBoxLayout(this);
     vbox->setAlignment(Qt::AlignCenter);
 
-    QLabel *titleLabel = new QLabel("Welcome!");
+    QLabel *titleLabel = new QLabel("Welcome to Bernie, your secure data storage!");
     titleLabel->setObjectName("landingPageTitle");
     titleLabel->setAlignment(Qt::AlignCenter);
     vbox->addWidget(titleLabel);

@@ -6,12 +6,14 @@
 #include <QLabel>
 
 #include "../Models/Vault.h"
+#include "SelectDBPage.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
 private:
     QStackedWidget *stackedWidget;
     Vault &vault;
+    SelectDBPage *sDBP;
 
 public:
     explicit MainWindow(Vault &v, QWidget *parent = 0);
