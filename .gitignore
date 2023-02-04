@@ -58,5 +58,6 @@ compile_commands.json
 .idea
 
 # Personal ignores
+Bernie/Bernie
 Bernie/Testing/Bernie
 Bernie/Testing/CMakeFiles/

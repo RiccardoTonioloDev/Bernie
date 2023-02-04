@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/assets">
+        <file alias="App_Icon">Savings/Assets/App_Logo.png</file>
+        <file alias="Add">Savings/Assets/Add.svg</file>
+        <file alias="Account">Savings/Assets/Account.svg</file>
+        <file alias="Contacts">Savings/Assets/Contacts.svg</file>
+        <file alias="CreditCards">Savings/Assets/CreditCards.svg</file>
+        <file alias="Crypto">Savings/Assets/Crypto.svg</file>
+        <file alias="Home">Savings/Assets/Home.svg</file>
+        <file alias="Modify">Savings/Assets/Modify.svg</file>
+        <file alias="Notes">Savings/Assets/Notes.svg</file>
+        <file alias="Remove">Savings/Assets/Remove.svg</file>
+        <file alias="View">Savings/Assets/View.svg</file>
+        <file alias="Back">Savings/Assets/Back.svg</file>
+    </qresource>
+</RCC>
