@@ -29,6 +29,10 @@ bool Contact::modify(const SerializableObject *ptr) {
     return false;
 }
 
+void Contact::accept(SerializableObjectsVisitor *visit) const {
+    visit->visit(*this);
+}
+
 Contact *Contact::clone() const {
     return new Contact(*this);
 }

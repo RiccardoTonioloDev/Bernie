@@ -34,7 +34,20 @@ add_executable(Bernie
         ./Models/Vault.h
         main.cpp
         resources.qrc
-        Views/MainWindow.cpp Views/MainWindow.h Views/LandingPage.cpp Views/LandingPage.h Views/CreateDBPage.cpp Views/CreateDBPage.h Views/SelectDBPage.cpp Views/SelectDBPage.h)
+        Views/MainWindow.cpp
+        Views/MainWindow.h
+        Views/LandingPage.cpp
+        Views/LandingPage.h
+        Views/CreateDBPage.cpp
+        Views/CreateDBPage.h
+        Views/SelectDBPage.cpp
+        Views/SelectDBPage.h
+        Views/HomePage.cpp
+        Views/HomePage.h
+        Views/Visitors/VisitorListItem.cpp
+        Views/Visitors/VisitorListItem.h
+        Views/Visitors/SerializableObjectsVisitor.h
+        Views/Visitors/ListCardItem.cpp Views/Visitors/ListCardItem.h Views/Visitors/SerializableObjectsVisitor.cpp)
 
 target_link_libraries(Bernie Qt6::Widgets)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})

@@ -17,6 +17,10 @@ Note *Note::clone() const {
     return new Note(*this);
 }
 
+void Note::accept(SerializableObjectsVisitor *visitor) const {
+    visitor->visit(*this);
+}
+
 bool Note::modify(const SerializableObject *ptr) {
     if (dynamic_cast<const Note *>(ptr)) {
         *this = *(static_cast<const Note *>(ptr));

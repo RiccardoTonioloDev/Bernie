@@ -27,6 +27,8 @@ public:
      * POST: ritorna un puntatore ad Account essendo covariante come tipo di ritorno a un puntatore SerializableObject
      */
     Account *clone() const override;
+
+    void accept(SerializableObjectsVisitor *visit) const;
 };
 
 

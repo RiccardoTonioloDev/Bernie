@@ -6,6 +6,7 @@
 #include <vector>
 #include <utility>
 #include <iostream>
+#include "../Views/Visitors/SerializableObjectsVisitor.h"
 
 
 class SerializableObject {
@@ -48,6 +49,8 @@ public:
     bool operator<=(const SerializableObject &) const;
 
     virtual bool modify(const SerializableObject *) = 0;
+
+    virtual void accept(SerializableObjectsVisitor *visit) const = 0;
 
     operator std::string() const;
 

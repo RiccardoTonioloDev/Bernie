@@ -22,6 +22,10 @@ std::string CryptoWallet::serialize() const {
     return serializedObj;
 }
 
+void CryptoWallet::accept(SerializableObjectsVisitor *visit) const {
+    visit->visit(*this);
+}
+
 bool CryptoWallet::modify(const SerializableObject *ptr) {
     if (dynamic_cast<const CryptoWallet *>(ptr)) {
         *this = *(static_cast<const CryptoWallet *>(ptr));

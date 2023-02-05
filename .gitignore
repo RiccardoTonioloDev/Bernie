@@ -63,3 +63,6 @@ Bernie/Testing/Bernie
 Bernie/Testing/CMakeFiles/
 Bernie/CMakeFiles/
 Bernie/Bernie_autogen/
+Bernie/Bernie/cmake_install.cmake
+Bernie/Bernie/CMakeCache.txt
+Bernie/Bernie/Makefile

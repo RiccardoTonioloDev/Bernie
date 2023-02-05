@@ -3,6 +3,7 @@
 #include "LandingPage.h"
 #include "CreateDBPage.h"
 #include "SelectDBPage.h"
+#include "HomePage.h"
 #include <QHBoxLayout>
 #include <algorithm>
 
@@ -11,9 +12,11 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     LandingPage *lP = new LandingPage();
     CreateDBPage *cDBP = new CreateDBPage();
     sDBP = new SelectDBPage(vault.fetchDBNames());
+    HomePage *hp = new HomePage(vault);
     stackedWidget->addWidget(lP); //0
     stackedWidget->addWidget(cDBP); //1
     stackedWidget->addWidget(sDBP); //2
+    stackedWidget->addWidget(hp); //3
 
     setCentralWidget(stackedWidget);
 
@@ -49,5 +52,5 @@ void MainWindow::createDBAndSwitch(std::string name, std::string password) {
         return;
     }
     vault.loadStorage(name + ".txt", password);
-    stackedWidget->setCurrentIndex(0);
+    stackedWidget->setCurrentIndex(3);
 }

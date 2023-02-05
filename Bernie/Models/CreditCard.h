@@ -28,6 +28,8 @@ public:
     POST: resituisce una copia dell'oggetto costruita mediante costruttore di copia passando come parametro il puntatore implicito this deferenziato
     */
     CreditCard *clone() const override;
+
+    void accept(SerializableObjectsVisitor *visit) const;
 };
 
 #endif

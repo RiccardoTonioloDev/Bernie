@@ -23,6 +23,8 @@ public:
     POST: resituisce una copia dell'oggetto costruita mediante costruttore di copia passando come parametro il puntatore implicito this deferenziato
     */
     Note *clone() const override;
+
+    void accept(SerializableObjectsVisitor *visitor) const;
 };
 
 #endif

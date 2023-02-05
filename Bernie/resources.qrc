@@ -7,7 +7,7 @@
         <file alias="CreditCards">Savings/Assets/CreditCards.svg</file>
         <file alias="Crypto">Savings/Assets/Crypto.svg</file>
         <file alias="Home">Savings/Assets/Home.svg</file>
-        <file alias="Modify">Savings/Assets/Modify.svg</file>
+        <file alias="Edit">Savings/Assets/Modify.svg</file>
         <file alias="Notes">Savings/Assets/Notes.svg</file>
         <file alias="Remove">Savings/Assets/Remove.svg</file>
         <file alias="View">Savings/Assets/View.svg</file>

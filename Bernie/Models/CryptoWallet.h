@@ -26,6 +26,8 @@ public:
      * POST: ritorna un puntatore a CryptoWallet essendo covariante come tipo di ritorno a un puntatore SerializableObject
      */
     CryptoWallet *clone() const override;
+
+    void accept(SerializableObjectsVisitor *visit) const;
 };
 
 
