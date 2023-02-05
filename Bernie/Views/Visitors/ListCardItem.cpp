@@ -10,15 +10,19 @@ ListCardItem::ListCardItem(const SerializableObject *d, const std::string &name,
     QLabel *iconLabel = new QLabel;
     iconLabel->setPixmap(QIcon(QString::fromStdString(icon)).pixmap(64, 64));
     QLabel *objName = new QLabel(QString::fromStdString(name));
-    QPushButton *viewButton = new QPushButton("View");
+    QPushButton *viewButton = new QPushButton();
+    viewButton->setFixedSize(40, 40);
     viewButton->setIcon(QIcon(":/assets/View"));
-    viewButton->setIconSize(QSize(10, 10));
-    QPushButton *editButton = new QPushButton("Edit");
+    viewButton->setIconSize(QSize(20, 20));
+    QPushButton *editButton = new QPushButton();
+    editButton->setFixedSize(40, 40);
     editButton->setIcon(QIcon(":/assets/Edit"));
-    editButton->setIconSize(QSize(10, 10));
-    QPushButton *removeButton = new QPushButton("Remove");
+    editButton->setIconSize(QSize(20, 20));
+    QPushButton *removeButton = new QPushButton();
+    removeButton->setFixedSize(40, 40);
     removeButton->setIcon(QIcon(":/assets/Remove"));
-    removeButton->setIconSize(QSize(10, 10));
+    removeButton->setIconSize(QSize(20, 20));
+    removeButton->setObjectName("remove");
 
     cardRow->addWidget(iconLabel);
     cardRow->addWidget(objName);

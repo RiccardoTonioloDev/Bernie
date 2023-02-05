@@ -12,5 +12,6 @@
         <file alias="Remove">Savings/Assets/Remove.svg</file>
         <file alias="View">Savings/Assets/View.svg</file>
         <file alias="Back">Savings/Assets/Back.svg</file>
+        <file alias="stylesheet">Savings/StyleSheets/normalStyleSheet.qss</file>
     </qresource>
 </RCC>

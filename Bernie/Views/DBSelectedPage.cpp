@@ -29,6 +29,8 @@ DBSelectedPage::DBSelectedPage(QWidget *parent) : QWidget(parent) {
     dbPassword->setMaximumWidth(300);
     dbPassword->setMinimumHeight(25);
     dbPassword->setEchoMode(QLineEdit::Password);
+    dbName->setAlignment(Qt::AlignCenter);
+    dbPassword->setAlignment(Qt::AlignCenter);
     QPushButton *decryptButton = new QPushButton("Decrypt");
     secondRow->addWidget(namelbl);
     secondRow->addWidget(dbName);
@@ -45,6 +47,7 @@ DBSelectedPage::DBSelectedPage(QWidget *parent) : QWidget(parent) {
 }
 
 void DBSelectedPage::returnSelectDBSlot() {
+    dbPassword->setText("");
     emit returnSelectDBSignal();
 }
 

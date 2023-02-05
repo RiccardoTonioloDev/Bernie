@@ -4,7 +4,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include "../../models/account.h"
+#include "../../Models/Account.h"
 #include "../../Models/CryptoWallet.h"
 #include "../../Models/Contact.h"
 #include "../../Models/Note.h"
@@ -30,4 +30,8 @@ void VisitorListItem::visit(const Contact &cont) {
 
 void VisitorListItem::visit(const CryptoWallet &crypt) {
     widget = new ListCardItem(&crypt, crypt, ":/assets/Crypto");
+}
+
+ListCardItem *VisitorListItem::getWidget() {
+    return static_cast<ListCardItem *>(widget);
 }

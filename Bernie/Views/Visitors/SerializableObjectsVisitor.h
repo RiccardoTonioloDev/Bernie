@@ -29,7 +29,7 @@ public:
 
     virtual void visit(const Note &note) = 0;
 
-    virtual QWidget *getWidget();
+    virtual QWidget *getWidget() = 0;
 };
 
 #endif

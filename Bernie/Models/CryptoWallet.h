@@ -27,7 +27,7 @@ public:
      */
     CryptoWallet *clone() const override;
 
-    void accept(SerializableObjectsVisitor *visit) const;
+    void accept(SerializableObjectsVisitor *visit) const override;
 };
 
 

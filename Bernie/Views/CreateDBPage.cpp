@@ -43,6 +43,9 @@ CreateDBPage::CreateDBPage(QWidget *parent) : QWidget(parent) {
     password2->setMaximumWidth(300);
     password2->setMinimumHeight(25);
     QPushButton *createButton = new QPushButton("Create");
+    name->setAlignment(Qt::AlignCenter);
+    password1->setAlignment(Qt::AlignCenter);
+    password2->setAlignment(Qt::AlignCenter);
     secondRow->addWidget(lbName);
     secondRow->addWidget(name);
     secondRow->addWidget(nameDisclamer);

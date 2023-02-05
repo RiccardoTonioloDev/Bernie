@@ -31,7 +31,7 @@ public:
     */
     Contact *clone() const override;
 
-    void accept(SerializableObjectsVisitor *visit) const;
+    void accept(SerializableObjectsVisitor *visit) const override;
 };
 
 #endif

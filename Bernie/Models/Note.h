@@ -24,7 +24,7 @@ public:
     */
     Note *clone() const override;
 
-    void accept(SerializableObjectsVisitor *visitor) const;
+    void accept(SerializableObjectsVisitor *visitor) const override;
 };
 
 #endif

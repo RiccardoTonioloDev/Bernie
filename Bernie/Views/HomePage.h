@@ -13,6 +13,8 @@ private:
     QLineEdit *searchBox;
     QListWidget *listOfCards;
 
+    void changeByVector(const std::vector<const SerializableObject *> &vec);
+
 public:
     HomePage(Vault &v, QWidget *parent = 0);
 
@@ -20,6 +22,22 @@ public:
 
 signals:
 public slots:
+
+    void filterAll();
+
+    void filterAccount();
+
+    void filterCrypto();
+
+    void filterCreditCard();
+
+    void filterNote();
+
+    void filterContacts();
+
+    void filterByName(const QString &name);
+
+    void returnPressed();
 
 };
 

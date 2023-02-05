@@ -1,0 +1,63 @@
+* {
+    color: black;
+    border-radius: 10px;
+}
+#landingPageTitle {
+    font-size: 20px;
+}
+QMainWindow {
+    background-color: #D1E4E5;
+}
+QLineEdit {
+    background-color: #F2F6F3;
+}
+QLineEdit::disabled{
+    background-color: #d9ddda;
+    border: 1px solid gray;
+}
+QLineEdit::focus{
+    border: 3px solid #47e0ff;
+}
+QPushButton{
+    background-color: #A0C0C2;
+    padding: 5px;
+}
+QPushButton::hover{
+    background-color: #708687;
+}
+QPushButton::pressed{
+    background-color: #596b6c;
+}
+#remove{
+    background-color: #D76B63;
+    padding: 5px;
+}
+#remove::hover{
+    background-color: #ac554f;
+}
+#remove::pressed{
+    background-color: #81403b;
+}
+QLabel {
+    color: black;
+}
+QComboBox {
+    background-color: white;
+    min-height: 30px;
+    text-align: center;
+}
+QListWidget {
+    background-color: #FDC7A0;
+}
+QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical{
+    background: #CA9F80;
+    width: 4px;
+}
+QScrollBar:vertical {
+    background: #654F40;
+    width: 4px;
+    border-radius: 50%;
+}
+QDialog {
+    background-color: #D1E4E5;
+}

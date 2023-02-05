@@ -8,6 +8,9 @@
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon(":/assets/App_Icon"));
+    QFile stylesheet(":/assets/stylesheet");
+    stylesheet.open(QFile::ReadOnly);
+    app.setStyleSheet(QLatin1String(stylesheet.readAll()));
 
     Vault vault("./Savings/Databases");
     MainWindow window(vault);
