@@ -22,9 +22,13 @@ signals:
 
     void returnLandingSignal();
 
+    void dbSelectedSignal(const std::string &name);
+
 public slots:
 
     void returnLandingSlot();
+
+    void dbSelectedSlot();
 
 };
 

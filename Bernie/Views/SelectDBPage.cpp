@@ -42,6 +42,7 @@ SelectDBPage::SelectDBPage(std::vector<std::string> fN, QWidget *parent) : QWidg
     outerLayout->addLayout(secondRow);
 
     connect(backButton, &QPushButton::clicked, this, &SelectDBPage::returnLandingSlot);
+    connect(selectButton, &QPushButton::clicked, this, &SelectDBPage::dbSelectedSlot);
 }
 
 void SelectDBPage::refreshNameList(std::vector<std::string> fN) {
@@ -62,4 +63,10 @@ void SelectDBPage::refreshNameList(std::vector<std::string> fN) {
 
 void SelectDBPage::returnLandingSlot() {
     emit returnLandingSignal();
+}
+
+void SelectDBPage::dbSelectedSlot() {
+    std::string fileName = filesCombobox->currentText().toStdString();
+    std::string realFileName(fileName.begin(), fileName.end() - 4);
+    emit dbSelectedSignal(realFileName);
 }

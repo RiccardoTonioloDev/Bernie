@@ -3,7 +3,7 @@
 #include "LandingPage.h"
 #include "CreateDBPage.h"
 #include "SelectDBPage.h"
-#include "HomePage.h"
+
 #include <QHBoxLayout>
 #include <algorithm>
 
@@ -12,11 +12,13 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     LandingPage *lP = new LandingPage();
     CreateDBPage *cDBP = new CreateDBPage();
     sDBP = new SelectDBPage(vault.fetchDBNames());
-    HomePage *hp = new HomePage(vault);
+    hp = new HomePage(vault);
+    DBsp = new DBSelectedPage();
     stackedWidget->addWidget(lP); //0
     stackedWidget->addWidget(cDBP); //1
     stackedWidget->addWidget(sDBP); //2
     stackedWidget->addWidget(hp); //3
+    stackedWidget->addWidget(DBsp); //4
 
     setCentralWidget(stackedWidget);
 
@@ -25,6 +27,9 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(cDBP, &CreateDBPage::returnLandingSignal, this, &MainWindow::switchLendingSlot);
     connect(cDBP, &CreateDBPage::createDBSignal, this, &MainWindow::createDBAndSwitch);
     connect(sDBP, &SelectDBPage::returnLandingSignal, this, &MainWindow::switchLendingSlot);
+    connect(sDBP, &SelectDBPage::dbSelectedSignal, this, &MainWindow::switchSelectedDBSlot);
+    connect(DBsp, &DBSelectedPage::returnSelectDBSignal, this, &MainWindow::switchSelectSlot);
+    connect(DBsp, &DBSelectedPage::decryptDBSignal, this, &MainWindow::readDBAndSwitch);
 }
 
 void MainWindow::switchCreateSlot() {
@@ -52,5 +57,25 @@ void MainWindow::createDBAndSwitch(std::string name, std::string password) {
         return;
     }
     vault.loadStorage(name + ".txt", password);
+    stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::switchSelectedDBSlot(const std::string &name) {
+    DBsp->setName(name);
+    stackedWidget->setCurrentIndex(4);
+}
+
+void MainWindow::readDBAndSwitch(const std::string &name, const std::string &password) {
+    bool isCorrect = vault.loadStorage(name + ".txt", password);
+    if (isCorrect == false) {
+        QDialog dialog;
+        QLabel *dialogLabel = new QLabel("Incorrect password. Please retry with the correct password.");
+        QHBoxLayout *dialogLayout = new QHBoxLayout;
+        dialogLayout->addWidget(dialogLabel);
+        dialog.setLayout(dialogLayout);
+        dialog.exec();
+        return;
+    }
+    hp->refresh();
     stackedWidget->setCurrentIndex(3);
 }

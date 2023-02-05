@@ -16,6 +16,8 @@ private:
 public:
     HomePage(Vault &v, QWidget *parent = 0);
 
+    void refresh();
+
 signals:
 public slots:
 
