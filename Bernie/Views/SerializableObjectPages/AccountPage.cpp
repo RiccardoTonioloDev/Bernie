@@ -61,5 +61,12 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     manageButton->setVisible(ptr == nullptr || (ptr && toEdit));
 
     connect(backButton, &QPushButton::clicked, this, &AccountPage::returnTypeSelectionPageSlot);
-    connect(backButton, &QPushButton::clicked, this, &AccountPage::returnTypeSelectionPageSlot);
+    connect(manageButton, &QPushButton::clicked, this, &AccountPage::manageSerializableObjectSlot);
+}
+
+void AccountPage::manageSerializableObjectSlot() {
+    if (toEdit) emit editSerializableObjectSignal(objToManage, new Account(nameField->text().toStdString(),
+                                                                           emailField->text().toStdString(),
+                                                                           passwordField->text().toStdString(),
+                                                                           usernameField->text().toStdString()));
 }

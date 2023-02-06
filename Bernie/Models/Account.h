@@ -39,4 +39,4 @@ public:
 };
 
 
-#endif //ACCOUNT_H
+#endif

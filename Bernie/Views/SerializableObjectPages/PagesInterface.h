@@ -16,9 +16,9 @@ public:
 
     void returnTypeSelectionPageSignal();
 
-    void addSerializableObjectSignal(SerializableObject *newObject);
+    void addSerializableObjectSignal(const SerializableObject *newObject);
 
-    virtual void editSerializableObjectSignal(SerializableObject *toEdit, SerializableObject *edited) = 0;
+    virtual void editSerializableObjectSignal(const SerializableObject *toEdit, const SerializableObject *edited) = 0;
 
 public slots:
 
