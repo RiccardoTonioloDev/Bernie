@@ -6,6 +6,7 @@
 #include <QIcon>
 #include <QLabel>
 #include "Visitors/VisitorListItem.h"
+#include "Visitors/VisitorManageItem.h"
 #include "Components/MenuButton.h"
 
 HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
@@ -83,7 +84,6 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
 }
 
 void HomePage::addDataSlot() {
-    emit addDataSignal();
 }
 
 void HomePage::changeByVector(const std::vector<const SerializableObject *> &vectorSerializableObjects) {
@@ -139,21 +139,15 @@ void HomePage::returnPressed() {
 }
 
 void HomePage::watchDataSlot(const SerializableObject *ptr) {
-    QDialog dialog;
-    QLabel *dialogLabel = new QLabel("Please insert at least the identifier, the email and the password.");
-    QHBoxLayout *dialogLayout = new QHBoxLayout;
-    dialogLayout->addWidget(dialogLabel);
-    dialog.setLayout(dialogLayout);
-    dialog.exec();
+    VisitorManageItem visitor;
+    ptr->accept(&visitor, false);
+    emit createWatchPageSignal(visitor.getWidget());
 }
 
 void HomePage::editDataSlot(const SerializableObject *ptr) {
-    QDialog dialog;
-    QLabel *dialogLabel = new QLabel("Please insert at least the identifier, the email and the password.");
-    QHBoxLayout *dialogLayout = new QHBoxLayout;
-    dialogLayout->addWidget(dialogLabel);
-    dialog.setLayout(dialogLayout);
-    dialog.exec();
+    VisitorManageItem visitor;
+    ptr->accept(&visitor, true);
+    emit createEditPageSignal(visitor.getWidget());
 }
 
 void HomePage::removeDataSlot(const SerializableObject *ptr) {

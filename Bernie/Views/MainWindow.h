@@ -39,6 +39,10 @@ public slots:
 
     void createAddPage(PagesInterface *);
 
+    void createEditPage(PagesInterface *);
+
+    void createWatchPage(PagesInterface *);
+
     void returnSelectionFromCreate();
 
     void addSerializableObjectSlot(const SerializableObject *);

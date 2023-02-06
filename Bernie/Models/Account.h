@@ -29,7 +29,7 @@ public:
      */
     Account *clone() const override;
 
-    void accept(SerializableObjectsVisitor *visit) const override;
+    void accept(SerializableObjectsVisitor *visit, bool toEdit = false) const override;
 
     const std::string &getEmail() const;
 

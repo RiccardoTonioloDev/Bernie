@@ -40,6 +40,8 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(Tsp, &TypeSelectionPage::createCreditCardSignal, this, &MainWindow::createAddPage);
     connect(Tsp, &TypeSelectionPage::createContactSignal, this, &MainWindow::createAddPage);
     connect(hp, &HomePage::addDataSignal, this, &MainWindow::switchTypeSelectionSlot);
+    connect(hp, &HomePage::createEditPageSignal, this, &MainWindow::createEditPage);
+    connect(hp, &HomePage::createWatchPageSignal, this, &MainWindow::createWatchPage);
 }
 
 void MainWindow::switchCreateSlot() {
@@ -67,6 +69,15 @@ void MainWindow::createAddPage(PagesInterface *pageToAdd) {
     if (pageToAdd) {
         stackedWidget->addWidget(pageToAdd);
         connect(pageToAdd, &PagesInterface::addSerializableObjectSignal, this, &MainWindow::addSerializableObjectSlot);
+        connect(pageToAdd, &PagesInterface::returnTypeSelectionPageSignal, this,
+                &MainWindow::returnSelectionFromCreate);
+        stackedWidget->setCurrentIndex(stackedWidget->count() - 1);
+    }
+}
+
+void MainWindow::createEditPage(PagesInterface *pageToAdd) {
+    if (pageToAdd) {
+        stackedWidget->addWidget(pageToAdd);
         connect(pageToAdd, &PagesInterface::editSerializableObjectSignal, this,
                 &MainWindow::editSerializableObjectSlot);
         connect(pageToAdd, &PagesInterface::returnTypeSelectionPageSignal, this,
@@ -75,8 +86,17 @@ void MainWindow::createAddPage(PagesInterface *pageToAdd) {
     }
 }
 
+void MainWindow::createWatchPage(PagesInterface *pageToAdd) {
+    if (pageToAdd) {
+        stackedWidget->addWidget(pageToAdd);
+        connect(pageToAdd, &PagesInterface::returnTypeSelectionPageSignal, this,
+                &MainWindow::returnSelectionFromCreate);
+        stackedWidget->setCurrentIndex(stackedWidget->count() - 1);
+    }
+}
+
 void MainWindow::returnSelectionFromCreate() {
-    stackedWidget->setCurrentIndex(5);
+    stackedWidget->setCurrentIndex(3);
     QWidget * lastPage = stackedWidget->widget(stackedWidget->count() - 1);
     stackedWidget->removeWidget(lastPage);
     delete lastPage;

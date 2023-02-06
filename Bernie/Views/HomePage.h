@@ -5,6 +5,7 @@
 #include <QListWidget>
 #include <QLineEdit>
 #include "../Models/Vault.h"
+#include "SerializableObjectPages/PagesInterface.h"
 
 class HomePage : public QWidget {
 Q_OBJECT
@@ -22,13 +23,11 @@ public:
 
 signals:
 
-    void addDataSignal();
+    void addDataSignal(const SerializableObject *);
 
-    void watchDataSignal();
+    void createWatchPageSignal(PagesInterface *);
 
-    void editDataSignal();
-
-    void removeDataSignal();
+    void createEditPageSignal(PagesInterface *);
 
 public slots:
 

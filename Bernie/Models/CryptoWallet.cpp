@@ -22,8 +22,8 @@ std::string CryptoWallet::serialize() const {
     return serializedObj;
 }
 
-void CryptoWallet::accept(SerializableObjectsVisitor *visit) const {
-    visit->visit(*this);
+void CryptoWallet::accept(SerializableObjectsVisitor *visit, bool toEdit) const {
+    visit->visit(*this, toEdit);
 }
 
 bool CryptoWallet::modify(const SerializableObject *ptr) {
