@@ -121,7 +121,7 @@ template std::vector<const SerializableObject *> Vault::filteredVectorize<Contac
 
 template std::vector<const SerializableObject *> Vault::filteredVectorize<Note>() const;
 
-bool Vault::modifyTreeObj(const SerializableObject *toModify, SerializableObject *toAssign) {
+bool Vault::modifyTreeObj(const SerializableObject *toModify, const SerializableObject *toAssign) {
     std::string name = *toAssign;
     std::string nameOfModified = *toModify;
     if (nameOfModified == name && tree->searchSingle(nameOfModified) != nullptr) {

@@ -3,6 +3,8 @@
 #include <QLabel>
 #include <QPushButton>
 #include "Components/TypeSelectionButton.h"
+#include "SerializableObjectPages/AccountPage.h"
+#include "SerializableObjectPages/CryptoWalletPage.h"
 
 TypeSelectionPage::TypeSelectionPage(QWidget *parent) {
     QVBoxLayout *outerLayout = new QVBoxLayout(this);
@@ -44,25 +46,25 @@ TypeSelectionPage::TypeSelectionPage(QWidget *parent) {
 }
 
 void TypeSelectionPage::createCreditCardSlot() {
-    emit createCreditCardSignal();
+    emit createCreditCardSignal(nullptr);
 }
 
 void TypeSelectionPage::createNoteSlot() {
-    emit createNoteSignal();
+    emit createNoteSignal(nullptr);
 }
 
 void TypeSelectionPage::createCryptoWalletSlot() {
-    emit createCryptoWalletSignal();
+    emit createCryptoWalletSignal(new CryptoWalletPage());
 
 }
 
 void TypeSelectionPage::createContactSlot() {
-    emit createContactSignal();
+    emit createContactSignal(nullptr);
 
 }
 
 void TypeSelectionPage::createAccountSlot() {
-    emit createAccountSignal();
+    emit createAccountSignal(new AccountPage());
 }
 
 void TypeSelectionPage::returnHomePageSlot() {

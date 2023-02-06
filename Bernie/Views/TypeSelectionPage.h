@@ -1,6 +1,7 @@
 #ifndef TYPESELECTOINPAGE_H
 #define TYPESELECTOINPAGE_H
 
+#include "SerializableObjectPages/PagesInterface.h"
 #include <QWidget>
 
 class TypeSelectionPage : public QWidget {
@@ -11,15 +12,15 @@ public:
 
 signals:
 
-    void createAccountSignal();
+    void createAccountSignal(PagesInterface *);
 
-    void createCreditCardSignal();
+    void createCreditCardSignal(PagesInterface *);
 
-    void createContactSignal();
+    void createContactSignal(PagesInterface *);
 
-    void createNoteSignal();
+    void createNoteSignal(PagesInterface *);
 
-    void createCryptoWalletSignal();
+    void createCryptoWalletSignal(PagesInterface *);
 
     void returnHomePageSignal();
 

@@ -27,16 +27,16 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else identifierLabel->setText("Account identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(toEdit);
+    nameField->setEnabled(ptr == nullptr || toEdit);
     if (ptr) nameField->setText(QString::fromStdString(*ptrAccount));
 
     //EMAIL
     QLabel *emailLabel = new QLabel();
-    if (!ptr) identifierLabel->setText("Insert Email here:");
-    else identifierLabel->setText("Email:");
+    if (!ptr) emailLabel->setText("Insert Email here:");
+    else emailLabel->setText("Email:");
 
     emailField = new QLineEdit();
-    emailField->setEnabled(toEdit);
+    emailField->setEnabled(ptr == nullptr || toEdit);
     if (ptr) emailField->setText(QString::fromStdString(ptrAccount->getEmail()));
 
     //USERNAME
@@ -45,7 +45,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else usernameLabel->setText("Username:");
 
     usernameField = new QLineEdit();
-    usernameField->setEnabled(toEdit);
+    usernameField->setEnabled(ptr == nullptr || toEdit);
     if (ptr) emailField->setText(QString::fromStdString(ptrAccount->getUsername()));
 
     //Password
@@ -54,7 +54,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else passwordLabel->setText("Password:");
 
     passwordField = new QLineEdit();
-    passwordField->setEnabled(toEdit);
+    passwordField->setEnabled(ptr == nullptr || toEdit);
     if (ptr) passwordField->setText(QString::fromStdString(ptrAccount->getPassword()));
 
     QPushButton *manageButton = new QPushButton();
@@ -84,9 +84,10 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
 
 void AccountPage::manageSerializableObjectSlot() {
     if ((nameField->text().toStdString().size() == 0 ||
+         emailField->text().toStdString().size() == 0 ||
          passwordField->text().toStdString().size() == 0) && (objToManage == nullptr || toEdit)) {
         QDialog dialog;
-        QLabel *dialogLabel = new QLabel("Please insert at least the email and the password.");
+        QLabel *dialogLabel = new QLabel("Please insert at least the identifier, the email and the password.");
         QHBoxLayout *dialogLayout = new QHBoxLayout;
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);
