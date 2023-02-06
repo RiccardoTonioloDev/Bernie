@@ -56,8 +56,22 @@ QComboBox {
     min-height: 30px;
     text-align: center;
 }
+QListView {
+    background-color: #F2F6F3;
+    border-radius: 10px;
+}
+QListView {
+    border-radius: 10px;
+}
+QListView::item::hover {
+    background-color: #FDD2B3;
+}
+QListView::item::selected {
+    background-color: #FDD2B3;
+}
 QListWidget {
     background-color: #FDC7A0;
+    border-radius: 10px;
 }
 QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical{
     background: #CA9F80;
