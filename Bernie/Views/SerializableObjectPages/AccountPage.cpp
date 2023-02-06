@@ -1,6 +1,7 @@
 #include "AccountPage.h"
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QDialog>
 #include <QLabel>
 #include "../../Models/Account.h"
 
@@ -19,6 +20,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
 
     //Second row
     QVBoxLayout *secondRow = new QVBoxLayout();
+    secondRow->setAlignment(Qt::AlignCenter);
     //NAME
     QLabel *identifierLabel = new QLabel();
     if (!ptr) identifierLabel->setText("Insert Account identifier:");
@@ -36,6 +38,10 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     emailField = new QLineEdit();
     emailField->setEnabled(toEdit);
     if (ptr) emailField->setText(QString::fromStdString(ptrAccount->getEmail()));
+    secondRow->addWidget(identifierLabel);
+    secondRow->addWidget(nameField);
+    secondRow->addWidget(emailLabel);
+    secondRow->addWidget(emailField);
 
     //USERNAME
     QLabel *usernameLabel = new QLabel();
@@ -60,13 +66,23 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else manageButton->setText("Update");
     manageButton->setVisible(ptr == nullptr || (ptr && toEdit));
 
+    outerLayout->addLayout(firstRow);
+    outerLayout->addLayout(secondRow);
+    outerLayout->addStretch();
+
     connect(backButton, &QPushButton::clicked, this, &AccountPage::returnTypeSelectionPageSlot);
     connect(manageButton, &QPushButton::clicked, this, &AccountPage::manageSerializableObjectSlot);
 }
 
 void AccountPage::manageSerializableObjectSlot() {
-    if (nameField->text().toStdString().size() == 0 ||
-        passwordField->text().toStdString().size() == 0) {
+    if ((nameField->text().toStdString().size() == 0 ||
+         passwordField->text().toStdString().size() == 0) && (objToManage == nullptr || toEdit)) {
+        QDialog dialog;
+        QLabel *dialogLabel = new QLabel("Please insert at least the email and the password.");
+        QHBoxLayout *dialogLayout = new QHBoxLayout;
+        dialogLayout->addWidget(dialogLabel);
+        dialog.setLayout(dialogLayout);
+        dialog.exec();
 
     }
     if (toEdit) emit editSerializableObjectSignal(objToManage, new Account(nameField->text().toStdString(),

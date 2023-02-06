@@ -20,7 +20,7 @@ signals:
 
     void addSerializableObjectSignal(const SerializableObject *newObject);
 
-    virtual void editSerializableObjectSignal(const SerializableObject *toEdit, const SerializableObject *edited) = 0;
+    virtual void editSerializableObjectSignal(const SerializableObject *toEdit, const SerializableObject *edited);
 
 public slots:
 
