@@ -21,6 +21,9 @@ public:
     void refresh();
 
 signals:
+
+    void addDataSignal();
+
 public slots:
 
     void filterAll();
@@ -39,6 +42,7 @@ public slots:
 
     void returnPressed();
 
+    void addDataSlot();
 };
 
 

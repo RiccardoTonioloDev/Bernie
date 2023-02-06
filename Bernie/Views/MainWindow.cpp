@@ -3,6 +3,7 @@
 #include "LandingPage.h"
 #include "CreateDBPage.h"
 #include "SelectDBPage.h"
+#include "TypeSelectionPage.h"
 
 #include <QHBoxLayout>
 #include <algorithm>
@@ -14,11 +15,13 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     sDBP = new SelectDBPage(vault.fetchDBNames());
     hp = new HomePage(vault);
     DBsp = new DBSelectedPage();
+    TypeSelectionPage *Tsp = new TypeSelectionPage();
     stackedWidget->addWidget(lP); //0
     stackedWidget->addWidget(cDBP); //1
     stackedWidget->addWidget(sDBP); //2
     stackedWidget->addWidget(hp); //3
     stackedWidget->addWidget(DBsp); //4
+    stackedWidget->addWidget(Tsp); //5
 
     setCentralWidget(stackedWidget);
 
@@ -30,10 +33,20 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(sDBP, &SelectDBPage::dbSelectedSignal, this, &MainWindow::switchSelectedDBSlot);
     connect(DBsp, &DBSelectedPage::returnSelectDBSignal, this, &MainWindow::switchSelectSlot);
     connect(DBsp, &DBSelectedPage::decryptDBSignal, this, &MainWindow::readDBAndSwitch);
+    connect(Tsp, &TypeSelectionPage::returnHomePageSignal, this, &MainWindow::switchHomePageSlot);
+    connect(hp, &HomePage::addDataSignal, this, &MainWindow::switchTypeSelectionSlot);
 }
 
 void MainWindow::switchCreateSlot() {
     stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::switchHomePageSlot() {
+    stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::switchTypeSelectionSlot() {
+    stackedWidget->setCurrentIndex(5);
 }
 
 void MainWindow::switchLendingSlot() {

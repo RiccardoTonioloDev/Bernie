@@ -74,6 +74,11 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
     connect(allButton, &QPushButton::clicked, this, &HomePage::filterAll);
     connect(searchBox, &QLineEdit::textChanged, this, &HomePage::filterByName);
     connect(searchBox, &QLineEdit::returnPressed, this, &HomePage::returnPressed);
+    connect(addButton, &QPushButton::clicked, this, &HomePage::addDataSlot);
+}
+
+void HomePage::addDataSlot() {
+    emit addDataSignal();
 }
 
 void HomePage::changeByVector(const std::vector<const SerializableObject *> &vectorSerializableObjects) {

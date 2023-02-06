@@ -28,9 +28,13 @@ public slots:
 
     void switchSelectSlot();
 
+    void switchHomePageSlot();
+
     void switchSelectedDBSlot(const std::string &name);
 
     void switchLendingSlot();
+
+    void switchTypeSelectionSlot();
 
     void createDBAndSwitch(std::string name, std::string password);
 
