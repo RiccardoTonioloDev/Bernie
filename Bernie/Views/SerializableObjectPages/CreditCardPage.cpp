@@ -26,6 +26,8 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     firstRow->addStretch();
 
     //Second row
+    QVBoxLayout *secondRow = new QVBoxLayout();
+    secondRow->setAlignment(Qt::AlignCenter);
     //NAME
     QLabel *nameLabel = new QLabel();
     if (!ptr) nameLabel->setText("Insert credit card identifier:");
@@ -100,18 +102,20 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     manageButton->setVisible(ptr == nullptr || (ptr && toEdit));
 
     //LAYOUT
+    secondRow->addWidget(nameLabel);
+    secondRow->addWidget(nameField);
+    secondRow->addWidget(ownerLabel);
+    secondRow->addWidget(ownerField);
+    secondRow->addWidget(numberLabel);
+    secondRow->addWidget(numberField);
+    secondRow->addWidget(cvvLabel);
+    secondRow->addWidget(cvvField);
+    secondRow->addWidget(dateLabel);
+    secondRow->addWidget(dateField);
+    secondRow->addWidget(manageButton);
+
     outerLayout->addLayout(firstRow);
-    outerLayout->addWidget(nameLabel);
-    outerLayout->addWidget(nameField);
-    outerLayout->addWidget(ownerLabel);
-    outerLayout->addWidget(ownerField);
-    outerLayout->addWidget(numberLabel);
-    outerLayout->addWidget(numberField);
-    outerLayout->addWidget(cvvLabel);
-    outerLayout->addWidget(cvvField);
-    outerLayout->addWidget(dateLabel);
-    outerLayout->addWidget(dateField);
-    outerLayout->addWidget(manageButton);
+    outerLayout->addLayout(secondRow);
     outerLayout->addStretch();
 
     connect(backButton, &QPushButton::clicked, this, &CreditCardPage::returnTypeSelectionPageSlot);
