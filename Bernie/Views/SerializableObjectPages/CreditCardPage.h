@@ -9,10 +9,10 @@ private:
     QLineEdit *numberField;
     QLineEdit *cvvField;
 public:
-    CreditCardPage(const SerializableObject* obj = nullptr, bool toEdit = false, QWidget* parent = 0){}
+    CreditCardPage(const SerializableObject* obj = nullptr, bool toEdit = false, QWidget* parent = 0);
     signals:
 public slots:
-    void managerSerializableObjectSlot(){};
+    void managerSerializableObjectSlot();
 
 };
 
