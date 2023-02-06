@@ -27,7 +27,7 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     else nameLabel->setText("Note identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(toEdit);
+    nameField->setEnabled(ptr == nullptr || toEdit);
     if(ptr) nameField->setText(QString::fromStdString(*ptrNote));
 
     QLabel *textLabel = new QLabel();
@@ -35,7 +35,7 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     else textLabel->setText("Text:");
 
     textField = new QTextEdit();
-    textField->setEnabled(toEdit);
+    textField->setEnabled(ptr == nullptr || toEdit);
     if(ptr) textField->setText(QString::fromStdString(ptrNote->getText()));
 
     //button create/edit

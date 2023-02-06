@@ -3,7 +3,8 @@
 #include <QPushButton>
 #include <QDialog>
 #include <QLabel>
-#include <QIntValidator>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include "../../Models/CreditCard.h"
 
 
@@ -31,7 +32,11 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else nameLabel->setText("Credit card identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(toEdit);
+    nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setMaxLength(50);
+    nameField->setMaximumWidth(300);
+    nameField->setMinimumHeight(25);
+    nameField->setAlignment(Qt::AlignCenter);
     if (ptr) nameField->setText(QString::fromStdString(*ptrCreditCard));
 
     //OWNER
@@ -40,7 +45,11 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else ownerLabel->setText("Owner:");
 
     ownerField = new QLineEdit();
-    ownerField->setEnabled(toEdit);
+    ownerField->setEnabled(ptr == nullptr || toEdit);
+    ownerField->setMaxLength(50);
+    ownerField->setMaximumWidth(300);
+    ownerField->setMinimumHeight(25);
+    ownerField->setAlignment(Qt::AlignCenter);
     if (ptr) ownerField->setText(QString::fromStdString(ptrCreditCard->getOwner()));
 
     //NUMBER
@@ -49,8 +58,15 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else numberLabel->setText("Credit card number:");
 
     numberField = new QLineEdit();
-    numberField->setEnabled(toEdit);
-    numberField->setInputMask("9999999999");
+    numberField->setEnabled(ptr == nullptr || toEdit);
+    //numberField->setInputMask("9999 9999 9999 9999");
+    QRegularExpression numberRx("[0-9]\\d{0,16}");
+    QValidator *numberValidator = new QRegularExpressionValidator(numberRx, this);
+    numberField->setValidator(numberValidator);
+    numberField->setMaxLength(50);
+    numberField->setMaximumWidth(300);
+    numberField->setMinimumHeight(25);
+    numberField->setAlignment(Qt::AlignCenter);
     if (ptr) numberField->setText(QString::fromStdString(ptrCreditCard->getNumber()));
 
     //CVV
@@ -59,8 +75,17 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else cvvLabel->setText("Cvv:");
 
     cvvField = new QLineEdit();
-    cvvField->setEnabled(toEdit);
-    cvvField->setInputMask("999");
+    cvvField->setEnabled(ptr == nullptr || toEdit);
+    //cvvField->setInputMask("999");
+    QRegularExpression cvvRx("[0-9]\\d{0,3}");
+    QValidator *cvvValidator = new QRegularExpressionValidator(cvvRx, this);
+    cvvField->setValidator(cvvValidator);
+    cvvField->setCursorPosition(0);
+    cvvField->setText("");
+    cvvField->setMaxLength(50);
+    cvvField->setMaximumWidth(300);
+    cvvField->setMinimumHeight(25);
+    cvvField->setAlignment(Qt::AlignCenter);
     if (ptr) cvvField->setText(QString::fromStdString(ptrCreditCard->getCvv()));
 
     //DATE
@@ -70,7 +95,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
 
     Date *date = nullptr;
     if (ptrCreditCard) date = new Date(ptrCreditCard->getDate());
-    dateField = new DateComponent(date, toEdit, 0);
+    dateField = new DateComponent(date, ptr == nullptr || toEdit, 0);
 
     //BUTTON
     QPushButton *manageButton = new QPushButton();
