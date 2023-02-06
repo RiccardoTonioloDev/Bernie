@@ -49,11 +49,12 @@ void NotePage::manageSerializableObjectSlot() {
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);
         dialog.exec();
+        return;
     }
-    else if(toEdit){
+    if(toEdit){
         emit editSerializableObjectSignal(objToManage, new Note(nameField->text().toStdString(),
                                                                 textField->toPlainText().toStdString()));
     }
-    else emit new Note(nameField->text().toStdString(),
-                       textField->toPlainText().toStdString());
+    else emit addSerializableObjectSignal(new Note(nameField->text().toStdString(),
+                       textField->toPlainText().toStdString()));
 }
