@@ -36,3 +36,23 @@ void Contact::accept(SerializableObjectsVisitor *visit, bool toEdit) const {
 Contact *Contact::clone() const {
     return new Contact(*this);
 }
+
+const std::string &Contact::getContactName() const {
+    return contactName;
+}
+
+const std::string &Contact::getContactSurname() const {
+    return contactSurname;
+}
+
+const Date &Contact::getBirthday() const {
+    return birthday;
+}
+
+const Telephone &Contact::getTelephone() const {
+    return telephone;
+}
+
+const std::string &Contact::getMail() const {
+    return mail;
+}

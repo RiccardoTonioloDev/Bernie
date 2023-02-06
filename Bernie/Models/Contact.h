@@ -32,6 +32,16 @@ public:
     Contact *clone() const override;
 
     void accept(SerializableObjectsVisitor *visit, bool toEdit = false) const override;
+
+    const std::string &getContactName() const;
+
+    const std::string &getContactSurname() const;
+
+    const Date &getBirthday() const;
+
+    const Telephone &getTelephone() const;
+
+    const std::string &getMail() const;
 };
 
 #endif

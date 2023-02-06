@@ -17,6 +17,8 @@ public:
      * POST: restituisce il numero di telefono sotto forma di stringa.
      */
     std::string getNumber() const;
+    const std::string &getPrefix() const;
+    const std::string &getNumberOnly() const;
 };
 
 

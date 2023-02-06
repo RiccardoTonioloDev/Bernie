@@ -23,3 +23,10 @@ Telephone::Telephone(const std::string &strTelephone) {
 std::string Telephone::getNumber() const {
     return prefix + " " + number;
 }
+
+const std::string &Telephone::getPrefix() const {
+    return prefix;
+}
+const std::string &Telephone::getNumberOnly() const{
+    return number;
+}
