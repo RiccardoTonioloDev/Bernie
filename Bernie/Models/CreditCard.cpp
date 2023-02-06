@@ -33,3 +33,19 @@ void CreditCard::accept(SerializableObjectsVisitor *visit) const {
 CreditCard *CreditCard::clone() const {
     return new CreditCard(*this);
 }
+
+const std::string &CreditCard::getOwner() const {
+    return owner;
+}
+
+const std::string &CreditCard::getNumber() const {
+    return number;
+}
+
+const std::string &CreditCard::getCvv() const {
+    return cvv;
+}
+
+const Date &CreditCard::getDate() const {
+    return date;
+}

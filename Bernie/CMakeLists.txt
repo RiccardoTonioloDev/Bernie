@@ -68,7 +68,7 @@ add_executable(Bernie
         Views/SerializableObjectPages/NotePage.h
         Views/SerializableObjectPages/CryptoWalletPage.cpp
         Views/SerializableObjectPages/CryptoWalletPage.h
-        )
+        Views/Components/DateComponent.cpp Views/Components/DateComponent.h)
 
 
 target_link_libraries(Bernie Qt6::Widgets)
