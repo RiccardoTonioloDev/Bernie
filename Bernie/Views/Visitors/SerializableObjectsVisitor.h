@@ -19,15 +19,15 @@ class SerializableObjectsVisitor {
 protected:
     QWidget *widget;
 public:
-    virtual void visit(const CreditCard &crcard) = 0;
+    virtual void visit(const CreditCard &crcard, bool toEdit = false) = 0;
 
-    virtual void visit(const Account &acc) = 0;
+    virtual void visit(const Account &acc, bool toEdit = false) = 0;
 
-    virtual void visit(const CryptoWallet &cypt) = 0;
+    virtual void visit(const CryptoWallet &cypt, bool toEdit = false) = 0;
 
-    virtual void visit(const Contact &cont) = 0;
+    virtual void visit(const Contact &cont, bool toEdit = false) = 0;
 
-    virtual void visit(const Note &note) = 0;
+    virtual void visit(const Note &note, bool toEdit = false) = 0;
 
     virtual QWidget *getWidget() = 0;
 };

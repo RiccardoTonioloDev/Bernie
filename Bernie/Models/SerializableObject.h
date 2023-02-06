@@ -50,7 +50,7 @@ public:
 
     virtual bool modify(const SerializableObject *) = 0;
 
-    virtual void accept(SerializableObjectsVisitor *visit) const = 0;
+    virtual void accept(SerializableObjectsVisitor *visit, bool toEdit = false) const = 0;
 
     operator std::string() const;
 

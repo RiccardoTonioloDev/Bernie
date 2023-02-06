@@ -26,8 +26,8 @@ bool Account::modify(const SerializableObject *ptr) {
     return false;
 }
 
-void Account::accept(SerializableObjectsVisitor *visitor) const {
-    visitor->visit(*this);
+void Account::accept(SerializableObjectsVisitor *visitor, bool toEdit) const {
+    visitor->visit(*this, toEdit);
 }
 
 Account *Account::clone() const {

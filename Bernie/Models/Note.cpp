@@ -17,8 +17,8 @@ Note *Note::clone() const {
     return new Note(*this);
 }
 
-void Note::accept(SerializableObjectsVisitor *visitor) const {
-    visitor->visit(*this);
+void Note::accept(SerializableObjectsVisitor *visitor, bool toEdit) const {
+    visitor->visit(*this, toEdit);
 }
 
 bool Note::modify(const SerializableObject *ptr) {

@@ -7,15 +7,16 @@
 
 class VisitorListItem : public SerializableObjectsVisitor {
 public:
-    virtual void visit(const CreditCard &crcard) override;
+    virtual void
+    visit(const CreditCard &crcard, bool toEdit = false) override;
 
-    virtual void visit(const Account &acc) override;
+    virtual void visit(const Account &acc, bool toEdit = false) override;
 
-    virtual void visit(const CryptoWallet &cypt) override;
+    virtual void visit(const CryptoWallet &cypt, bool toEdit = false) override;
 
-    virtual void visit(const Contact &cont) override;
+    virtual void visit(const Contact &cont, bool toEdit = false) override;
 
-    virtual void visit(const Note &note) override;
+    virtual void visit(const Note &note, bool toEdit = false) override;
 
     ListCardItem *getWidget() override;
 };

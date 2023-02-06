@@ -26,8 +26,8 @@ bool CreditCard::modify(const SerializableObject *ptr) {
     return false;
 }
 
-void CreditCard::accept(SerializableObjectsVisitor *visit) const {
-    visit->visit(*this);
+void CreditCard::accept(SerializableObjectsVisitor *visit, bool toEdit) const {
+    visit->visit(*this, toEdit);
 }
 
 CreditCard *CreditCard::clone() const {

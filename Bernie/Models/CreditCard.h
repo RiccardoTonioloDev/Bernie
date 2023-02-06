@@ -29,7 +29,8 @@ public:
     */
     CreditCard *clone() const override;
 
-    void accept(SerializableObjectsVisitor *visit) const override;
+    void accept(SerializableObjectsVisitor *visit, bool toEdit = false) const override;
+
     const std::string &getOwner() const;
 
     const std::string &getNumber() const;

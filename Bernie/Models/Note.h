@@ -25,7 +25,8 @@ public:
     */
     Note *clone() const override;
 
-    void accept(SerializableObjectsVisitor *visitor) const override;
+    void accept(SerializableObjectsVisitor *visitor, bool toEdit = false) const override;
+
     const std::string &getText() const;
 };
 

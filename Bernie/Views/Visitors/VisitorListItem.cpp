@@ -12,23 +12,23 @@
 #include "ListCardItem.h"
 
 
-void VisitorListItem::visit(const Note &note) {
+void VisitorListItem::visit(const Note &note, bool toEdit) {
     widget = new ListCardItem(&note, note, ":/assets/Notes");
 }
 
-void VisitorListItem::visit(const Account &acc) {
+void VisitorListItem::visit(const Account &acc, bool toEdit) {
     widget = new ListCardItem(&acc, acc, ":/assets/Account");
 }
 
-void VisitorListItem::visit(const CreditCard &crcard) {
+void VisitorListItem::visit(const CreditCard &crcard, bool toEdit) {
     widget = new ListCardItem(&crcard, crcard, ":/assets/CreditCards");
 }
 
-void VisitorListItem::visit(const Contact &cont) {
+void VisitorListItem::visit(const Contact &cont, bool toEdit) {
     widget = new ListCardItem(&cont, cont, ":/assets/Contacts");
 }
 
-void VisitorListItem::visit(const CryptoWallet &crypt) {
+void VisitorListItem::visit(const CryptoWallet &crypt, bool toEdit) {
     widget = new ListCardItem(&crypt, crypt, ":/assets/Crypto");
 }
 
