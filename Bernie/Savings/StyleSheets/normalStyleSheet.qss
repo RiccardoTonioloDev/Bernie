@@ -41,6 +41,16 @@ QPushButton::pressed{
 QLabel {
     color: black;
 }
+QTextEdit {
+    background-color: #F2F6F3;
+}
+QTextEdit::disabled{
+    background-color: #d9ddda;
+    border: 1px solid gray;
+}
+QTextEdit::focus{
+    border: 3px solid #47e0ff;
+}
 QComboBox {
     background-color: white;
     min-height: 30px;

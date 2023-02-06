@@ -84,6 +84,7 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
 }
 
 void HomePage::addDataSlot() {
+    emit addDataSignal();
 }
 
 void HomePage::changeByVector(const std::vector<const SerializableObject *> &vectorSerializableObjects) {
