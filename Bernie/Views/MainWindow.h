@@ -9,6 +9,7 @@
 #include "HomePage.h"
 #include "SelectDBPage.h"
 #include "DBSelectedPage.h"
+#include "SerializableObjectPages/PagesInterface.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -35,6 +36,14 @@ public slots:
     void switchLendingSlot();
 
     void switchTypeSelectionSlot();
+
+    void createAddPage(PagesInterface *);
+
+    void returnSelectionFromCreate();
+
+    void addSerializableObjectSlot(const SerializableObject *);
+
+    void editSerializableObjectSlot(const SerializableObject *toEdit, const SerializableObject *Edited);
 
     void createDBAndSwitch(std::string name, std::string password);
 

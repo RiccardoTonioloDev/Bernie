@@ -34,6 +34,11 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(DBsp, &DBSelectedPage::returnSelectDBSignal, this, &MainWindow::switchSelectSlot);
     connect(DBsp, &DBSelectedPage::decryptDBSignal, this, &MainWindow::readDBAndSwitch);
     connect(Tsp, &TypeSelectionPage::returnHomePageSignal, this, &MainWindow::switchHomePageSlot);
+    connect(Tsp, &TypeSelectionPage::createCryptoWalletSignal, this, &MainWindow::createAddPage);
+    connect(Tsp, &TypeSelectionPage::createNoteSignal, this, &MainWindow::createAddPage);
+    connect(Tsp, &TypeSelectionPage::createAccountSignal, this, &MainWindow::createAddPage);
+    connect(Tsp, &TypeSelectionPage::createCreditCardSignal, this, &MainWindow::createAddPage);
+    connect(Tsp, &TypeSelectionPage::createContactSignal, this, &MainWindow::createAddPage);
     connect(hp, &HomePage::addDataSignal, this, &MainWindow::switchTypeSelectionSlot);
 }
 
@@ -56,6 +61,43 @@ void MainWindow::switchLendingSlot() {
 void MainWindow::switchSelectSlot() {
     sDBP->refreshNameList(vault.fetchDBNames());
     stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::createAddPage(PagesInterface *pageToAdd) {
+    if (pageToAdd) {
+        stackedWidget->addWidget(pageToAdd);
+        connect(pageToAdd, &PagesInterface::addSerializableObjectSignal, this, &MainWindow::addSerializableObjectSlot);
+        connect(pageToAdd, &PagesInterface::editSerializableObjectSignal, this,
+                &MainWindow::editSerializableObjectSlot);
+        connect(pageToAdd, &PagesInterface::returnTypeSelectionPageSignal, this,
+                &MainWindow::returnSelectionFromCreate);
+        stackedWidget->setCurrentIndex(stackedWidget->count() - 1);
+    }
+}
+
+void MainWindow::returnSelectionFromCreate() {
+    stackedWidget->setCurrentIndex(5);
+    QWidget * lastPage = stackedWidget->widget(stackedWidget->count() - 1);
+    stackedWidget->removeWidget(lastPage);
+    delete lastPage;
+}
+
+void MainWindow::addSerializableObjectSlot(const SerializableObject *ptr) {
+    vault.addSerializableObject(ptr);
+    hp->refresh();
+    stackedWidget->setCurrentIndex(3);
+    QWidget * lastPage = stackedWidget->widget(stackedWidget->count() - 1);
+    stackedWidget->removeWidget(lastPage);
+    delete lastPage;
+}
+
+void MainWindow::editSerializableObjectSlot(const SerializableObject *toEdit, const SerializableObject *Edited) {
+    vault.modifyTreeObj(toEdit, Edited);
+    hp->refresh();
+    stackedWidget->setCurrentIndex(3);
+    QWidget * lastPage = stackedWidget->widget(stackedWidget->count() - 1);
+    stackedWidget->removeWidget(lastPage);
+    delete lastPage;
 }
 
 void MainWindow::createDBAndSwitch(std::string name, std::string password) {
