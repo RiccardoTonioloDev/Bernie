@@ -72,7 +72,7 @@ add_executable(Bernie
         Views/SerializableObjectPages/CreditCardPage.h
         Views/Components/DateComponent.cpp
         Views/Components/DateComponent.h
-        )
+        Views/SerializableObjectPages/ContactPage.cpp Views/SerializableObjectPages/ContactPage.h)
 
 
 target_link_libraries(Bernie Qt6::Widgets)
