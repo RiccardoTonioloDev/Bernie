@@ -33,3 +33,15 @@ void Account::accept(SerializableObjectsVisitor *visitor) const {
 Account *Account::clone() const {
     return new Account(*this);
 }
+
+const std::string &Account::getEmail() const {
+    return email;
+}
+
+const std::string &Account::getUsername() const {
+    return username;
+}
+
+const std::string &Account::getPassword() const {
+    return password;
+}

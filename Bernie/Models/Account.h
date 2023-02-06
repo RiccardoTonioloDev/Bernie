@@ -10,6 +10,7 @@ private:
     std::string email;
     std::string username;
     std::string password;
+
 public:
     Account(const std::string &name, const std::string &email, const std::string &password,
             const std::string &username = "");
@@ -29,6 +30,12 @@ public:
     Account *clone() const override;
 
     void accept(SerializableObjectsVisitor *visit) const override;
+
+    const std::string &getEmail() const;
+
+    const std::string &getUsername() const;
+
+    const std::string &getPassword() const;
 };
 
 

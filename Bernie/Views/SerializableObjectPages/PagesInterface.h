@@ -16,7 +16,7 @@ public:
 
     void returnTypeSelectionPageSignal();
 
-    void addSerializableObjectSignal(SerializableObject *);
+    void addSerializableObjectSignal(SerializableObject *newObject);
 
     virtual void editSerializableObjectSignal(SerializableObject *toEdit, SerializableObject *edited) = 0;
 
@@ -24,9 +24,8 @@ public slots:
 
     void returnTypeSelectionPageSlot();
 
-    virtual void addSerializableObjectSlot() = 0;
+    virtual void manageSerializableObjectSlot() = 0;
 
-    virtual void editSerializableObjectSlot() = 0;
 };
 
 #endif
