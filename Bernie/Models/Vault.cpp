@@ -2,6 +2,14 @@
 #include <dirent.h>
 #include <algorithm>
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
+
+#include <dirent.h>
+
+#endif
+
 Vault::Vault(const std::string &path) : tree(nullptr), storage(nullptr), pathToDirectory(path) {}
 
 Vault::~Vault() {
@@ -60,6 +68,20 @@ void Vault::reset() {
 
 std::vector<std::string> Vault::fetchDBNames() const {
     std::vector<std::string> fileNames;
+#ifdef _WIN32
+    WIN32_FIND_DATA fd;
+    HANDLE hFind = FindFirstFile((pathToDirectory + "\\*").c_str(), &fd);
+    if (hFind == INVALID_HANDLE_VALUE) {
+        std::cerr << "Could not open directory: " << pathToDirectory << std::endl;
+        return fileNames;
+    }
+    do {
+        if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+            fileNames.push_back(fd.cFileName);
+        }
+    } while (FindNextFile(hFind, &fd));
+    FindClose(hFind);
+#else
     DIR *dir = opendir(pathToDirectory.c_str());
     if (dir == nullptr) {
         std::cerr << "Could not open directory: " << pathToDirectory << std::endl;
@@ -72,9 +94,8 @@ std::vector<std::string> Vault::fetchDBNames() const {
         }
     }
     closedir(dir);
-
+#endif
     std::sort(fileNames.begin(), fileNames.end());
-
     return fileNames;
 }
 

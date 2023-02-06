@@ -14,6 +14,8 @@ protected:
 public:
     PagesInterface(const SerializableObject * = nullptr, bool tE = false, QWidget *parent = 0);
 
+signals:
+
     void returnTypeSelectionPageSignal();
 
     void addSerializableObjectSignal(const SerializableObject *newObject);
