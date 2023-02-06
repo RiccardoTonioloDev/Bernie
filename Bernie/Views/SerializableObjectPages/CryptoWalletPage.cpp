@@ -37,4 +37,6 @@ CryptoWalletPage::CryptoWalletPage(const SerializableObject *ptr, bool toEdit, Q
     if (ptr) blockchainNameField->setText(QString::fromStdString(ptrCrypto->getBlockchainName()));
 
     //WORDS
+    words = new std::vector<QLineEdit *>();
+
 }
