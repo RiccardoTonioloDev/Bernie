@@ -101,6 +101,11 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else manageButton->setText("Update");
     manageButton->setVisible(ptr == nullptr || (ptr && toEdit));
 
+    //third row
+    QVBoxLayout* thirdRow = new QVBoxLayout();
+    thirdRow->setAlignment(Qt::AlignCenter);
+
+
     //LAYOUT
     secondRow->addWidget(nameLabel);
     secondRow->addWidget(nameField);
@@ -111,11 +116,12 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     secondRow->addWidget(cvvLabel);
     secondRow->addWidget(cvvField);
     secondRow->addWidget(dateLabel);
-    secondRow->addWidget(dateField);
-    secondRow->addWidget(manageButton);
+    thirdRow->addWidget(dateField);
+    thirdRow->addWidget(manageButton);
 
     outerLayout->addLayout(firstRow);
     outerLayout->addLayout(secondRow);
+    outerLayout->addLayout(thirdRow);
     outerLayout->addStretch();
 
     connect(backButton, &QPushButton::clicked, this, &CreditCardPage::returnTypeSelectionPageSlot);

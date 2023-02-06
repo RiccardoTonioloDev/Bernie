@@ -1,3 +1,5 @@
+#include <QLabel>
+#include <QDialog>
 #include "DateComponent.h"
 #include "QHBoxLayout"
 
@@ -6,15 +8,18 @@ DateComponent::DateComponent(Date* d, bool toEdit, QWidget *parent): QWidget(par
 
     dayField = new QLineEdit();
     dayField->setEnabled(toEdit);
-    if(date) dayField->setText(QString::fromStdString(""+date->getDay()));
+    dayField->setAlignment(Qt::AlignCenter);
+    if(date) dayField->setText(QString::fromStdString(std::to_string(date->getDay())));
 
     monthField = new QLineEdit();
     monthField->setEnabled(toEdit);
-    if(date) monthField->setText(QString::fromStdString(""+date->getMonth()));
+    monthField->setAlignment(Qt::AlignCenter);
+    if(date) monthField->setText(QString::fromStdString(std::to_string(date->getMonth())));
 
     yearField = new QLineEdit();
     yearField->setEnabled(toEdit);
-    if(date) yearField->setText(QString::fromStdString(""+date->getYear()));
+    yearField->setAlignment(Qt::AlignCenter);
+    if(date) yearField->setText(QString::fromStdString(std::to_string(date->getYear())));
 
     lyt->addWidget(dayField);
     lyt->addWidget(monthField);
