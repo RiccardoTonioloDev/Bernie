@@ -38,10 +38,6 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     emailField = new QLineEdit();
     emailField->setEnabled(toEdit);
     if (ptr) emailField->setText(QString::fromStdString(ptrAccount->getEmail()));
-    secondRow->addWidget(identifierLabel);
-    secondRow->addWidget(nameField);
-    secondRow->addWidget(emailLabel);
-    secondRow->addWidget(emailField);
 
     //USERNAME
     QLabel *usernameLabel = new QLabel();
@@ -66,6 +62,18 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else manageButton->setText("Update");
     manageButton->setVisible(ptr == nullptr || (ptr && toEdit));
 
+    //Populating second row
+    secondRow->addWidget(identifierLabel);
+    secondRow->addWidget(nameField);
+    secondRow->addWidget(emailLabel);
+    secondRow->addWidget(emailField);
+    secondRow->addWidget(usernameLabel);
+    secondRow->addWidget(usernameField);
+    secondRow->addWidget(passwordLabel);
+    secondRow->addWidget(passwordField);
+    secondRow->addWidget(manageButton);
+
+
     outerLayout->addLayout(firstRow);
     outerLayout->addLayout(secondRow);
     outerLayout->addStretch();
@@ -83,14 +91,14 @@ void AccountPage::manageSerializableObjectSlot() {
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);
         dialog.exec();
-
+        return;
     }
     if (toEdit) emit editSerializableObjectSignal(objToManage, new Account(nameField->text().toStdString(),
                                                                            emailField->text().toStdString(),
                                                                            passwordField->text().toStdString(),
                                                                            usernameField->text().toStdString()));
-    else emit new Account(nameField->text().toStdString(),
-                          emailField->text().toStdString(),
-                          passwordField->text().toStdString(),
-                          usernameField->text().toStdString());
+    else emit addSerializableObjectSignal(new Account(nameField->text().toStdString(),
+                                                      emailField->text().toStdString(),
+                                                      passwordField->text().toStdString(),
+                                                      usernameField->text().toStdString()));
 }
