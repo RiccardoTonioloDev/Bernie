@@ -31,7 +31,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else nameLabel->setText("Credit card identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(toEdit);
+    nameField->setEnabled(ptr == nullptr || toEdit);
     if (ptr) nameField->setText(QString::fromStdString(*ptrCreditCard));
 
     //OWNER
@@ -40,7 +40,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else ownerLabel->setText("Owner:");
 
     ownerField = new QLineEdit();
-    ownerField->setEnabled(toEdit);
+    ownerField->setEnabled(ptr == nullptr || toEdit);
     if (ptr) ownerField->setText(QString::fromStdString(ptrCreditCard->getOwner()));
 
     //NUMBER
@@ -49,7 +49,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else numberLabel->setText("Credit card number:");
 
     numberField = new QLineEdit();
-    numberField->setEnabled(toEdit);
+    numberField->setEnabled(ptr == nullptr || toEdit);
     numberField->setInputMask("9999999999");
     if (ptr) numberField->setText(QString::fromStdString(ptrCreditCard->getNumber()));
 
@@ -59,7 +59,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else cvvLabel->setText("Cvv:");
 
     cvvField = new QLineEdit();
-    cvvField->setEnabled(toEdit);
+    cvvField->setEnabled(ptr == nullptr || toEdit);
     cvvField->setInputMask("999");
     if (ptr) cvvField->setText(QString::fromStdString(ptrCreditCard->getCvv()));
 
@@ -70,7 +70,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
 
     Date *date = nullptr;
     if (ptrCreditCard) date = new Date(ptrCreditCard->getDate());
-    dateField = new DateComponent(date, toEdit, 0);
+    dateField = new DateComponent(date, ptr == nullptr || toEdit, 0);
 
     //BUTTON
     QPushButton *manageButton = new QPushButton();
