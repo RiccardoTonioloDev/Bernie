@@ -126,6 +126,7 @@ bool Vault::modifyTreeObj(const SerializableObject *toModify, const Serializable
     std::string nameOfModified = *toModify;
     if (nameOfModified == name && tree->searchSingle(nameOfModified) != nullptr) {
         const_cast<SerializableObject *>(toModify)->modify(toAssign);
+        loadToStorage();
         return true;
     } else return false;
 }

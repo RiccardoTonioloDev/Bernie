@@ -4,13 +4,14 @@
 #include "QHBoxLayout"
 
 DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(parent), date(d) {
-    QHBoxLayout *lyt = new QHBoxLayout();
+    QHBoxLayout *lyt = new QHBoxLayout(this);
+    lyt->setAlignment(Qt::AlignCenter);
 
     dayField = new QLineEdit();
     dayField->setEnabled(toEdit);
     dayField->setAlignment(Qt::AlignCenter);
     dayField->setMaxLength(50);
-    dayField->setMaximumWidth(300);
+    dayField->setMaximumWidth(70);
     dayField->setMinimumHeight(25);
     if (date) dayField->setText(QString::fromStdString(std::to_string(date->getDay())));
 
@@ -18,7 +19,7 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     monthField->setEnabled(toEdit);
     monthField->setAlignment(Qt::AlignCenter);
     monthField->setMaxLength(50);
-    monthField->setMaximumWidth(300);
+    monthField->setMaximumWidth(70);
     monthField->setMinimumHeight(25);
     if (date) monthField->setText(QString::fromStdString(std::to_string(date->getMonth())));
 
@@ -26,7 +27,7 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     yearField->setEnabled(toEdit);
     yearField->setAlignment(Qt::AlignCenter);
     yearField->setMaxLength(50);
-    yearField->setMaximumWidth(300);
+    yearField->setMaximumWidth(70);
     yearField->setMinimumHeight(25);
     if (date) yearField->setText(QString::fromStdString(std::to_string(date->getYear())));
 
