@@ -32,6 +32,10 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
 
     nameField = new QLineEdit();
     nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setMaxLength(50);
+    nameField->setMaximumWidth(300);
+    nameField->setMinimumHeight(25);
+    nameField->setAlignment(Qt::AlignCenter);
     if (ptr) nameField->setText(QString::fromStdString(*ptrCreditCard));
 
     //OWNER
@@ -41,6 +45,10 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
 
     ownerField = new QLineEdit();
     ownerField->setEnabled(ptr == nullptr || toEdit);
+    ownerField->setMaxLength(50);
+    ownerField->setMaximumWidth(300);
+    ownerField->setMinimumHeight(25);
+    ownerField->setAlignment(Qt::AlignCenter);
     if (ptr) ownerField->setText(QString::fromStdString(ptrCreditCard->getOwner()));
 
     //NUMBER
@@ -50,7 +58,13 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
 
     numberField = new QLineEdit();
     numberField->setEnabled(ptr == nullptr || toEdit);
-    numberField->setInputMask("9999999999");
+    numberField->setInputMask("9999 9999 9999 9999");
+    numberField->setCursorPosition(0);
+    numberField->setText("");
+    numberField->setMaxLength(50);
+    numberField->setMaximumWidth(300);
+    numberField->setMinimumHeight(25);
+    numberField->setAlignment(Qt::AlignCenter);
     if (ptr) numberField->setText(QString::fromStdString(ptrCreditCard->getNumber()));
 
     //CVV
@@ -61,6 +75,12 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     cvvField = new QLineEdit();
     cvvField->setEnabled(ptr == nullptr || toEdit);
     cvvField->setInputMask("999");
+    cvvField->setCursorPosition(0);
+    cvvField->setText("");
+    cvvField->setMaxLength(50);
+    cvvField->setMaximumWidth(300);
+    cvvField->setMinimumHeight(25);
+    cvvField->setAlignment(Qt::AlignCenter);
     if (ptr) cvvField->setText(QString::fromStdString(ptrCreditCard->getCvv()));
 
     //DATE
