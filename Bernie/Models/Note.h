@@ -7,6 +7,7 @@
 class Note : public SerializableObject {
 private:
     std::string text;
+
 public:
     Note(const std::string &name, const std::string &text);
 
@@ -25,6 +26,7 @@ public:
     Note *clone() const override;
 
     void accept(SerializableObjectsVisitor *visitor) const override;
+    const std::string &getText() const;
 };
 
 #endif

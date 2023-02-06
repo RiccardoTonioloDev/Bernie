@@ -28,3 +28,7 @@ bool Note::modify(const SerializableObject *ptr) {
     }
     return false;
 }
+
+const std::string &Note::getText() const {
+    return text;
+}
