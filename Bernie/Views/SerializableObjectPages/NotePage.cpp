@@ -22,6 +22,18 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
 
     //second row
     //text field
+    QLabel *nameLabel = new QLabel();
+    if(!ptr) nameLabel->setText("Insert Note identifier:");
+    else nameLabel->setText("Note identifier:");
+
+    nameField = new QLineEdit();
+    nameField->setEnabled(toEdit);
+    if(ptr) nameField->setText(QString::fromStdString(*ptrNote));
+
+    QLabel *textLabel = new QLabel();
+    if(!ptr) textLabel->setText("Insert text here:");
+    else textLabel->setText("Text:");
+
     textField = new QTextEdit();
     textField->setEnabled(toEdit);
     if(ptr) textField->setText(QString::fromStdString(ptrNote->getText()));
@@ -33,6 +45,9 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     manageButton->setVisible(toEdit || (ptr && toEdit));
 
     outerLayout->addLayout(firstRow);
+    outerLayout->addWidget(nameLabel);
+    outerLayout->addWidget(nameField);
+    outerLayout->addWidget(textLabel);
     outerLayout->addWidget(textField);
     outerLayout->addWidget(manageButton);
     outerLayout->addStretch();
