@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QLineEdit>
-#include "../../Models/SerializableObject.h";
+#include "../../Models/SerializableObject.h"
 
 class PagesInterface : public QWidget {
 Q_OBJECT

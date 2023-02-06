@@ -65,8 +65,16 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
 }
 
 void AccountPage::manageSerializableObjectSlot() {
+    if (nameField->text().toStdString().size() == 0 ||
+        passwordField->text().toStdString().size() == 0) {
+
+    }
     if (toEdit) emit editSerializableObjectSignal(objToManage, new Account(nameField->text().toStdString(),
                                                                            emailField->text().toStdString(),
                                                                            passwordField->text().toStdString(),
                                                                            usernameField->text().toStdString()));
+    else emit new Account(nameField->text().toStdString(),
+                          emailField->text().toStdString(),
+                          passwordField->text().toStdString(),
+                          usernameField->text().toStdString());
 }
