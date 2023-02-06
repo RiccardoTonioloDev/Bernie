@@ -8,10 +8,11 @@
 class PagesInterface : public QWidget {
 Q_OBJECT
 protected:
-    const SerializableObject *toEdit;
+    const SerializableObject *objToManage;
     QLineEdit *nameField;
+    bool toEdit;
 public:
-    PagesInterface(const SerializableObject * = nullptr, QWidget *parent = 0);
+    PagesInterface(const SerializableObject * = nullptr, bool tE = false, QWidget *parent = 0);
 
     void returnTypeSelectionPageSignal();
 

@@ -47,7 +47,7 @@ add_executable(Bernie
         Views/Visitors/VisitorListItem.cpp
         Views/Visitors/VisitorListItem.h
         Views/Visitors/SerializableObjectsVisitor.h
-        Views/Visitors/ListCardItem.cpp Views/Visitors/ListCardItem.h Views/Visitors/SerializableObjectsVisitor.cpp Views/DBSelectedPage.cpp Views/DBSelectedPage.h Views/Components/MenuButton.cpp Views/Components/MenuButton.h Views/TypeSelectionPage.cpp Views/TypeSelectionPage.h Views/Components/TypeSelectionButton.cpp Views/Components/TypeSelectionButton.h Views/Visitors/VisitorManageItem.cpp Views/Visitors/VisitorManageItem.h Views/SerializableObjectPages/PagesInterface.h Views/SerializableObjectPages/PagesInterface.cpp)
+        Views/Visitors/ListCardItem.cpp Views/Visitors/ListCardItem.h Views/Visitors/SerializableObjectsVisitor.cpp Views/DBSelectedPage.cpp Views/DBSelectedPage.h Views/Components/MenuButton.cpp Views/Components/MenuButton.h Views/TypeSelectionPage.cpp Views/TypeSelectionPage.h Views/Components/TypeSelectionButton.cpp Views/Components/TypeSelectionButton.h Views/Visitors/VisitorManageItem.cpp Views/Visitors/VisitorManageItem.h Views/SerializableObjectPages/PagesInterface.h Views/SerializableObjectPages/PagesInterface.cpp Views/SerializableObjectPages/AccountPage.cpp Views/SerializableObjectPages/AccountPage.h)
 
 target_link_libraries(Bernie Qt6::Widgets)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
