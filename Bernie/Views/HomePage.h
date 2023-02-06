@@ -23,7 +23,7 @@ public:
 
 signals:
 
-    void addDataSignal(const SerializableObject *);
+    void addDataSignal();
 
     void createWatchPageSignal(PagesInterface *);
 
