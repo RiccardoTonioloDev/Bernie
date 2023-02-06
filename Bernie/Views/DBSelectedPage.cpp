@@ -1,6 +1,7 @@
 #include "DBSelectedPage.h"
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QDialog>
 #include <QLabel>
 #include <QLineEdit>
 
@@ -52,6 +53,15 @@ void DBSelectedPage::returnSelectDBSlot() {
 }
 
 void DBSelectedPage::decryptDBSlot() {
+    if (dbPassword->text().toStdString().size() == 0) {
+        QDialog dialog;
+        QLabel *dialogLabel = new QLabel("Please insert at least one char for the password.");
+        QHBoxLayout *dialogLayout = new QHBoxLayout;
+        dialogLayout->addWidget(dialogLabel);
+        dialog.setLayout(dialogLayout);
+        dialog.exec();
+        return;
+    }
     emit decryptDBSignal(dbName->text().toStdString(), dbPassword->text().toStdString());
 }
 

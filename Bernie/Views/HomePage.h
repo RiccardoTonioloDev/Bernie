@@ -24,6 +24,12 @@ signals:
 
     void addDataSignal();
 
+    void watchDataSignal();
+
+    void editDataSignal();
+
+    void removeDataSignal();
+
 public slots:
 
     void filterAll();
@@ -43,6 +49,12 @@ public slots:
     void returnPressed();
 
     void addDataSlot();
+
+    void watchDataSlot(const SerializableObject *);
+
+    void editDataSlot(const SerializableObject *);
+
+    void removeDataSlot(const SerializableObject *);
 };
 
 

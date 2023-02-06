@@ -1,5 +1,6 @@
 #include "HomePage.h"
 #include <QVBoxLayout>
+#include <QDialog>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QIcon>
@@ -37,6 +38,7 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
     //MiddleSpace
     listOfCards = new QListWidget();
     auto vectorSerializableObjects = vault.vectorize();
+    bool prova = false;
     for (auto so: vectorSerializableObjects) {
         VisitorListItem visitor;
         so->accept(&visitor);
@@ -45,6 +47,9 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
         item->setSizeHint(QSize(0, 100));
         listOfCards->addItem(item);
         listOfCards->setItemWidget(item, cardLine);
+        connect(cardLine, &ListCardItem::removeSignal, this, &HomePage::removeDataSlot);
+        connect(cardLine, &ListCardItem::watchSignal, this, &HomePage::watchDataSlot);
+        connect(cardLine, &ListCardItem::editSignal, this, &HomePage::editDataSlot);
     }
 
     //LowerRow
@@ -91,6 +96,9 @@ void HomePage::changeByVector(const std::vector<const SerializableObject *> &vec
         item->setSizeHint(QSize(0, 100));
         listOfCards->addItem(item);
         listOfCards->setItemWidget(item, cardLine);
+        connect(cardLine, &ListCardItem::removeSignal, this, &HomePage::removeDataSlot);
+        connect(cardLine, &ListCardItem::watchSignal, this, &HomePage::watchDataSlot);
+        connect(cardLine, &ListCardItem::editSignal, this, &HomePage::editDataSlot);
     }
 }
 
@@ -128,4 +136,29 @@ void HomePage::filterByName(const QString &name) {
 
 void HomePage::returnPressed() {
     searchBox->clearFocus();
+}
+
+void HomePage::watchDataSlot(const SerializableObject *ptr) {
+    QDialog dialog;
+    QLabel *dialogLabel = new QLabel("Please insert at least the identifier, the email and the password.");
+    QHBoxLayout *dialogLayout = new QHBoxLayout;
+    dialogLayout->addWidget(dialogLabel);
+    dialog.setLayout(dialogLayout);
+    dialog.exec();
+}
+
+void HomePage::editDataSlot(const SerializableObject *ptr) {
+    QDialog dialog;
+    QLabel *dialogLabel = new QLabel("Please insert at least the identifier, the email and the password.");
+    QHBoxLayout *dialogLayout = new QHBoxLayout;
+    dialogLayout->addWidget(dialogLabel);
+    dialog.setLayout(dialogLayout);
+    dialog.exec();
+}
+
+void HomePage::removeDataSlot(const SerializableObject *ptr) {
+    if (ptr) {
+        vault.deleteSerializableObject(*ptr);
+        refresh();
+    }
 }

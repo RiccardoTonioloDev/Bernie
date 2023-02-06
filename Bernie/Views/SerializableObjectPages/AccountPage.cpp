@@ -28,6 +28,10 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
 
     nameField = new QLineEdit();
     nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setMaxLength(50);
+    nameField->setMaximumWidth(300);
+    nameField->setMinimumHeight(25);
+    nameField->setAlignment(Qt::AlignCenter);
     if (ptr) nameField->setText(QString::fromStdString(*ptrAccount));
 
     //EMAIL
@@ -37,6 +41,10 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
 
     emailField = new QLineEdit();
     emailField->setEnabled(ptr == nullptr || toEdit);
+    emailField->setMaxLength(50);
+    emailField->setMaximumWidth(300);
+    emailField->setMinimumHeight(25);
+    emailField->setAlignment(Qt::AlignCenter);
     if (ptr) emailField->setText(QString::fromStdString(ptrAccount->getEmail()));
 
     //USERNAME
@@ -46,6 +54,10 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
 
     usernameField = new QLineEdit();
     usernameField->setEnabled(ptr == nullptr || toEdit);
+    usernameField->setMaxLength(50);
+    usernameField->setMaximumWidth(300);
+    usernameField->setMinimumHeight(25);
+    usernameField->setAlignment(Qt::AlignCenter);
     if (ptr) emailField->setText(QString::fromStdString(ptrAccount->getUsername()));
 
     //Password
@@ -55,6 +67,10 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
 
     passwordField = new QLineEdit();
     passwordField->setEnabled(ptr == nullptr || toEdit);
+    passwordField->setMaxLength(50);
+    passwordField->setMaximumWidth(300);
+    passwordField->setMinimumHeight(25);
+    passwordField->setAlignment(Qt::AlignCenter);
     if (ptr) passwordField->setText(QString::fromStdString(ptrAccount->getPassword()));
 
     QPushButton *manageButton = new QPushButton();
@@ -94,11 +110,13 @@ void AccountPage::manageSerializableObjectSlot() {
         dialog.exec();
         return;
     }
-    if (toEdit) emit editSerializableObjectSignal(objToManage, new Account(nameField->text().toStdString(),
+    std::string upperName(nameField->text().toStdString());
+    std::transform(upperName.begin(), upperName.end(), upperName.begin(), [](char &c) { return std::toupper(c); });
+    if (toEdit) emit editSerializableObjectSignal(objToManage, new Account(upperName,
                                                                            emailField->text().toStdString(),
                                                                            passwordField->text().toStdString(),
                                                                            usernameField->text().toStdString()));
-    else emit addSerializableObjectSignal(new Account(nameField->text().toStdString(),
+    else emit addSerializableObjectSignal(new Account(upperName,
                                                       emailField->text().toStdString(),
                                                       passwordField->text().toStdString(),
                                                       usernameField->text().toStdString()));
