@@ -5,6 +5,8 @@
 #include "Components/TypeSelectionButton.h"
 #include "SerializableObjectPages/AccountPage.h"
 #include "SerializableObjectPages/CryptoWalletPage.h"
+#include "SerializableObjectPages/NotePage.h"
+#include "SerializableObjectPages/CreditCardPage.h"
 
 TypeSelectionPage::TypeSelectionPage(QWidget *parent) {
     QVBoxLayout *outerLayout = new QVBoxLayout(this);
@@ -46,11 +48,11 @@ TypeSelectionPage::TypeSelectionPage(QWidget *parent) {
 }
 
 void TypeSelectionPage::createCreditCardSlot() {
-    emit createCreditCardSignal(nullptr);
+    emit createCreditCardSignal(new CreditCardPage());
 }
 
 void TypeSelectionPage::createNoteSlot() {
-    emit createNoteSignal(nullptr);
+    emit createNoteSignal(new NotePage());
 }
 
 void TypeSelectionPage::createCryptoWalletSlot() {
