@@ -36,6 +36,12 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     nameField->setAlignment(Qt::AlignCenter);
     if(ptr) nameField->setText(QString::fromStdString(*ptrNote));
 
+    //third row
+    QHBoxLayout *thirdRow = new QHBoxLayout;
+    thirdRow->setAlignment(Qt::AlignCenter);
+    //textBox
+    QVBoxLayout *textAreaBox = new QVBoxLayout;
+    textAreaBox->setAlignment(Qt::AlignCenter);
     QLabel *textLabel = new QLabel();
     if(!ptr) textLabel->setText("Insert text here:");
     else textLabel->setText("Text:");
@@ -43,7 +49,13 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     textField = new QTextEdit();
     textField->setEnabled(ptr == nullptr || toEdit);
     if(ptr) textField->setText(QString::fromStdString(ptrNote->getText()));
+    textField->setFixedWidth(400);
+    textAreaBox->addWidget(textLabel);
+    textAreaBox->addWidget(textField);
 
+    //fourth row
+    QHBoxLayout *fourthRow = new QHBoxLayout;
+    fourthRow->setAlignment(Qt::AlignCenter);
     //button create/edit
     QPushButton* manageButton = new QPushButton();
     if (!ptr) manageButton->setText("Create");
@@ -52,12 +64,15 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
 
     secondRow->addWidget(nameLabel);
     secondRow->addWidget(nameField);
-    secondRow->addWidget(textLabel);
-    secondRow->addWidget(textField);
-    secondRow->addWidget(manageButton);
+    thirdRow->addStretch();
+    thirdRow->addLayout(textAreaBox);
+    thirdRow->addStretch();
+    fourthRow->addWidget(manageButton);
 
     outerLayout->addLayout(firstRow);
     outerLayout->addLayout(secondRow);
+    outerLayout->addLayout(thirdRow);
+    outerLayout->addLayout(fourthRow);
     outerLayout->addStretch();
 
     connect(backButton, &QPushButton::clicked, this, &NotePage::returnTypeSelectionPageSlot);
