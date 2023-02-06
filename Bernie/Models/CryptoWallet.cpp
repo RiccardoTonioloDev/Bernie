@@ -33,3 +33,11 @@ bool CryptoWallet::modify(const SerializableObject *ptr) {
     }
     return false;
 }
+
+const std::string &CryptoWallet::getBlockchainName() const {
+    return blockchain_name;
+}
+
+const std::vector<std::string> &CryptoWallet::getWords() const {
+    return words;
+}
