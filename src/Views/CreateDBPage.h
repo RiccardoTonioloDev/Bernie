@@ -15,7 +15,7 @@ public:
 
     void resetFields();
 
-    void spawnAlertDialog(std::string text);
+    void spawnAlertDialog(std::string text) const ;
 
 signals:
 
