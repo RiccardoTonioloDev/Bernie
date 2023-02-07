@@ -8,13 +8,14 @@
 #include "../SerializableObjectPages/CryptoWalletPage.h"
 #include "../SerializableObjectPages/AccountPage.h"
 #include "../SerializableObjectPages/CreditCardPage.h"
+#include "../SerializableObjectPages/ContactPage.h"
 
 void VisitorManageItem::visit(const Note &note, bool toEdit) {
     widget = new NotePage(&note, toEdit);
 }
 
 void VisitorManageItem::visit(const Contact &cont, bool toEdit) {
-    widget = nullptr;
+    widget = new ContactPage(&cont, toEdit);
 }
 
 void VisitorManageItem::visit(const CreditCard &crcard, bool toEdit) {

@@ -7,6 +7,7 @@
 #include "SerializableObjectPages/CryptoWalletPage.h"
 #include "SerializableObjectPages/NotePage.h"
 #include "SerializableObjectPages/CreditCardPage.h"
+#include "SerializableObjectPages/ContactPage.h"
 
 TypeSelectionPage::TypeSelectionPage(QWidget *parent) {
     QVBoxLayout *outerLayout = new QVBoxLayout(this);
@@ -61,7 +62,7 @@ void TypeSelectionPage::createCryptoWalletSlot() {
 }
 
 void TypeSelectionPage::createContactSlot() {
-    emit createContactSignal(nullptr);
+    emit createContactSignal(new ContactPage());
 
 }
 

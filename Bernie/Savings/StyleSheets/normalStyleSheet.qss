@@ -85,3 +85,13 @@ QScrollBar:vertical {
 QDialog {
     background-color: #D1E4E5;
 }
+QSpinBox {
+    background-color: #F2F6F3;
+}
+QSpinBox::disabled{
+    background-color: #d9ddda;
+    border: 1px solid gray;
+}
+QSpinBox::focus{
+    border: 3px solid #47e0ff;
+}

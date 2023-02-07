@@ -1,5 +1,7 @@
 #include <QLabel>
 #include <QDialog>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include "DateComponent.h"
 #include "QHBoxLayout"
 
@@ -13,6 +15,9 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     dayField->setMaxLength(50);
     dayField->setMaximumWidth(70);
     dayField->setMinimumHeight(25);
+    QRegularExpression dayRx("[1-9]{2}");
+    QValidator *dayValidator = new QRegularExpressionValidator(dayRx, this);
+    dayField->setValidator(dayValidator);
     if (date) dayField->setText(QString::fromStdString(std::to_string(date->getDay())));
 
     monthField = new QLineEdit();
@@ -21,6 +26,9 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     monthField->setMaxLength(50);
     monthField->setMaximumWidth(70);
     monthField->setMinimumHeight(25);
+    QRegularExpression monthRx("[1-9]{2}");
+    QValidator *monthValidator = new QRegularExpressionValidator(monthRx, this);
+    monthField->setValidator(monthValidator);
     if (date) monthField->setText(QString::fromStdString(std::to_string(date->getMonth())));
 
     yearField = new QLineEdit();
@@ -29,6 +37,9 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     yearField->setMaxLength(50);
     yearField->setMaximumWidth(70);
     yearField->setMinimumHeight(25);
+    QRegularExpression yearRx("[0-9]*");
+    QValidator *yearValidator = new QRegularExpressionValidator(yearRx, this);
+    yearField->setValidator(yearValidator);
     if (date) yearField->setText(QString::fromStdString(std::to_string(date->getYear())));
 
     lyt->addWidget(dayField);
@@ -38,12 +49,15 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
 }
 
 bool DateComponent::isValid() const {
+    if (std::stoi(dayField->text().toStdString()) > 31) return false;
+    if (std::stoi(monthField->text().toStdString()) > 12) return false;
+    if (std::stoi(dayField->text().toStdString()) < 1) return false;
+    if (std::stoi(monthField->text().toStdString()) < 1) return false;
     if (std::stoi(monthField->text().toStdString()) == 2) {
         if ((std::stoi(dayField->text().toStdString()) == 29 && std::stoi(yearField->text().toStdString()) % 4 != 0) ||
             std::stoi(dayField->text().toStdString()) > 29)
             return false;
     }
-
     if (std::stoi(dayField->text().toStdString()) == 31 && (std::stoi(monthField->text().toStdString()) == 11 ||
                                                             std::stoi(monthField->text().toStdString()) == 4 ||
                                                             std::stoi(monthField->text().toStdString()) == 6 ||

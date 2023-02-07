@@ -2,7 +2,9 @@
 #include <QLabel>
 #include <QDialog>
 #include "ContactPage.h"
-ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *parent) : PagesInterface(ptr, toEdit, parent) {
+
+ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *parent) : PagesInterface(ptr, toEdit,
+                                                                                                       parent) {
 
     QVBoxLayout *outerLayout = new QVBoxLayout(this);
     const Contact *ptrContact = nullptr;
@@ -76,11 +78,12 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else birthdayDateLabel->setText("Contact birthday:");
 
     Date *birthdayDate = nullptr;
-    if(ptr) birthdayDate = new Date(ptrContact->getBirthday());
-    dateField = new DateComponent(birthdayDate, toEdit, 0);
+    if (ptr) birthdayDate = new Date(ptrContact->getBirthday());
+    dateField = new DateComponent(birthdayDate, ptr == nullptr || toEdit, 0);
 
     //third row
     QHBoxLayout *thirdRow = new QHBoxLayout();
+    thirdRow->addStretch();
     thirdRow->setAlignment(Qt::AlignHCenter);
 
     //layout for prefix
@@ -91,8 +94,13 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     if (!ptr) prefixLabel->setText("Insert prefix here:");
     else prefixLabel->setText("Prefix:");
 
-    prefixField = new QComboBox();
-    if(ptr) prefixField->setCurrentText(QString::fromStdString(ptrContact->getTelephone().getPrefix()));
+    prefixField = new QSpinBox();
+    prefixField->setMaximum(999);
+    prefixField->setMaximumWidth(300);
+    prefixField->setMinimumHeight(25);
+    prefixField->setAlignment(Qt::AlignCenter);
+    prefixField->setEnabled(ptr == nullptr || toEdit);
+    if (ptr) prefixField->setValue(std::stoi(ptrContact->getTelephone().getPrefix()));
     prefixBox->addWidget(prefixLabel);
     prefixBox->addWidget(prefixField);
 
@@ -105,18 +113,25 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else numberLabel->setText("Phone number:");
 
     numberField = new QLineEdit();
-    numberField->setMaxLength(50);
+    QRegularExpression numberRx("[0-9]{15}");
+    QValidator *numberValidator = new QRegularExpressionValidator(numberRx, this);
+    numberField->setValidator(numberValidator);
+    numberField->setEnabled(ptr == nullptr || toEdit);
+    numberField->setMaxLength(15);
     numberField->setMaximumWidth(300);
     numberField->setMinimumHeight(25);
     numberField->setAlignment(Qt::AlignCenter);
-    if(ptr) numberField->setText(QString::fromStdString(ptrContact->getTelephone().getNumberOnly()));
+    if (ptr) numberField->setText(QString::fromStdString(ptrContact->getTelephone().getNumberOnly()));
     numberBox->addWidget(numberLabel);
     numberBox->addWidget(numberField);
 
+    QVBoxLayout *buttonBox = new QVBoxLayout();
+    buttonBox->setAlignment(Qt::AlignCenter);
     QPushButton *manageButton = new QPushButton();
     if (!ptr) manageButton->setText("Create");
     else manageButton->setText("Update");
     manageButton->setVisible(ptr == nullptr || (ptr && toEdit));
+    manageButton->setFixedWidth(130);
 
     //LAYOUT
     secondRow->addWidget(identifierLabel);
@@ -125,30 +140,36 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     secondRow->addWidget(contactNameField);
     secondRow->addWidget(contactSurnameLabel);
     secondRow->addWidget(contactSurnameField);
+    secondRow->addWidget(emailLabel);
+    secondRow->addWidget(emailField);
+    secondRow->addWidget(birthdayDateLabel);
 
+    thirdRow->setAlignment(Qt::AlignCenter);
     thirdRow->addLayout(prefixBox);
     thirdRow->addLayout(numberBox);
+    thirdRow->addStretch();
 
     outerLayout->addLayout(firstRow);
     outerLayout->addLayout(secondRow);
-    outerLayout->addWidget(birthdayDateLabel);
     outerLayout->addWidget(dateField);
     outerLayout->addLayout(thirdRow);
-    outerLayout->addWidget(manageButton);
+    buttonBox->addWidget(manageButton);
+    outerLayout->addLayout(buttonBox);
+    outerLayout->addStretch();
 
     connect(backButton, &QPushButton::clicked, this, &ContactPage::returnTypeSelectionPageSlot);
     connect(manageButton, &QPushButton::clicked, this, &ContactPage::manageSerializableObjectSlot);
 }
 
 void ContactPage::manageSerializableObjectSlot() {
-    if(nameField->text().toStdString().size() == 0 ||
+    if (nameField->text().toStdString().size() == 0 ||
         contactNameField->text().toStdString().size() == 0 ||
         contactSurnameField->text().toStdString().size() == 0 ||
         emailField->text().toStdString().size() == 0 ||
-        prefixField->currentText().toStdString().size() == 0 ||
+        prefixField->value() < 0 ||
         numberField->text().toStdString().size() == 0 ||
         !dateField->isValid()
-        ){
+            ) {
         QDialog dialog;
         QLabel *dialogLabel = new QLabel("Please contacts fields cannot be empty and the date has to be valid");
         QHBoxLayout *dialogLayout = new QHBoxLayout;
@@ -163,13 +184,16 @@ void ContactPage::manageSerializableObjectSlot() {
                                                                            contactNameField->text().toStdString(),
                                                                            contactSurnameField->text().toStdString(),
                                                                            *dateField->getDate(),
-                                                                           Telephone(prefixField->currentText().toStdString() + " " + numberField->text().toStdString()),
+                                                                           Telephone(
+                                                                                   std::to_string(prefixField->value()),
+                                                                                   numberField->text().toStdString()),
                                                                            emailField->text().toStdString()));
     else emit addSerializableObjectSignal(new Contact(upperName,
-                                                                   contactNameField->text().toStdString(),
-                                                                   contactSurnameField->text().toStdString(),
-                                                                   *dateField->getDate(),
-                                                                   Telephone(prefixField->currentText().toStdString() + " " + numberField->text().toStdString()),
-                                                                   emailField->text().toStdString()));
+                                                      contactNameField->text().toStdString(),
+                                                      contactSurnameField->text().toStdString(),
+                                                      *dateField->getDate(),
+                                                      Telephone(std::to_string(prefixField->value()),
+                                                                numberField->text().toStdString()),
+                                                      emailField->text().toStdString()));
 
 }
