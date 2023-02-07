@@ -9,12 +9,6 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6Widgets REQUIRED)
 
-if (UNIX AND NOT APPLE)
-    if (WAYLAND_FOUND)
-        add_definitions(-DQT_QPA_PLATFORM=wayland)
-    endif ()
-endif ()
-
 add_executable(Bernie
         ./Core/RBBSTree.h
         ./Core/RBBSTree.cpp
