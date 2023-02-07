@@ -75,10 +75,12 @@ void MainWindow::decryptSlot() {
     QHBoxLayout *dialogLyt = new QHBoxLayout;
     dialogLyt->setAlignment(Qt::AlignCenter);
     if (vault.isInitialized()) {
+        dialog.setFixedSize(800,600);
         QTextEdit *dialogTextArea = new QTextEdit();
+        dialogTextArea->setEnabled(false);
         std::vector<const SerializableObject *> v = vault.vectorize();
         for (auto cit = v.begin(); cit != v.end(); ++cit) {
-            dialogTextArea->append(QString::fromStdString((*cit)->serialize()) + "\n");
+            dialogTextArea->append(QString::fromStdString((*cit)->serialize()));
         }
         dialogLyt->addWidget(dialogTextArea);
     } else {
