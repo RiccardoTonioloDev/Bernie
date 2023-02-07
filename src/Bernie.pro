@@ -7,6 +7,7 @@ RESOURCES += resources.qrc
 INCLUDEPATH += src/
 OBJECTS_DIR = build/qmake
 RCC_DIR = build/qmake/rcc
+QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter
 MOC_DIR = build/qmake/moc
 DESTDIR = ./
 
