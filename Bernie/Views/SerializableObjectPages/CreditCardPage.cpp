@@ -140,12 +140,14 @@ void CreditCardPage::manageSerializableObjectSlot() {
         dialog.exec();
         return;
     }
-    if (toEdit) emit editSerializableObjectSignal(objToManage, new CreditCard(nameField->text().toStdString(),
+    std::string upperName(nameField->text().toStdString());
+    std::transform(upperName.begin(), upperName.end(), upperName.begin(), [](char &c) { return std::toupper(c); });
+    if (toEdit) emit editSerializableObjectSignal(objToManage, new CreditCard(upperName,
                                                                               ownerField->text().toStdString(),
                                                                               numberField->text().toStdString(),
                                                                               cvvField->text().toStdString(),
                                                                               *(dateField->getDate())));
-    else emit addSerializableObjectSignal(new CreditCard(nameField->text().toStdString(),
+    else emit addSerializableObjectSignal(new CreditCard(upperName,
                                                          ownerField->text().toStdString(),
                                                          numberField->text().toStdString(),
                                                          cvvField->text().toStdString(),

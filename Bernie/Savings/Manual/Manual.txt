@@ -29,8 +29,8 @@ The home page:
 
     # Managing items:
     ## Add a new item:
-        To add a new item click on the add button (the button with the + sign), and in the menu that will be showed
-        to you, you can select between the five types at you disposals.
+        To add a new item click on the add button (the button with the + sign, in the upper right side of the home
+        page), and in the menu that will be showed to you, you can select between the five types at you disposals.
         Once you clicked on one of them, you can start to insert values inside the fields. Once you finished click
         on the create button, and you will be moved to the home page, where the new item will be showed in the
         middle section.
@@ -50,6 +50,10 @@ The home page:
     # Filtering items:
         You can filter the list of items in the main section in two different ways:
             1. The search box: you can simply type inside the search box, to filter the items in the middle section
-                               based on the names (the identifiers in uppercase
+                               based on the names (the identifiers in uppercase);
+            2. The type filtering buttons: you can simply click on the buttons in the lower section of the home page
+                                           to filter the items in the middle section, based on the types of the items;
+            2. See all items: you can find a button called "all" in the upper left section of the home page, where
+                              clicking it will result in cleaning all the filters.
 
 

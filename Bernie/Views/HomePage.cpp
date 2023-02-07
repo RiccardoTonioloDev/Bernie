@@ -111,6 +111,8 @@ void HomePage::refresh() {
 }
 
 void HomePage::filterAll() {
+    searchBox->setText("");
+    searchBox->clearFocus();
     refresh();
 }
 

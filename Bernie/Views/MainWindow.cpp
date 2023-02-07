@@ -63,7 +63,6 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(hp, &HomePage::createEditPageSignal, this, &MainWindow::createEditPage);
     connect(hp, &HomePage::createWatchPageSignal, this, &MainWindow::createWatchPage);
     connect(logoutAction, &QAction::triggered, this, &MainWindow::logoutSlot);
-    connect(logoutAction, &QAction::triggered, this, &MainWindow::logoutSlot);
     connect(manual, &QAction::triggered, this, &MainWindow::manualSlot);
     connect(decryptedFile, &QAction::triggered, this, &MainWindow::decryptSlot);
     connect(sDBTR, &SelectDBToRemove::returnLandingSignal, this, &MainWindow::switchLendingSlot);
@@ -77,7 +76,14 @@ void MainWindow::logoutSlot() {
         vault.reset();
         hp->refresh();
         stackedWidget->setCurrentIndex(0);
+        return;
     }
+    QDialog dialog;
+    QLabel *dialogLabel = new QLabel("Please access a database first.");
+    QHBoxLayout *dialogLayout = new QHBoxLayout;
+    dialogLayout->addWidget(dialogLabel);
+    dialog.setLayout(dialogLayout);
+    dialog.exec();
 }
 
 void MainWindow::manualSlot() {
@@ -121,7 +127,7 @@ void MainWindow::switchCreateSlot() {
     stackedWidget->setCurrentIndex(1);
 }
 
-void MainWindow::switchDeleteSlot(){
+void MainWindow::switchDeleteSlot() {
     sDBTR->refreshNameList(vault.fetchDBNames());
     stackedWidget->setCurrentIndex(6);
 }
@@ -181,7 +187,15 @@ void MainWindow::returnSelectionFromCreate() {
 }
 
 void MainWindow::addSerializableObjectSlot(const SerializableObject *ptr) {
-    vault.addSerializableObject(ptr);
+    if (!vault.addSerializableObject(ptr)) {
+        QDialog dialog;
+        QLabel *dialogLabel = new QLabel("Please, use an identifier that was never used before.");
+        QHBoxLayout *dialogLayout = new QHBoxLayout;
+        dialogLayout->addWidget(dialogLabel);
+        dialog.setLayout(dialogLayout);
+        dialog.exec();
+        return;
+    }
     hp->refresh();
     stackedWidget->setCurrentIndex(3);
     QWidget * lastPage = stackedWidget->widget(stackedWidget->count() - 1);
@@ -233,11 +247,12 @@ void MainWindow::readDBAndSwitch(const std::string &name, const std::string &pas
     stackedWidget->setCurrentIndex(3);
 }
 
-void MainWindow::switchSelectDBToRemoveSlot(){
+void MainWindow::switchSelectDBToRemoveSlot() {
+    sDBTR->refreshNameList(vault.fetchDBNames());
     stackedWidget->setCurrentIndex(6);
 }
 
-void MainWindow::switchDBSelectedToRemoveSlot(const std::string& name) {
+void MainWindow::switchDBSelectedToRemoveSlot(const std::string &name) {
     DBstr->setName(name);
     stackedWidget->setCurrentIndex(7);
 }
@@ -245,7 +260,7 @@ void MainWindow::switchDBSelectedToRemoveSlot(const std::string& name) {
 void MainWindow::removeDBSlot(const std::string &name, const std::string &password) {
     QDialog dialog;
     QHBoxLayout *dialogLayout = new QHBoxLayout;
-    if(!vault.loadStorage(name+".txt", password)){
+    if (!vault.loadStorage(name + ".txt", password)) {
         QLabel *dialogLabel = new QLabel("Invalid access credentials.");
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);
@@ -258,8 +273,8 @@ void MainWindow::removeDBSlot(const std::string &name, const std::string &passwo
     reply.setText(QString::fromStdString("Are you sure you want to delete " + name + " database?"));
     reply.addButton(QMessageBox::Yes);
     reply.addButton(QMessageBox::No);
-    if(reply.exec() == QMessageBox::Yes){
-        vault.deleteDB(name+".txt", password);
+    if (reply.exec() == QMessageBox::Yes) {
+        vault.deleteDB(name + ".txt", password);
         QLabel *dialogLabel = new QLabel("Database removed correctly.");
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);

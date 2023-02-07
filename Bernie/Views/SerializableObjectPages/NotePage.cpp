@@ -89,9 +89,11 @@ void NotePage::manageSerializableObjectSlot() {
         dialog.exec();
         return;
     }
+    std::string upperName(nameField->text().toStdString());
+    std::transform(upperName.begin(), upperName.end(), upperName.begin(), [](char &c) { return std::toupper(c); });
     if (toEdit) {
-        emit editSerializableObjectSignal(objToManage, new Note(nameField->text().toStdString(),
+        emit editSerializableObjectSignal(objToManage, new Note(upperName,
                                                                 textField->toPlainText().toStdString()));
-    } else emit addSerializableObjectSignal(new Note(nameField->text().toStdString(),
+    } else emit addSerializableObjectSignal(new Note(upperName,
                                                      textField->toPlainText().toStdString()));
 }
