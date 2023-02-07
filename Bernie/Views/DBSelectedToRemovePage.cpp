@@ -45,6 +45,7 @@ DBSelectedToRemovePage::DBSelectedToRemovePage(QWidget *parent) : QWidget(parent
 
     connect(backButton, &QPushButton::clicked, this, &DBSelectedToRemovePage::returnSelectDBSlot);
     connect(removeButton, &QPushButton::clicked, this, &DBSelectedToRemovePage::removeDBSlot);
+    connect(dbPassword, &QLineEdit::returnPressed, this, &DBSelectedToRemovePage::removeDBSlot);
 }
 
 void DBSelectedToRemovePage::returnSelectDBSlot() {

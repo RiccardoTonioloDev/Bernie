@@ -88,15 +88,20 @@ void MainWindow::logoutSlot() {
 
 void MainWindow::manualSlot() {
     QDialog dialog;
-    QHBoxLayout *dialogLyt = new QHBoxLayout;
+    QVBoxLayout *dialogLyt = new QVBoxLayout;
     dialog.setFixedSize(800, 600);
     QTextEdit *dialogTextArea = new QTextEdit();
     dialogTextArea->setReadOnly(true);
     dialogTextArea->setObjectName("Manual");
     dialogLyt->setAlignment(Qt::AlignCenter);
+    QLabel *manualText = new QLabel("Application manual");
+    manualText->setObjectName("landingPageTitle");
+
     QFile manual(":/assets/Manual");
     manual.open(QFile::ReadOnly);
     dialogTextArea->append(manual.readAll());
+
+    dialogLyt->addWidget(manualText);
     dialogLyt->addWidget(dialogTextArea);
     dialog.setLayout(dialogLyt);
     dialog.exec();

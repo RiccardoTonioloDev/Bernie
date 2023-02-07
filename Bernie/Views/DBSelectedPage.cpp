@@ -45,6 +45,7 @@ DBSelectedPage::DBSelectedPage(QWidget *parent) : QWidget(parent) {
 
     connect(backButton, &QPushButton::clicked, this, &DBSelectedPage::returnSelectDBSlot);
     connect(decryptButton, &QPushButton::clicked, this, &DBSelectedPage::decryptDBSlot);
+    connect(dbPassword, &QLineEdit::returnPressed, this, &DBSelectedPage::decryptDBSlot);
 }
 
 void DBSelectedPage::returnSelectDBSlot() {
