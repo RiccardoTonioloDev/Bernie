@@ -68,7 +68,16 @@ void MainWindow::logoutSlot() {
     }
 }
 
-void MainWindow::manualSlot() {}
+void MainWindow::manualSlot() {
+    QDialog dialog;
+    QHBoxLayout *dialogLyt = new QHBoxLayout;
+    QTextEdit *dialogTextArea = new QTextEdit();
+    dialogLyt->setAlignment(Qt::AlignCenter);
+    dialogTextArea->append("");
+    dialogLyt->addWidget(dialogTextArea);
+    dialog.setLayout(dialogLyt);
+    dialog.exec();
+}
 
 void MainWindow::decryptSlot() {
     QDialog dialog;
