@@ -60,7 +60,13 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(decryptedFile, &QAction::triggered, this, &MainWindow::decryptSlot);
 }
 
-void MainWindow::logoutSlot() {}
+void MainWindow::logoutSlot() {
+    if (vault.isInitialized()) {
+        vault.reset();
+        hp->refresh();
+        stackedWidget->setCurrentIndex(0);
+    }
+}
 
 void MainWindow::manualSlot() {}
 
