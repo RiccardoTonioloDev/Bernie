@@ -1,9 +1,7 @@
 #include "CreateDBPage.h"
 #include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QLayout>
 #include <QDialog>
 
 CreateDBPage::CreateDBPage(QWidget *parent) : QWidget(parent) {
@@ -70,7 +68,7 @@ void CreateDBPage::resetFields() {
     password2->setText("");
 }
 
-void CreateDBPage::spawnAlertDialog(std::string text) {
+void CreateDBPage::spawnAlertDialog(std::string text) const {
     QDialog dialog;
     QLabel *dialogLabel = new QLabel(QString::fromStdString(text));
     QHBoxLayout *dialogLayout = new QHBoxLayout;

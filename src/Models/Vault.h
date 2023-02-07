@@ -100,7 +100,7 @@ public:
      */
     bool modifyTreeObj(const SerializableObject *toModified, const SerializableObject *toAssign);
 
-    bool operator=(const Vault &) = delete;
+    Vault& operator=(const Vault &) = delete;
 
     Vault(const Vault &) = delete;
 
@@ -110,8 +110,16 @@ public:
      */
     void reset();
 
+    /*
+     * POST: verifica se il vault è stato inizializzato o meno (guardando al puntatore dello storage e al puntatore
+     * dell'albero.
+     */
     bool isInitialized() const;
 
+    /*
+     * POST: se il name del file corrisponde con la password per decriptarlo correttamente, allora eliminerà il file,
+     * con tale nome ritornando true, altrimenti non eliminerà niente e ritornerà false.
+     */
     bool deleteDB(const std::string& name, const std::string& password);
 };
 
