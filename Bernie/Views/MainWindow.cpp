@@ -6,8 +6,9 @@
 #include "CreateDBPage.h"
 #include "SelectDBPage.h"
 #include "TypeSelectionPage.h"
-
+#include "../Models/SerializableObject.h"
 #include <QHBoxLayout>
+#include <QTextEdit>
 #include <algorithm>
 
 MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent) {
@@ -63,7 +64,24 @@ void MainWindow::logoutSlot() {}
 
 void MainWindow::manualSlot() {}
 
-void MainWindow::decryptSlot() {}
+void MainWindow::decryptSlot() {
+    QDialog dialog;
+    QHBoxLayout* dialogLyt = new QHBoxLayout;
+    dialogLyt->setAlignment(Qt::AlignCenter);
+    if(vault.isInitialized()){
+        QTextEdit *dialogTextArea = new QTextEdit();
+        std::vector<const SerializableObject*> v = vault.searchSerializableObjects();
+        for(auto cit = v.begin(); cit != v.end(); ++cit){
+            dialogTextArea->append(QString::fromStdString((*cit)->serialize())+"\n");
+        }
+        dialogLyt->addWidget(dialogTextArea);
+    }else{
+        QLabel *dialogLabel = new QLabel("Please first select a database in order to see its content");
+        dialogLyt->addWidget(dialogLabel);
+    }
+    dialog.setLayout(dialogLyt);
+    dialog.exec();
+}
 
 void MainWindow::switchCreateSlot() {
     stackedWidget->setCurrentIndex(1);
