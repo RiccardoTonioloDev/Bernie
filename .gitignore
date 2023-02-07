@@ -74,3 +74,4 @@ src/.qmake.stash
 src/Bernie.app
 src/Makefile
 src/Testing/Bernie.app
+.vscode
