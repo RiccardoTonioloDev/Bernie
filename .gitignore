@@ -69,3 +69,7 @@ src/Bernie/Makefile
 src/Testing/CMakeCache.txt
 src/Testing/Makefile
 src/Testing/cmake_install.cmake
+src/build
+src/.qmake.stash
+src/Bernie.app
+src/Makefile
