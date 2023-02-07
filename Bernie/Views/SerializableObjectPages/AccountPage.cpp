@@ -27,7 +27,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else identifierLabel->setText("Account identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setEnabled(ptr == nullptr);
     nameField->setMaxLength(50);
     nameField->setMaximumWidth(300);
     nameField->setMinimumHeight(25);

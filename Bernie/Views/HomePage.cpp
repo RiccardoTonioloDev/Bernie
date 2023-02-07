@@ -24,6 +24,7 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
     searchBox->setAlignment(Qt::AlignCenter);
     searchBox->setMinimumHeight(32);
     searchBox->setPlaceholderText("Search");
+    searchBox->setObjectName("searchBox");
     QFont font = searchBox->font();
     font.setPointSize(15);
     searchBox->setFont(font);
