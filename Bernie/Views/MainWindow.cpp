@@ -70,7 +70,7 @@ void MainWindow::decryptSlot() {
     dialogLyt->setAlignment(Qt::AlignCenter);
     if(vault.isInitialized()){
         QTextEdit *dialogTextArea = new QTextEdit();
-        std::vector<const SerializableObject*> v = vault.searchSerializableObjects();
+        std::vector<const SerializableObject*> v = vault.vectorize();
         for(auto cit = v.begin(); cit != v.end(); ++cit){
             dialogTextArea->append(QString::fromStdString((*cit)->serialize())+"\n");
         }
