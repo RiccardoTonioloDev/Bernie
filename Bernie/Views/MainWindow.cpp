@@ -115,6 +115,7 @@ void MainWindow::decryptSlot() {
         dialog.setMinimumSize(1600, 600);
         QTextEdit *dialogTextArea = new QTextEdit();
         dialogTextArea->setReadOnly(true);
+        dialogTextArea->setObjectName("Manual");
         std::vector<const SerializableObject *> v = vault.vectorize();
         for (auto cit = v.begin(); cit != v.end(); ++cit) {
             dialogTextArea->append(QString::fromStdString((*cit)->serialize()));
