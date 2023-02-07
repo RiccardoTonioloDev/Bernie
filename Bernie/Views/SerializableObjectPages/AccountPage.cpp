@@ -58,7 +58,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     usernameField->setMaximumWidth(300);
     usernameField->setMinimumHeight(25);
     usernameField->setAlignment(Qt::AlignCenter);
-    if (ptr) emailField->setText(QString::fromStdString(ptrAccount->getUsername()));
+    if (ptr) usernameField->setText(QString::fromStdString(ptrAccount->getUsername()));
 
     //Password
     QLabel *passwordLabel = new QLabel();

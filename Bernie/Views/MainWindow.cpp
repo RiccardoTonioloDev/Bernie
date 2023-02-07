@@ -107,9 +107,9 @@ void MainWindow::decryptSlot() {
     QHBoxLayout *dialogLyt = new QHBoxLayout;
     dialogLyt->setAlignment(Qt::AlignCenter);
     if (vault.isInitialized()) {
-        dialog.setFixedSize(800, 600);
+        dialog.setMinimumSize(1600, 600);
         QTextEdit *dialogTextArea = new QTextEdit();
-        dialogTextArea->setEnabled(false);
+        dialogTextArea->setReadOnly(true);
         std::vector<const SerializableObject *> v = vault.vectorize();
         for (auto cit = v.begin(); cit != v.end(); ++cit) {
             dialogTextArea->append(QString::fromStdString((*cit)->serialize()));
@@ -236,7 +236,8 @@ void MainWindow::readDBAndSwitch(const std::string &name, const std::string &pas
     bool isCorrect = vault.loadStorage(name + ".txt", password);
     if (isCorrect == false) {
         QDialog dialog;
-        QLabel *dialogLabel = new QLabel("Incorrect password. Please retry with the correct password.");
+        QLabel *dialogLabel = new QLabel(
+                "Incorrect password or damaged database. If you know you inserted the correct password, the database is damaged.");
         QHBoxLayout *dialogLayout = new QHBoxLayout;
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);
