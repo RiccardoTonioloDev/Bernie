@@ -1,0 +1,55 @@
+This is the official manual of the application.
+Here we will analyze any functionality inside the app.
+Every step will be guided by popups, in case you are doing something wrong, so don't be worried.
+Everything that you will do will be automatically saved, so that you will never worry about consciously saving
+something yourself.
+You will always be able to go back, if you decide for whatever reason that you don't want to go on in whatever action
+you are doing with the program.
+
+The landing page:
+    Here you can select between selecting an existing encrypted database, creating a new one, or removing an existing
+    one.
+
+The selection page:
+    Here you can select between a list of existing databases, the one that you want to interact with.
+    Once you choose one, you have to insert the correct password to open it and to interact with it.
+
+The creation page:
+    Here you can create a new database.
+    You have to choose a name for it, and a password (the confirmation password field is there to make sure that
+    you are well aware of the password you are using).
+
+The remove page:
+    Here you can select between a list of existing databases, the one that you want to remove.
+    Once you choose one, you have to insert the correct password to remove it.
+
+The home page:
+    Here is the page were the magic happens.
+    Once you firstly you access here, the central part will be empty (that's because nothing is inside the database).
+
+    # Managing items:
+    ## Add a new item:
+        To add a new item click on the add button (the button with the + sign), and in the menu that will be showed
+        to you, you can select between the five types at you disposals.
+        Once you clicked on one of them, you can start to insert values inside the fields. Once you finished click
+        on the create button, and you will be moved to the home page, where the new item will be showed in the
+        middle section.
+    ## Edit an existing item:
+        In the middle section of you landing page you will find all the items you have created. You can click on the
+        edit button (the one with the pencil and the notepad), to edit the specific item you selected.
+        Once you clicked on one of them, you can start to insert values inside the fields. Once you finished click
+        on the edit button, and you will be moved to the home page, where the old item will obviously no more be
+        showed.
+    ## Watch an existing item:
+        In the middle section of you landing page you will find all the items you have created. You can click on the
+        watch button (the one with the eye), to watch the specific item you selected.
+    ## Remove an existing item:
+        In the middle section of you landing page you will find all the items you have created. You can click on the
+        remove button (the one with the trash bin, on a red background), to remove the specific item you selected.
+
+    # Filtering items:
+        You can filter the list of items in the main section in two different ways:
+            1. The search box: you can simply type inside the search box, to filter the items in the middle section
+                               based on the names (the identifiers in uppercase
+
+

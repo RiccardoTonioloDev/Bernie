@@ -86,6 +86,8 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
 
 void HomePage::addDataSlot() {
     emit addDataSignal();
+    searchBox->setText("");
+    searchBox->clearFocus();
 }
 
 void HomePage::changeByVector(const std::vector<const SerializableObject *> &vectorSerializableObjects) {
@@ -133,7 +135,9 @@ void HomePage::filterCrypto() {
 }
 
 void HomePage::filterByName(const QString &name) {
-    changeByVector(vault.searchSerializableObjects(name.toStdString()));
+    std::string upperName(name.toStdString());
+    std::transform(upperName.begin(), upperName.end(), upperName.begin(), [](char &c) { return std::toupper(c); });
+    changeByVector(vault.searchSerializableObjects(upperName));
 }
 
 void HomePage::returnPressed() {
@@ -144,12 +148,16 @@ void HomePage::watchDataSlot(const SerializableObject *ptr) {
     VisitorManageItem visitor;
     ptr->accept(&visitor, false);
     emit createWatchPageSignal(visitor.getWidget());
+    searchBox->setText("");
+    searchBox->clearFocus();
 }
 
 void HomePage::editDataSlot(const SerializableObject *ptr) {
     VisitorManageItem visitor;
     ptr->accept(&visitor, true);
     emit createEditPageSignal(visitor.getWidget());
+    searchBox->setText("");
+    searchBox->clearFocus();
 }
 
 void HomePage::removeDataSlot(const SerializableObject *ptr) {

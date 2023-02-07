@@ -95,6 +95,7 @@ QSpinBox::disabled{
 QSpinBox::focus{
     border: 3px solid #47e0ff;
 }
-QLineEdit#searchBox {
-    color: gray;
+
+QTextEdit#Manual {
+    border: 0px;
 }

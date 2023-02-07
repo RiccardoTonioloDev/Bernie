@@ -74,7 +74,8 @@ void MainWindow::manualSlot() {
     QHBoxLayout *dialogLyt = new QHBoxLayout;
     dialog.setFixedSize(800, 600);
     QTextEdit *dialogTextArea = new QTextEdit();
-    dialogTextArea->setDisabled(true);
+    dialogTextArea->setReadOnly(true);
+    dialogTextArea->setObjectName("Manual");
     dialogLyt->setAlignment(Qt::AlignCenter);
     QFile manual(":/assets/Manual");
     manual.open(QFile::ReadOnly);
