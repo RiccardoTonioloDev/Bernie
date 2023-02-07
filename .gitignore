@@ -58,11 +58,11 @@ compile_commands.json
 .idea
 
 # Personal ignores
-Bernie/Bernie
-Bernie/Testing/Bernie
-Bernie/Testing/CMakeFiles/
-Bernie/CMakeFiles/
-Bernie/Bernie_autogen/
-Bernie/Bernie/cmake_install.cmake
-Bernie/Bernie/CMakeCache.txt
-Bernie/Bernie/Makefile
+src/Bernie
+src/Testing/Bernie
+src/Testing/CMakeFiles/
+src/CMakeFiles/
+src/Bernie_autogen/
+src/Bernie/cmake_install.cmake
+src/Bernie/CMakeCache.txt
+src/Bernie/Makefile

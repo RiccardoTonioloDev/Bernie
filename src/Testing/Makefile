@@ -117,7 +117,7 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Bernie
+# Target rules for targets named src
 
 # Build rule for target.
 Bernie: cmake_check_build_system
