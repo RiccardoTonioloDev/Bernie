@@ -1,7 +1,7 @@
 #include "Account.h"
 
 Account::Account(const std::string &n, const std::string &email, const std::string &pswd, const std::string &usrnm)
-        : SerializableObject(n), email(email), username(usrnm), password(pswd) {}
+        : SerializableObject(n), email(email), password(pswd), username(usrnm) {}
 
 Account::Account(const std::vector<std::string> &serializedVectorized) : SerializableObject(serializedVectorized[1]),
                                                                          email(serializedVectorized[2]),
