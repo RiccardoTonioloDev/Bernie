@@ -100,7 +100,7 @@ public:
      */
     bool modifyTreeObj(const SerializableObject *toModified, const SerializableObject *toAssign);
 
-    bool operator=(const Vault &) = delete;
+    Vault& operator=(const Vault &) = delete;
 
     Vault(const Vault &) = delete;
 
