@@ -22,14 +22,26 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
 
     //second row
     //text field
+    QVBoxLayout *secondRow = new QVBoxLayout;
+    secondRow->setAlignment(Qt::AlignCenter);
     QLabel *nameLabel = new QLabel();
     if(!ptr) nameLabel->setText("Insert Note identifier:");
     else nameLabel->setText("Note identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setEnabled(ptr == nullptr);
+    nameField->setMaxLength(50);
+    nameField->setMaximumWidth(300);
+    nameField->setMinimumHeight(25);
+    nameField->setAlignment(Qt::AlignCenter);
     if(ptr) nameField->setText(QString::fromStdString(*ptrNote));
 
+    //third row
+    QHBoxLayout *thirdRow = new QHBoxLayout;
+    thirdRow->setAlignment(Qt::AlignCenter);
+    //textBox
+    QVBoxLayout *textAreaBox = new QVBoxLayout;
+    textAreaBox->setAlignment(Qt::AlignCenter);
     QLabel *textLabel = new QLabel();
     if(!ptr) textLabel->setText("Insert text here:");
     else textLabel->setText("Text:");
@@ -37,19 +49,30 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     textField = new QTextEdit();
     textField->setEnabled(ptr == nullptr || toEdit);
     if(ptr) textField->setText(QString::fromStdString(ptrNote->getText()));
+    textField->setFixedWidth(400);
+    textAreaBox->addWidget(textLabel);
+    textAreaBox->addWidget(textField);
 
+    //fourth row
+    QHBoxLayout *fourthRow = new QHBoxLayout;
+    fourthRow->setAlignment(Qt::AlignCenter);
     //button create/edit
     QPushButton* manageButton = new QPushButton();
     if (!ptr) manageButton->setText("Create");
     else manageButton->setText("Update");
     manageButton->setVisible(toEdit || (ptr && toEdit));
 
+    secondRow->addWidget(nameLabel);
+    secondRow->addWidget(nameField);
+    thirdRow->addStretch();
+    thirdRow->addLayout(textAreaBox);
+    thirdRow->addStretch();
+    fourthRow->addWidget(manageButton);
+
     outerLayout->addLayout(firstRow);
-    outerLayout->addWidget(nameLabel);
-    outerLayout->addWidget(nameField);
-    outerLayout->addWidget(textLabel);
-    outerLayout->addWidget(textField);
-    outerLayout->addWidget(manageButton);
+    outerLayout->addLayout(secondRow);
+    outerLayout->addLayout(thirdRow);
+    outerLayout->addLayout(fourthRow);
     outerLayout->addStretch();
 
     connect(backButton, &QPushButton::clicked, this, &NotePage::returnTypeSelectionPageSlot);

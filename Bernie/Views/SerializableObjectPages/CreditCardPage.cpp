@@ -34,7 +34,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else nameLabel->setText("Credit card identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setEnabled(ptr == nullptr);
     nameField->setMaxLength(50);
     nameField->setMaximumWidth(300);
     nameField->setMinimumHeight(25);
