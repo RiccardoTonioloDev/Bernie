@@ -26,7 +26,7 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else identifierLabel->setText("Contact identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setEnabled(ptr == nullptr);
     nameField->setMaxLength(50);
     nameField->setMaximumWidth(300);
     nameField->setMinimumHeight(25);

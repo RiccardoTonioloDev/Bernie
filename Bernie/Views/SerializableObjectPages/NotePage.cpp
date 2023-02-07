@@ -22,12 +22,17 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
 
     //second row
     //text field
+    QVBoxLayout *secondRow = new QVBoxLayout;
     QLabel *nameLabel = new QLabel();
     if(!ptr) nameLabel->setText("Insert Note identifier:");
     else nameLabel->setText("Note identifier:");
 
     nameField = new QLineEdit();
-    nameField->setEnabled(ptr == nullptr || toEdit);
+    nameField->setEnabled(ptr == nullptr);
+    nameField->setMaxLength(50);
+    nameField->setMaximumWidth(300);
+    nameField->setMinimumHeight(25);
+    nameField->setAlignment(Qt::AlignCenter);
     if(ptr) nameField->setText(QString::fromStdString(*ptrNote));
 
     QLabel *textLabel = new QLabel();
@@ -44,12 +49,14 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     else manageButton->setText("Update");
     manageButton->setVisible(toEdit || (ptr && toEdit));
 
+    secondRow->addWidget(nameLabel);
+    secondRow->addWidget(nameField);
+    secondRow->addWidget(textLabel);
+    secondRow->addWidget(textField);
+    secondRow->addWidget(manageButton);
+
     outerLayout->addLayout(firstRow);
-    outerLayout->addWidget(nameLabel);
-    outerLayout->addWidget(nameField);
-    outerLayout->addWidget(textLabel);
-    outerLayout->addWidget(textField);
-    outerLayout->addWidget(manageButton);
+    outerLayout->addLayout(secondRow);
     outerLayout->addStretch();
 
     connect(backButton, &QPushButton::clicked, this, &NotePage::returnTypeSelectionPageSlot);
