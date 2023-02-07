@@ -66,3 +66,6 @@ src/Bernie_autogen/
 src/Bernie/cmake_install.cmake
 src/Bernie/CMakeCache.txt
 src/Bernie/Makefile
+src/Testing/CMakeCache.txt
+src/Testing/Makefile
+src/Testing/cmake_install.cmake
