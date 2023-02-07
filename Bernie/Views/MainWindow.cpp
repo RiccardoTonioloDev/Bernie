@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 #include <QDialog>
+#include <QMenuBar>
+#include <QAction>
 #include "LandingPage.h"
 #include "CreateDBPage.h"
 #include "SelectDBPage.h"
@@ -23,6 +25,15 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     stackedWidget->addWidget(DBsp); //4
     stackedWidget->addWidget(Tsp); //5
 
+    QMenu *file = menuBar()->addMenu("&File");
+    QAction *logoutAction = new QAction("Logout");
+    QAction *manual = new QAction("Manual");
+    QAction *decryptedFile = new QAction("See decrypted database");
+    file->addAction(logoutAction);
+    file->addAction(manual);
+    file->addAction(decryptedFile);
+
+
     setCentralWidget(stackedWidget);
 
     connect(lP, &LandingPage::switchSelectSignal, this, &MainWindow::switchSelectSlot);
@@ -42,7 +53,17 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(hp, &HomePage::addDataSignal, this, &MainWindow::switchTypeSelectionSlot);
     connect(hp, &HomePage::createEditPageSignal, this, &MainWindow::createEditPage);
     connect(hp, &HomePage::createWatchPageSignal, this, &MainWindow::createWatchPage);
+    connect(logoutAction, &QAction::triggered, this, &MainWindow::logoutSlot);
+    connect(logoutAction, &QAction::triggered, this, &MainWindow::logoutSlot);
+    connect(manual, &QAction::triggered, this, &MainWindow::manualSlot);
+    connect(decryptedFile, &QAction::triggered, this, &MainWindow::decryptSlot);
 }
+
+void MainWindow::logoutSlot() {}
+
+void MainWindow::manualSlot() {}
+
+void MainWindow::decryptSlot() {}
 
 void MainWindow::switchCreateSlot() {
     stackedWidget->setCurrentIndex(1);

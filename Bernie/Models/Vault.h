@@ -34,11 +34,6 @@ private:
      */
     bool loadToStorage() const;
 
-    /*
-     * POST: va a resettare l'oggetto. Esegue delete dell'albero e dello storage, di modo da poter riutilizzare l'oggetto
-     * per leggere un altro file.
-     */
-    void reset();
 
 public:
     explicit Vault(const std::string &path);
@@ -107,6 +102,14 @@ public:
     bool operator=(const Vault &) = delete;
 
     Vault(const Vault &) = delete;
+
+    /*
+     * POST: va a resettare l'oggetto. Esegue delete dell'albero e dello storage, di modo da poter riutilizzare l'oggetto
+     * per leggere un altro file.
+     */
+    void reset();
+
+    bool isInitialized() const;
 };
 
 

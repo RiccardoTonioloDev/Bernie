@@ -130,3 +130,7 @@ bool Vault::modifyTreeObj(const SerializableObject *toModify, const Serializable
         return true;
     } else return false;
 }
+
+bool Vault::isInitialized() const {
+    return tree != nullptr && storage != nullptr;
+}

@@ -52,6 +52,12 @@ public slots:
     void createDBAndSwitch(std::string name, std::string password);
 
     void readDBAndSwitch(const std::string &name, const std::string &password);
+
+    void manualSlot();
+
+    void logoutSlot();
+
+    void decryptSlot();
 };
 
 
