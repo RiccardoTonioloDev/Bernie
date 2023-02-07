@@ -13,5 +13,6 @@
         <file alias="View">Savings/Assets/View.svg</file>
         <file alias="Back">Savings/Assets/Back.svg</file>
         <file alias="stylesheet">Savings/StyleSheets/normalStyleSheet.qss</file>
+        <file alias="Manual">Savings/Manual/Manual.txt</file>
     </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <QDialog>
+#include <QFile>
 #include <QMenuBar>
 #include <QAction>
 #include "LandingPage.h"
@@ -71,9 +72,13 @@ void MainWindow::logoutSlot() {
 void MainWindow::manualSlot() {
     QDialog dialog;
     QHBoxLayout *dialogLyt = new QHBoxLayout;
+    dialog.setFixedSize(800, 600);
     QTextEdit *dialogTextArea = new QTextEdit();
+    dialogTextArea->setDisabled(true);
     dialogLyt->setAlignment(Qt::AlignCenter);
-    dialogTextArea->append("");
+    QFile manual(":/assets/Manual");
+    manual.open(QFile::ReadOnly);
+    dialogTextArea->append(manual.readAll());
     dialogLyt->addWidget(dialogTextArea);
     dialog.setLayout(dialogLyt);
     dialog.exec();
@@ -84,7 +89,7 @@ void MainWindow::decryptSlot() {
     QHBoxLayout *dialogLyt = new QHBoxLayout;
     dialogLyt->setAlignment(Qt::AlignCenter);
     if (vault.isInitialized()) {
-        dialog.setFixedSize(800,600);
+        dialog.setFixedSize(800, 600);
         QTextEdit *dialogTextArea = new QTextEdit();
         dialogTextArea->setEnabled(false);
         std::vector<const SerializableObject *> v = vault.vectorize();
