@@ -19,13 +19,10 @@ SOURCES += \
         ../Models/Telephone.cpp \
         ../Core/EncDec_File.cpp \
         ../Models/Vault.cpp \
-        testing.cpp \
         TreeTestingFunctions.cpp \
         testing.cpp \
         SerializationTestingFunctions.cpp \
-        ../Core/EncDec_File.cpp \
         EncDec_FileTestingFunctions.cpp \
-        ../Models/Vault.cpp \
         VaultTestingFunctions.cpp
 
 
@@ -39,8 +36,6 @@ HEADERS += \
         ../Models/Note.h \
         ../Models/SerializableObject.h \
         ../Models/Telephone.h \
-        ../Core/EncDec_File.h \
-        ../Models/Vault.h \
         SerializationTestingFunctions.h \
         TreeTestingFunctions.h \
         ../Core/EncDec_File.h \
