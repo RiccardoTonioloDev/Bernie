@@ -63,6 +63,7 @@ void DBSelectedPage::decryptDBSlot() {
         return;
     }
     emit decryptDBSignal(dbName->text().toStdString(), dbPassword->text().toStdString());
+    dbPassword->setText("");
 }
 
 void DBSelectedPage::setName(const std::string &name) {
