@@ -19,12 +19,15 @@ LandingPage::LandingPage(QWidget *parent) : QWidget(parent) {
 
     QPushButton *select = new QPushButton("Select existing database");
     QPushButton *createNew = new QPushButton("Create new database");
+    QPushButton *deleteDb = new QPushButton("Delete existing database");
 
     vbox->addWidget(select);
     vbox->addWidget(createNew);
+    vbox->addWidget(deleteDb);
 
     connect(select, &QPushButton::clicked, this, &LandingPage::switchSelectSlot);
     connect(createNew, &QPushButton::clicked, this, &LandingPage::switchCreateSlot);
+    connect(deleteDb, &QPushButton::clicked, this, &LandingPage::switchDeleteSlot);
 }
 
 void LandingPage::switchCreateSlot() {
@@ -33,4 +36,8 @@ void LandingPage::switchCreateSlot() {
 
 void LandingPage::switchSelectSlot() {
     emit switchSelectSignal();
+}
+
+void LandingPage::switchDeleteSlot() {
+    emit switchDeleteSignal();
 }

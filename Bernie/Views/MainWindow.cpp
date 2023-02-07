@@ -11,6 +11,7 @@
 #include <QHBoxLayout>
 #include <QTextEdit>
 #include <algorithm>
+#include <QMessageBox>
 
 MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent) {
     stackedWidget = new QStackedWidget(this);
@@ -20,12 +21,17 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     hp = new HomePage(vault);
     DBsp = new DBSelectedPage();
     TypeSelectionPage *Tsp = new TypeSelectionPage();
+    sDBTR = new SelectDBToRemove(vault.fetchDBNames());
+    DBstr = new DBSelectedToRemovePage();
     stackedWidget->addWidget(lP); //0
     stackedWidget->addWidget(cDBP); //1
     stackedWidget->addWidget(sDBP); //2
     stackedWidget->addWidget(hp); //3
     stackedWidget->addWidget(DBsp); //4
     stackedWidget->addWidget(Tsp); //5
+    stackedWidget->addWidget(sDBTR); //6
+    stackedWidget->addWidget(DBstr); //7
+
 
     QMenu *file = menuBar()->addMenu("&File");
     QAction *logoutAction = new QAction("Logout");
@@ -40,6 +46,7 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
 
     connect(lP, &LandingPage::switchSelectSignal, this, &MainWindow::switchSelectSlot);
     connect(lP, &LandingPage::switchCreateSignal, this, &MainWindow::switchCreateSlot);
+    connect(lP, &LandingPage::switchDeleteSignal, this, &MainWindow::switchDeleteSlot);
     connect(cDBP, &CreateDBPage::returnLandingSignal, this, &MainWindow::switchLendingSlot);
     connect(cDBP, &CreateDBPage::createDBSignal, this, &MainWindow::createDBAndSwitch);
     connect(sDBP, &SelectDBPage::returnLandingSignal, this, &MainWindow::switchLendingSlot);
@@ -59,6 +66,10 @@ MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent
     connect(logoutAction, &QAction::triggered, this, &MainWindow::logoutSlot);
     connect(manual, &QAction::triggered, this, &MainWindow::manualSlot);
     connect(decryptedFile, &QAction::triggered, this, &MainWindow::decryptSlot);
+    connect(sDBTR, &SelectDBToRemove::returnLandingSignal, this, &MainWindow::switchLendingSlot);
+    connect(DBstr, &DBSelectedToRemovePage::returnSelectDBSignal, this, &MainWindow::switchSelectDBToRemoveSlot);
+    connect(sDBTR, &SelectDBToRemove::dbSelectedToRemoveSignal, this, &MainWindow::switchDBSelectedToRemoveSlot);
+    connect(DBstr, &DBSelectedToRemovePage::removeDBSignal, this, &MainWindow::removeDBSlot);
 }
 
 void MainWindow::logoutSlot() {
@@ -107,6 +118,11 @@ void MainWindow::decryptSlot() {
 
 void MainWindow::switchCreateSlot() {
     stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::switchDeleteSlot(){
+    sDBTR->refreshNameList(vault.fetchDBNames());
+    stackedWidget->setCurrentIndex(6);
 }
 
 void MainWindow::switchHomePageSlot() {
@@ -214,4 +230,39 @@ void MainWindow::readDBAndSwitch(const std::string &name, const std::string &pas
     }
     hp->refresh();
     stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::switchSelectDBToRemoveSlot(){
+    stackedWidget->setCurrentIndex(6);
+}
+
+void MainWindow::switchDBSelectedToRemoveSlot(const std::string& name) {
+    DBstr->setName(name);
+    stackedWidget->setCurrentIndex(7);
+}
+
+void MainWindow::removeDBSlot(const std::string &name, const std::string &password) {
+    QDialog dialog;
+    QHBoxLayout *dialogLayout = new QHBoxLayout;
+    if(!vault.loadStorage(name, password)){
+        QLabel *dialogLabel = new QLabel("Invalid access credentials.");
+        dialogLayout->addWidget(dialogLabel);
+        dialog.setLayout(dialogLayout);
+        dialog.exec();
+        return;
+    }
+
+    QMessageBox reply;
+    reply.setWindowTitle("ATTENTION");
+    reply.setText(QString::fromStdString("Are you sure you want to delete " + name + " database?"));
+    reply.addButton(QMessageBox::Yes);
+    reply.addButton(QMessageBox::No);
+    if(reply.exec() == QMessageBox::Yes){
+        vault.deleteDB(name, password);
+        QLabel *dialogLabel = new QLabel("Database removed correctly.");
+        dialogLayout->addWidget(dialogLabel);
+        dialog.setLayout(dialogLayout);
+        dialog.exec();
+        stackedWidget->setCurrentIndex(0);
+    }
 }

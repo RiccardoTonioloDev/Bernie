@@ -9,6 +9,7 @@
 #include "../Models/CreditCard.h"
 #include "../Models/Contact.h"
 #include "../Models/Note.h"
+#include <cstdio>
 
 class Vault {
 private:
@@ -110,6 +111,8 @@ public:
     void reset();
 
     bool isInitialized() const;
+
+    bool deleteDB(const std::string& name, const std::string& password);
 };
 
 
