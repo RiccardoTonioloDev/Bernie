@@ -9,7 +9,7 @@
 #include "Visitors/VisitorManageItem.h"
 #include "Components/MenuButton.h"
 
-HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
+HomePage::HomePage(Vault &v, QWidget *parent) : QWidget(parent), vault(v) {
     //Create outer layout
     QVBoxLayout *outerLayout = new QVBoxLayout(this);
 
@@ -40,7 +40,6 @@ HomePage::HomePage(Vault &v, QWidget *parent) : vault(v), QWidget(parent) {
     //MiddleSpace
     listOfCards = new QListWidget();
     auto vectorSerializableObjects = vault.vectorize();
-    bool prova = false;
     for (auto so: vectorSerializableObjects) {
         VisitorListItem visitor;
         so->accept(&visitor);

@@ -10,7 +10,6 @@ private:
     unsigned short int year;
 public:
     Date(short unsigned int d = 0, short unsigned int m = 0, short unsigned int y = 0);
-    Date(const Date& d);
 
     Date(const std::string &strDate);
 
@@ -18,6 +17,7 @@ public:
     POST: si ritorna una stringa composta da tutti i campi della data nel formato gg/mm/aaaa
     */
     std::string getData() const;
+
     unsigned short getDay() const;
 
     unsigned short getMonth() const;

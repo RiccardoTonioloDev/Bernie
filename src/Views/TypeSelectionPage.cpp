@@ -9,7 +9,7 @@
 #include "SerializableObjectPages/CreditCardPage.h"
 #include "SerializableObjectPages/ContactPage.h"
 
-TypeSelectionPage::TypeSelectionPage(QWidget *parent) {
+TypeSelectionPage::TypeSelectionPage(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *outerLayout = new QVBoxLayout(this);
 
     //First row

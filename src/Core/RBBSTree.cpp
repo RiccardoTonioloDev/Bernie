@@ -348,7 +348,7 @@ template<class T>
 const std::vector<const T *> RBBSTree<T>::search(const std::string &subStrToSearch) const {
     std::vector<const T *> result;
     for (Node *start = min; start != nullptr; start = start->succ) {
-        int indexOfSubStrToSearch = 0;
+        std::string::size_type indexOfSubStrToSearch = 0;
         std::string currentName = *(start->info);
         for (std::string::const_iterator cit = currentName.begin(); cit != currentName.end(); ++cit) {
             if (*cit == subStrToSearch[indexOfSubStrToSearch]) {

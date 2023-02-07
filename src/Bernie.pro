@@ -9,9 +9,6 @@ OBJECTS_DIR = build/qmake
 RCC_DIR = build/qmake/rcc
 MOC_DIR = build/qmake/moc
 DESTDIR = ./
-QMAKE_CFLAGS += -Wall -Wno-unknown-pragmas
-QMAKE_CXXFLAGS += -Wall -Wno-unknown-pragmas
-QMAKE_CXXFLAGS_RELEASE += -DQT_RELEASE -DNDEBUG
 
 SOURCES += \
         ./Core/RBBSTree.cpp \

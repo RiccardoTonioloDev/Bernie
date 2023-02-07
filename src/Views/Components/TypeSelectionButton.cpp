@@ -2,7 +2,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-TypeSelectionButton::TypeSelectionButton(const std::string &label, const std::string &icon, QWidget *parent) {
+TypeSelectionButton::TypeSelectionButton(const std::string &label, const std::string &icon) {
     QHBoxLayout *lyt = new QHBoxLayout();
     lyt->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);//
     setMinimumHeight(50);//

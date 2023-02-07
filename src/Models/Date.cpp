@@ -2,7 +2,6 @@
 #include <string>
 
 Date::Date(short unsigned int d, short unsigned int m, short unsigned int y) : day(d), month(m), year(y) {}
-Date::Date(const Date& d) : day(d.getDay()), month(d.getMonth()), year(d.getYear()){}
 
 Date::Date(const std::string &strDate) {
     std::string strDateCopy = strDate;

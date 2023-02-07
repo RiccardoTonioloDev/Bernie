@@ -8,8 +8,8 @@
 class Account : public SerializableObject {
 private:
     std::string email;
-    std::string username;
     std::string password;
+    std::string username;
 
 public:
     Account(const std::string &name, const std::string &email, const std::string &password,

@@ -4,7 +4,7 @@
 #include <QLabel>
 
 
-MenuButton::MenuButton(const std::string &label, const std::string &icon, QWidget *parent) {
+MenuButton::MenuButton(const std::string &label, const std::string &icon) {
     QVBoxLayout *lyt = new QVBoxLayout();
     lyt->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);//
     setMinimumHeight(70);//

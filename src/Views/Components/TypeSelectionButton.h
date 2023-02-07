@@ -12,7 +12,7 @@
 class TypeSelectionButton : public QPushButton {
 Q_OBJECT
 public:
-    TypeSelectionButton(const std::string &label, const std::string &icon, QWidget *parent = 0);
+    TypeSelectionButton(const std::string &label, const std::string &icon);
 
 signals:
 

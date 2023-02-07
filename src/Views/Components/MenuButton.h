@@ -7,7 +7,7 @@
 class MenuButton : public QPushButton {
 Q_OBJECT
 public:
-    MenuButton(const std::string &label, const std::string &icon, QWidget *parent = 0);
+    MenuButton(const std::string &label, const std::string &icon);
 
 signals:
 

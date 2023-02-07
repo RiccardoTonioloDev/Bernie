@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <QMessageBox>
 
-MainWindow::MainWindow(Vault &v, QWidget *parent) : vault(v), QMainWindow(parent) {
+MainWindow::MainWindow(Vault &v, QWidget *parent) : QMainWindow(parent), vault(v) {
     stackedWidget = new QStackedWidget(this);
     LandingPage *lP = new LandingPage();
     CreateDBPage *cDBP = new CreateDBPage();
