@@ -10,6 +10,8 @@
 #include "SelectDBPage.h"
 #include "DBSelectedPage.h"
 #include "SerializableObjectPages/PagesInterface.h"
+#include "SelectDBToRemove.h"
+#include "DBSelectedToRemovePage.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -19,6 +21,8 @@ private:
     SelectDBPage *sDBP;
     DBSelectedPage *DBsp;
     HomePage *hp;
+    SelectDBToRemove *sDBTR;
+    DBSelectedToRemovePage *DBstr;
 
 public:
     explicit MainWindow(Vault &v, QWidget *parent = 0);
@@ -29,6 +33,8 @@ public slots:
 
     void switchSelectSlot();
 
+    void switchDeleteSlot();
+
     void switchHomePageSlot();
 
     void switchSelectedDBSlot(const std::string &name);
@@ -36,6 +42,12 @@ public slots:
     void switchLendingSlot();
 
     void switchTypeSelectionSlot();
+
+    void switchSelectDBToRemoveSlot();
+
+    void switchDBSelectedToRemoveSlot(const std::string&);
+
+    void removeDBSlot(const std::string&, const std::string&);
 
     void createAddPage(PagesInterface *);
 

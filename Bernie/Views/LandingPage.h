@@ -15,12 +15,15 @@ signals:
 
     void switchCreateSignal();
 
+    void switchDeleteSignal();
+
 public slots:
 
     void switchSelectSlot();
 
     void switchCreateSlot();
 
+    void switchDeleteSlot();
 };
 
 

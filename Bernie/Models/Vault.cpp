@@ -134,3 +134,10 @@ bool Vault::modifyTreeObj(const SerializableObject *toModify, const Serializable
 bool Vault::isInitialized() const {
     return tree != nullptr && storage != nullptr;
 }
+
+bool Vault::deleteDB(const std::string &name, const std::string &password) {
+    if(!loadStorage(name, password)) return false;
+    reset();
+    std::remove((pathToDirectory+"/"+name).c_str());
+    return true;
+}

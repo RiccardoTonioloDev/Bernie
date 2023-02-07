@@ -72,7 +72,7 @@ add_executable(Bernie
         Views/SerializableObjectPages/CreditCardPage.h
         Views/Components/DateComponent.cpp
         Views/Components/DateComponent.h
-        Views/SerializableObjectPages/ContactPage.cpp Views/SerializableObjectPages/ContactPage.h)
+        Views/SerializableObjectPages/ContactPage.cpp Views/SerializableObjectPages/ContactPage.h Views/SelectDBToRemove.cpp Views/SelectDBToRemove.h Views/DBSelectedToRemovePage.cpp Views/DBSelectedToRemovePage.h)
 
 
 target_link_libraries(Bernie Qt6::Widgets)
