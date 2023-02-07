@@ -15,7 +15,6 @@ SOURCES += \
         ./Models/Account.cpp \
         ./Models/Contact.cpp \
         ./Models/CreditCard.cpp \
-        ./Models/CreditCard.h \
         ./Models/CryptoWallet.cpp \
         ./Models/Date.cpp \
         ./Models/Note.cpp \

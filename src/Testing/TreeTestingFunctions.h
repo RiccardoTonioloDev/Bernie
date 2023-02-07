@@ -1,8 +1,7 @@
 #ifndef TREETESTINGFUNCTIONS_CPP_H
 #define TREETESTINGFUNCTIONS_CPP_H
 
-//#include "RBBSTree.h"
-#include "RBBSTree.h"
+#include "../Core/RBBSTree.h"
 
 void RBBSTreeTest(const RBBSTree<SerializableObject> &input, const std::string &expected, const std::string &testName);
 

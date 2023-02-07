@@ -1,7 +1,7 @@
 #ifndef VAULTTESTINGFUNCTIONS_H
 #define VAULTTESTINGFUNCTIONS_H
 
-#include "Vault.h"
+#include "../Models/Vault.h"
 #include "TreeTestingFunctions.h"
 
 void readFileNamesTest(const Vault &input, const std::vector<std::string> expected, const std::string &testName);

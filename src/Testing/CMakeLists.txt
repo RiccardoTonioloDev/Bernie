@@ -1,7 +1,8 @@
 
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.22)
 project(..)
 
+find_package(Qt6Widgets REQUIRED)
 set(CMAKE_CXX_STANDARD 14)
 
 # Enable AddressSanitizer
@@ -34,6 +35,17 @@ add_executable(Bernie
         ../Models/Telephone.h
         TreeTestingFunctions.cpp
         testing.cpp
-        SerializationTestingFunctions.cpp SerializationTestingFunctions.h TreeTestingFunctions.h ../Core/EncDec_File.cpp ../Core/EncDec_File.h EncDec_FileTestingFunctions.cpp EncDec_FileTestingFunctions.h ../Models/Vault.cpp ../Models/Vault.h VaultTestingFunctions.cpp VaultTestingFunctions.h)
+        SerializationTestingFunctions.cpp
+        SerializationTestingFunctions.h
+        TreeTestingFunctions.h
+        ../Core/EncDec_File.cpp
+        ../Core/EncDec_File.h
+        EncDec_FileTestingFunctions.cpp
+        EncDec_FileTestingFunctions.h
+        ../Models/Vault.cpp
+        ../Models/Vault.h
+        VaultTestingFunctions.cpp
+        VaultTestingFunctions.h)
 
+target_link_libraries(Bernie Qt6::Widgets)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
