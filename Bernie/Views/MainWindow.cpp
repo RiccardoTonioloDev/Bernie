@@ -244,7 +244,7 @@ void MainWindow::switchDBSelectedToRemoveSlot(const std::string& name) {
 void MainWindow::removeDBSlot(const std::string &name, const std::string &password) {
     QDialog dialog;
     QHBoxLayout *dialogLayout = new QHBoxLayout;
-    if(!vault.loadStorage(name, password)){
+    if(!vault.loadStorage(name+".txt", password)){
         QLabel *dialogLabel = new QLabel("Invalid access credentials.");
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);
@@ -258,7 +258,7 @@ void MainWindow::removeDBSlot(const std::string &name, const std::string &passwo
     reply.addButton(QMessageBox::Yes);
     reply.addButton(QMessageBox::No);
     if(reply.exec() == QMessageBox::Yes){
-        vault.deleteDB(name, password);
+        vault.deleteDB(name+".txt", password);
         QLabel *dialogLabel = new QLabel("Database removed correctly.");
         dialogLayout->addWidget(dialogLabel);
         dialog.setLayout(dialogLayout);

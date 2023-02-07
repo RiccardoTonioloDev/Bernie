@@ -138,7 +138,6 @@ bool Vault::isInitialized() const {
 bool Vault::deleteDB(const std::string &name, const std::string &password) {
     if(!loadStorage(name, password)) return false;
     reset();
-    std::string nameFile = name+".txt";
-    std::remove(nameFile.c_str());
+    std::remove((pathToDirectory+"/"+name).c_str());
     return true;
 }
