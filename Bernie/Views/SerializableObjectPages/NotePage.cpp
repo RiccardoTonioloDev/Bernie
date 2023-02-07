@@ -23,6 +23,7 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     //second row
     //text field
     QVBoxLayout *secondRow = new QVBoxLayout;
+    secondRow->setAlignment(Qt::AlignCenter);
     QLabel *nameLabel = new QLabel();
     if(!ptr) nameLabel->setText("Insert Note identifier:");
     else nameLabel->setText("Note identifier:");
