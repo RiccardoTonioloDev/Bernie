@@ -10,7 +10,7 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     lyt->setAlignment(Qt::AlignCenter);
 
     dayField = new QLineEdit();
-    dayField->setEnabled(toEdit);
+    dayField->setReadOnly(!toEdit);
     dayField->setAlignment(Qt::AlignCenter);
     dayField->setMaxLength(50);
     dayField->setMaximumWidth(70);
@@ -21,7 +21,7 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     if (date) dayField->setText(QString::fromStdString(std::to_string(date->getDay())));
 
     monthField = new QLineEdit();
-    monthField->setEnabled(toEdit);
+    monthField->setReadOnly(!toEdit);
     monthField->setAlignment(Qt::AlignCenter);
     monthField->setMaxLength(50);
     monthField->setMaximumWidth(70);
@@ -32,7 +32,7 @@ DateComponent::DateComponent(Date *d, bool toEdit, QWidget *parent) : QWidget(pa
     if (date) monthField->setText(QString::fromStdString(std::to_string(date->getMonth())));
 
     yearField = new QLineEdit();
-    yearField->setEnabled(toEdit);
+    yearField->setReadOnly(!toEdit);
     yearField->setAlignment(Qt::AlignCenter);
     yearField->setMaxLength(50);
     yearField->setMaximumWidth(70);

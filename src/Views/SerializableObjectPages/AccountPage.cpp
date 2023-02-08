@@ -40,7 +40,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else emailLabel->setText("Email:");
 
     emailField = new QLineEdit();
-    emailField->setEnabled(ptr == nullptr || toEdit);
+    emailField->setReadOnly(ptr && !toEdit);
     emailField->setMaxLength(50);
     emailField->setMaximumWidth(300);
     emailField->setMinimumHeight(25);
@@ -53,7 +53,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else usernameLabel->setText("Username:");
 
     usernameField = new QLineEdit();
-    usernameField->setEnabled(ptr == nullptr || toEdit);
+    usernameField->setReadOnly(ptr && !toEdit);
     usernameField->setMaxLength(50);
     usernameField->setMaximumWidth(300);
     usernameField->setMinimumHeight(25);
@@ -66,7 +66,7 @@ AccountPage::AccountPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else passwordLabel->setText("Password:");
 
     passwordField = new QLineEdit();
-    passwordField->setEnabled(ptr == nullptr || toEdit);
+    passwordField->setReadOnly(ptr && !toEdit);
     passwordField->setMaxLength(50);
     passwordField->setMaximumWidth(300);
     passwordField->setMinimumHeight(25);

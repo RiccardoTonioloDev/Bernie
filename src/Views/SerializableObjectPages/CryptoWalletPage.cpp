@@ -42,7 +42,7 @@ CryptoWalletPage::CryptoWalletPage(const SerializableObject *ptr, bool toEdit, Q
     if (!ptr) nameLabel->setText("Insert Blockchain name here:");
     else nameLabel->setText("Blockchain name identifier:");
     blockchainNameField = new QLineEdit();
-    blockchainNameField->setEnabled(ptr == nullptr || toEdit);
+    blockchainNameField->setReadOnly(ptr && !toEdit);
     blockchainNameField->setMaxLength(50);
     blockchainNameField->setMaximumWidth(300);
     blockchainNameField->setMinimumHeight(25);
@@ -72,7 +72,7 @@ CryptoWalletPage::CryptoWalletPage(const SerializableObject *ptr, bool toEdit, Q
             words.push_back(wordEdit);
             wordEdit->setAlignment(Qt::AlignCenter);
         }
-    if (ptr && !toEdit) for (auto ptrQLineEdit: words) ptrQLineEdit->setEnabled(false);
+    if (ptr && !toEdit) for (auto ptrQLineEdit: words) ptrQLineEdit->setReadOnly(true);
 
     QGridLayout * wordsLayout = new QGridLayout();
     for (int i = 0; i < 4; ++i) {

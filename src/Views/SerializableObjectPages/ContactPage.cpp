@@ -39,7 +39,7 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else contactNameLabel->setText("Contact name:");
 
     contactNameField = new QLineEdit();
-    contactNameField->setEnabled(ptr == nullptr || toEdit);
+    contactNameField->setReadOnly(ptr && !toEdit);
     contactNameField->setMaxLength(50);
     contactNameField->setMaximumWidth(300);
     contactNameField->setMinimumHeight(25);
@@ -52,7 +52,7 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else contactSurnameLabel->setText("Contact surname:");
 
     contactSurnameField = new QLineEdit();
-    contactSurnameField->setEnabled(ptr == nullptr || toEdit);
+    contactSurnameField->setReadOnly(ptr && !toEdit);
     contactSurnameField->setMaxLength(50);
     contactSurnameField->setMaximumWidth(300);
     contactSurnameField->setMinimumHeight(25);
@@ -65,7 +65,7 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     else emailLabel->setText("Email:");
 
     emailField = new QLineEdit();
-    emailField->setEnabled(ptr == nullptr || toEdit);
+    emailField->setReadOnly(ptr && !toEdit);
     emailField->setMaxLength(50);
     emailField->setMaximumWidth(300);
     emailField->setMinimumHeight(25);
@@ -99,7 +99,7 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     prefixField->setMaximumWidth(300);
     prefixField->setMinimumHeight(25);
     prefixField->setAlignment(Qt::AlignCenter);
-    prefixField->setEnabled(ptr == nullptr || toEdit);
+    prefixField->setReadOnly(ptr && !toEdit);
     if (ptr) prefixField->setValue(std::stoi(ptrContact->getTelephone().getPrefix()));
     prefixBox->addWidget(prefixLabel);
     prefixBox->addWidget(prefixField);
@@ -116,7 +116,7 @@ ContactPage::ContactPage(const SerializableObject *ptr, bool toEdit, QWidget *pa
     QRegularExpression numberRx("[0-9]{15}");
     QValidator *numberValidator = new QRegularExpressionValidator(numberRx, this);
     numberField->setValidator(numberValidator);
-    numberField->setEnabled(ptr == nullptr || toEdit);
+    numberField->setReadOnly(ptr && !toEdit);
     numberField->setMaxLength(15);
     numberField->setMaximumWidth(300);
     numberField->setMinimumHeight(25);

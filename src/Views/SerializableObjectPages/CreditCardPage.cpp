@@ -47,7 +47,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else ownerLabel->setText("Owner:");
 
     ownerField = new QLineEdit();
-    ownerField->setEnabled(ptr == nullptr || toEdit);
+    ownerField->setReadOnly(ptr && !toEdit);
     ownerField->setMaxLength(50);
     ownerField->setMaximumWidth(300);
     ownerField->setMinimumHeight(25);
@@ -60,7 +60,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else numberLabel->setText("Credit card number:");
 
     numberField = new QLineEdit();
-    numberField->setEnabled(ptr == nullptr || toEdit);
+    numberField->setReadOnly(ptr && !toEdit);
     QRegularExpression numberRx("[0-9]{16}");
     QValidator *numberValidator = new QRegularExpressionValidator(numberRx, this);
     numberField->setValidator(numberValidator);
@@ -76,7 +76,7 @@ CreditCardPage::CreditCardPage(const SerializableObject *ptr, bool toEdit, QWidg
     else cvvLabel->setText("Cvv:");
 
     cvvField = new QLineEdit();
-    cvvField->setEnabled(ptr == nullptr || toEdit);
+    cvvField->setReadOnly(ptr && !toEdit);
     QRegularExpression cvvRx("[0-9]{3}");
     QValidator *cvvValidator = new QRegularExpressionValidator(cvvRx, this);
     cvvField->setValidator(cvvValidator);

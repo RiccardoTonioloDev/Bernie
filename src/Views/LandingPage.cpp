@@ -12,7 +12,7 @@ LandingPage::LandingPage(QWidget *parent) : QWidget(parent) {
     appIcon->setAlignment(Qt::AlignCenter);
     appIcon->setPixmap(QIcon(":/assets/App_Icon").pixmap(192, 192));
     vbox->addWidget(appIcon);
-    QLabel *titleLabel = new QLabel("Welcome to src, your secure data storage!");
+    QLabel *titleLabel = new QLabel("Welcome to Bernie, your secure data storage!");
     titleLabel->setObjectName("landingPageTitle");
     titleLabel->setAlignment(Qt::AlignCenter);
     vbox->addWidget(titleLabel);

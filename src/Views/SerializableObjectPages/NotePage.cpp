@@ -47,7 +47,7 @@ NotePage::NotePage(const SerializableObject *ptr, bool toEdit, QWidget *parent) 
     else textLabel->setText("Text:");
 
     textField = new QTextEdit();
-    textField->setEnabled(ptr == nullptr || toEdit);
+    textField->setReadOnly(ptr && !toEdit);
     if (ptr) textField->setText(QString::fromStdString(ptrNote->getText()));
     textField->setFixedWidth(400);
     textAreaBox->addWidget(textLabel);

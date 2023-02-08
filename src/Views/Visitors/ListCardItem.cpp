@@ -1,5 +1,6 @@
 #include "ListCardItem.h"
 #include <QPushButton>
+#include <QMessageBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include "../../Models/SerializableObject.h"
@@ -45,5 +46,12 @@ void ListCardItem::watchSlot() {
 }
 
 void ListCardItem::removeSlot() {
-    emit removeSignal(data);
+    QMessageBox reply;
+    reply.setWindowTitle("ATTENTION");
+    reply.setText(QString::fromStdString("Are you sure you want to delete " + data->operator std::string() + " ?"));
+    reply.addButton(QMessageBox::Yes);
+    reply.addButton(QMessageBox::No);
+    if (reply.exec() == QMessageBox::Yes) {
+        emit removeSignal(data);
+    }
 }

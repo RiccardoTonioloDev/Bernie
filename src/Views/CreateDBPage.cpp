@@ -60,6 +60,7 @@ CreateDBPage::CreateDBPage(QWidget *parent) : QWidget(parent) {
 
     connect(backButton, &QPushButton::clicked, this, &CreateDBPage::returnLandingSlot);
     connect(createButton, &QPushButton::clicked, this, &CreateDBPage::createDBSlot);
+    connect(password2, &QLineEdit::returnPressed, this, &CreateDBPage::createDBSlot);
 }
 
 void CreateDBPage::resetFields() {
