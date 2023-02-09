@@ -30,14 +30,14 @@ The home page:
     # Managing items:
     ## Add a new item:
         To add a new item click on the add button (the button with the + sign, in the upper right side of the home
-        page), and in the menu that will be showed to you, you can select between the five types at you disposals.
-        Once you clicked on one of them, you can start to insert values inside the fields. Once you finished click
+        page), and in the menu that will be showed to you, you can select between the five types at your disposals.
+        Once you clicked on one of them, you can start to insert values inside the fields. Once you finish click
         on the create button, and you will be moved to the home page, where the new item will be showed in the
         middle section.
     ## Edit an existing item:
         In the middle section of you landing page you will find all the items you have created. You can click on the
         edit button (the one with the pencil and the notepad), to edit the specific item you selected.
-        Once you clicked on one of them, you can start to insert values inside the fields. Once you finished click
+        Once you clicked on one of them, you can start to insert values inside the fields. Once you finish click
         on the edit button, and you will be moved to the home page, where the old item will obviously no more be
         showed.
     ## Watch an existing item:
