@@ -35,6 +35,10 @@ You can use the same exact commands you used for building, to build the automate
 
 All you have to do is going into the `src/Testing` folder, and then use the commands outlined before.
 
+## Documentation
+There are two technical sheets (one from me and one from my partner) about the project (written in italian), inside the `Docs` folder (there are the pdfs and the docx versions).
+You can even find the UML for the model, the minimal UML for the GUI, and the storyboard used to design the GUI.
+
 ## Notes
 You will find that there are already some databases. They are just there as an example, to try the project out.
 - The ones with the "_correct" suffix, will work correctly if you will use their names (without the "_correct") as the passwords;
