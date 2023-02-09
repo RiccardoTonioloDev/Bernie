@@ -9,7 +9,7 @@
 Bernie is the project that me and my friend decided to make as the course project for the Object Oriented Programming course for the year 2022/2023 at the University of Padua.
 Basically it's a password and data manager, where your stored data (not only passwords but even contacts, crypto wallets, credit cards, and notes as well), will be encrypted with the master password you used to generate your database.
 
-**Keep in mind:** the encryption method is the Vigenère cipher. It's not so much secure nowdays, but we decided to utilize it since this program is a proof of concept to show how it works. If you want to make the system more secure, you only need to change the `loadToFile` and the `loadFromFile` methods in the `src/Core/EncDec_File` class, with your favourite symmetric encryption algorithm.
+> **Keep in mind:** the encryption method is the Vigenère cipher. It's not so much secure nowdays, but we decided to utilize it since this program is a proof of concept to show how it works. If you want to make the system more secure, you only need to change the `loadToFile` and the `loadFromFile` methods in the `src/Core/EncDec_File` class, with your favourite symmetric encryption algorithm.
 
 ## Disclaimer
 I made the project public to inspire anyone who needed it. I take no responsibility for your use of the code within.
